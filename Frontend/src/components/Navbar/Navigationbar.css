@@ -1,0 +1,13 @@
+#logo {
+  width: 60px;
+}
+
+.dropdown-menu {
+  right: 0;
+  left: auto;
+}
+
+.dropdown-item {
+  color: gray;
+  font-weight: 500;
+}

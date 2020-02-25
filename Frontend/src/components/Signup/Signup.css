@@ -1,0 +1,27 @@
+#signup-form {
+  border: 1px solid;
+  border-radius: 4px;
+  padding: 50px 50px;
+  margin: 0 auto;
+  width: 40%;
+}
+#logo {
+  display: block;
+  height: 200px;
+  margin: 0 auto;
+  width: 40%;
+}
+
+h2 {
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+#button {
+  background-color: #9f9fa1;
+  width: 50%;
+  display: block;
+  margin: 40px auto 0;
+  border: none;
+}
