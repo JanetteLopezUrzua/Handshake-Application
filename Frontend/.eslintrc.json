@@ -20,6 +20,9 @@
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "quotes": "off",
-    "react/jsx-one-expression-per-line": "off"
+    "react/jsx-one-expression-per-line": "off",
+    "no-console": "off",
+    "arrow-parens": "off",
+    "comma-dangle": "off"
   }
 }

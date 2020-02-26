@@ -25,3 +25,7 @@ h2 {
   margin: 40px auto 0;
   border: none;
 }
+
+p {
+  color: red;
+}
