@@ -93,15 +93,6 @@ class Signup extends React.Component {
       passerrormsg = "Required. Enter Password.";
     } else if (!passpatt.test(data.password)) {
       passerrormsg = "Password must be between 8 and 16 characters.";
-    } else {
-      //password is encrypted
-      var ciphertext = CryptoJS.AES.encrypt(data.password, "secret key 123");
-
-      data.password = ciphertext;
-
-      // var bytes  = CryptoJS.AES.decrypt(ciphertext.toString(), 'secret key 123');
-      // var plaintext = bytes.toString(CryptoJS.enc.Utf8);
-      // console.log("decrypted text", plaintext);
     }
 
     if (
@@ -110,15 +101,20 @@ class Signup extends React.Component {
       emailerrormsg === "" &&
       passerrormsg === ""
     ) {
-      alert("true");
       axios
-        .post("http://localhost:3001/signup", data)
+        .post("http://localhost:3001/signup", data, {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        })
         .then(response => {
           console.log("Status Code : ", response.status);
         })
         .catch(error => {
           this.setState({
-            errormessages: {}
+            errormessages: {
+              accounterrormsg: error.response.data
+            }
           });
         });
     } else {
