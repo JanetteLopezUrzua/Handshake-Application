@@ -4,8 +4,8 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 // const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const CryptoJS = require("crypto-js");
 const conn = require("./db");
-var CryptoJS = require("crypto-js");
 const { connection } = conn;
 app.set("view engine", "ejs");
 
@@ -41,7 +41,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.post("/signup", (req, res) => {
+
+app.post("/student/signup", (req, res) => {
   connection.query("select email from students", (err, rows) => {
     if (err) throw err;
     let exists = false;
@@ -56,8 +57,8 @@ app.post("/signup", (req, res) => {
       });
       res.end("Email already exists.");
     } else {
-      //password is encrypted
-      var ciphertext = CryptoJS.AES.encrypt(
+      // password is encrypted
+      const ciphertext = CryptoJS.AES.encrypt(
         req.body.password,
         "secret key 123"
       );
@@ -68,6 +69,54 @@ app.post("/signup", (req, res) => {
       connection.query(
         `insert into students (name, email, password, college) values ('${req.body.name}', '${req.body.email}',
         '${ciphertext}', '${req.body.college}')`,
+        () => {
+          if (err) res.end("Error. Could not sign up.");
+
+          res.cookie("cookie", "admin", {
+            maxAge: 900000,
+            httpOnly: false,
+            path: "/"
+          });
+          req.session.user = req.body;
+          res.writeHead(200, {
+            "Content-Type": "text/plain"
+          });
+
+          res.end("Successful Sign Up");
+        }
+      );
+    }
+  });
+});
+
+
+app.post("/company/signup", (req, res) => {
+  connection.query("select email from companies", (err, rows) => {
+    if (err) throw err;
+    let exists = false;
+
+    rows.forEach(row => {
+      if (row.email === req.body.email) exists = true;
+    });
+
+    if (exists === true) {
+      res.writeHead(400, {
+        "Content-Type": "text/plain"
+      });
+      res.end("Email already exists.");
+    } else {
+      // password is encrypted
+      const ciphertext = CryptoJS.AES.encrypt(
+        req.body.password,
+        "secret key 123"
+      );
+      console.log("encrypted text", ciphertext.toString());
+      // var bytes  = CryptoJS.AES.decrypt(ciphertext.toString(), 'secret key 123');
+      // var plaintext = bytes.toString(CryptoJS.enc.Utf8);
+      // console.log("decrypted text", plaintext);
+      connection.query(
+        `insert into companies (name, email, password, location) values ('${req.body.name}', '${req.body.email}',
+        '${ciphertext}', '${req.body.location}')`,
         () => {
           if (err) res.end("Error. Could not sign up.");
 

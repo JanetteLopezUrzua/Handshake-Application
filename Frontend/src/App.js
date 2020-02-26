@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import "./App.css";
 import { BrowserRouter } from "react-router-dom";
-// import Signup from "./components/Signup/Signup";
-// import Signin from "./components/Signin/Signin";
-// import Navbar from "./components/Navbar/Navigationbar";
-import Signup from "./components/Signup/Signup";
+import StudentSignup from "./components/Student/Signup/Signup";
+import StudentSignin from "./components/Student/Signin/Signin";
+import Navbar from "./components/Navbar/Navigationbar";
+import Firstscreen from "./components/Firstscreen/Firstscreen";
+import CompanySignup from "./components/Company/Signup/Signup";
 
 // App Component
 class App extends Component {
@@ -18,7 +19,7 @@ class App extends Component {
       // Use Browser Router to route to different pages
       <BrowserRouter>
         <div>
-          <Signup />
+          <CompanySignup />
         </div>
       </BrowserRouter>
     );

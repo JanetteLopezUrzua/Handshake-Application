@@ -23,6 +23,8 @@
     "react/jsx-one-expression-per-line": "off",
     "no-console": "off",
     "arrow-parens": "off",
-    "comma-dangle": "off"
+    "comma-dangle": "off",
+    "import/no-named-as-default": "off",
+    "import/no-named-as-default-member": "off"
   }
 }
