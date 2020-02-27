@@ -69,20 +69,32 @@ app.post("/student/signup", (req, res) => {
       connection.query(
         `insert into students (name, email, password, college) values ('${req.body.name}', '${req.body.email}',
         '${ciphertext}', '${req.body.college}')`,
-        () => {
-          if (err) res.end("Error. Could not sign up.");
+        (err2) => {
+          if (err2) res.end("Error. Could not sign up.");
+          else {
+            connection.query(`select id from students where email='${req.body.email}'`, (err3, rows1) => {
+              if (err3) req.session.userId = undefined;
+              else {
+                rows1.forEach((row) => {
+                  res.cookie('id', row.id, {
+                    maxAge: 900000,
+                    httpOnly: false,
+                    path: "/"
+                  });
 
-          res.cookie("cookie", "admin", {
-            maxAge: 900000,
-            httpOnly: false,
-            path: "/"
-          });
-          req.session.user = req.body;
-          res.writeHead(200, {
-            "Content-Type": "text/plain"
-          });
+                  req.session.userId = row.id;
+                });
 
-          res.end("Successful Sign Up");
+                res.writeHead(200, {
+                  'Content-Type': 'application/json'
+                });
+
+                console.log(req.session.userId);
+
+                res.end(JSON.stringify(req.session.userId));
+              }
+            });
+          }
         }
       );
     }
@@ -117,24 +129,107 @@ app.post("/company/signup", (req, res) => {
       connection.query(
         `insert into companies (name, email, password, location) values ('${req.body.name}', '${req.body.email}',
         '${ciphertext}', '${req.body.location}')`,
-        () => {
-          if (err) res.end("Error. Could not sign up.");
+        (err2) => {
+          if (err2) res.end("Error. Could not sign up.");
 
-          res.cookie("cookie", "admin", {
-            maxAge: 900000,
-            httpOnly: false,
-            path: "/"
-          });
-          req.session.user = req.body;
-          res.writeHead(200, {
-            "Content-Type": "text/plain"
-          });
+          connection.query(`select id from companies where email='${req.body.email}'`, (err3, rows1) => {
+            if (err3) req.session.userId = undefined;
 
-          res.end("Successful Sign Up");
+            res.cookie("cookie", "admin", {
+              maxAge: 900000,
+              httpOnly: false,
+              path: "/"
+            });
+
+            rows1.forEach((row) => {
+              req.session.userId = row.id;
+            });
+
+            res.writeHead(200, {
+              'Content-Type': 'application/json'
+            });
+
+            res.end(JSON.stringify(req.session.userId));
+          });
         }
       );
     }
   });
+});
+
+// app.get("/id", (req, res) => {
+//   console.log("Getting id");
+
+//   if (req.body.id !== undefined) {
+//     res.writeHead(200, {
+//       'Content-Type': 'application/json'
+//     });
+
+//     // console.log(req.session.user);
+
+//     res.end(JSON.stringify(req.body.id));
+//   } else {
+//     res.writeHead(400, {
+//       'Content-Type': 'application/json'
+//     });
+
+//     // console.log(req.session.user);
+
+//     res.end(undefined);
+//   }
+// });
+
+app.get("/student/personalinfo/:id", (req, res) => {
+  console.log(req.params.id);
+  if (req.params.id !== undefined) {
+    let data = {
+      name: "",
+      dob: "",
+      city: "",
+      state: "",
+      country: "",
+    };
+
+    connection.query(`select name, dob, city, state, country from students where id='${req.params.id}'`, (err, rows) => {
+      if (err) res.end("Can't get information");
+      console.log(rows);
+      rows.forEach((row) => {
+        data = {
+          name: row.name,
+          dob: row.dob,
+          city: row.city,
+          state: row.state,
+          country: row.country,
+        };
+      });
+
+      res.writeHead(200, {
+        'Content-Type': 'application/json'
+      });
+
+      console.log(data);
+
+      res.end(JSON.stringify(data));
+    });
+  }
+});
+
+app.post("/student/personalinfo/", (req, res) => {
+  console.log(req.body.id);
+
+  if (req.body.id !== undefined) {
+    connection.query(`update students set name='${req.body.name}', dob='${req.body.dob}', city='${req.body.city}', state='${req.body.state}', country='${req.body.country}' where id='${req.body.id}'`, (err, result) => {
+      if (err) res.end("Can't update information");
+
+      console.log(`Changed ${result.changedRows} row(s)`);
+
+      res.writeHead(200, {
+        'Content-Type': 'text/plain'
+      });
+
+      res.end("Successful Save");
+    });
+  }
 });
 
 // start server on port 3001

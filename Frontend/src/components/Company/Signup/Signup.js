@@ -3,10 +3,10 @@ import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import "./Signup.css";
-import hsimage from "../../../assets/handshake.png";
 import axios from "axios";
-import cookie from "react-cookies";
-import { Redirect } from "react-router";
+// import cookie from "react-cookies";
+// import { Redirect } from "react-router";
+import hsimage from "../../../assets/handshake.png";
 
 class Signup extends React.Component {
   constructor() {
@@ -58,10 +58,9 @@ class Signup extends React.Component {
     let locationerrormsg = "";
     let emailerrormsg = "";
     let passerrormsg = "";
-    let accounterrormsg = "";
 
-    //Check that name input includes letters only
-    var lettpatt = new RegExp("^[a-zA-Z ]*$");
+    // Check that name input includes letters only
+    const lettpatt = new RegExp("^[a-zA-Z ]*$");
 
     if (data.name === "") {
       nameerrormsg = "Required. Enter Company Name.";
@@ -69,8 +68,8 @@ class Signup extends React.Component {
       nameerrormsg = "Name can include letters only";
     }
 
-    //Check that location input includes letters and numbers only
-    var lettandnumpatt = new RegExp("^[A-Za-z0-9 ]*$");
+    // Check that location input includes letters and numbers only
+    const lettandnumpatt = new RegExp("^[A-Za-z0-9 ]*$");
 
     if (data.location === "") {
       locationerrormsg = "Required. Enter Location.";
@@ -78,8 +77,8 @@ class Signup extends React.Component {
       locationerrormsg = "Location can include letters and numbers only";
     }
 
-    //Check that email input is valid
-    var emailpatt = new RegExp("\\S+@\\S+\\.\\S+");
+    // Check that email input is valid
+    const emailpatt = new RegExp("\\S+@\\S+\\.\\S+");
 
     if (data.email === "") {
       emailerrormsg = "Required. Enter Email.";
@@ -87,8 +86,8 @@ class Signup extends React.Component {
       emailerrormsg = "Email is not valid.";
     }
 
-    //password is at least 8 characters and 1 number
-    var passpatt = new RegExp("^[a-zA-Z0-9]{8,16}$");
+    // password is at least 8 characters and 1 number
+    const passpatt = new RegExp("^[a-zA-Z0-9]{8,16}$");
 
     if (data.password === "") {
       passerrormsg = "Required. Enter Password.";
@@ -97,10 +96,10 @@ class Signup extends React.Component {
     }
 
     if (
-      nameerrormsg === "" &&
-      locationerrormsg === "" &&
-      emailerrormsg === "" &&
-      passerrormsg === ""
+      nameerrormsg === ""
+      && locationerrormsg === ""
+      && emailerrormsg === ""
+      && passerrormsg === ""
     ) {
       axios
         .post("http://localhost:3001/company/signup", data)
@@ -121,7 +120,6 @@ class Signup extends React.Component {
           emailerrormsg,
           passerrormsg,
           locationerrormsg,
-          accounterrormsg
         }
       });
     }

@@ -3,10 +3,11 @@ import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import "./Signup.css";
-import hsimage from "../../../assets/handshake.png";
 import axios from "axios";
-import cookie from "react-cookies";
-import { Redirect } from "react-router";
+// import cookie from "react-cookies";
+// import { Redirect } from "react-router";
+import hsimage from "../../../assets/handshake.png";
+
 
 class Signup extends React.Component {
   constructor() {
@@ -58,10 +59,9 @@ class Signup extends React.Component {
     let collegeerrormsg = "";
     let emailerrormsg = "";
     let passerrormsg = "";
-    let accounterrormsg = "";
 
-    //Check that name and college inputs include letters only
-    var lettpatt = new RegExp("^[a-zA-Z ]*$");
+    // Check that name and college inputs include letters only
+    const lettpatt = new RegExp("^[a-zA-Z ]*$");
 
     if (data.name === "") {
       nameerrormsg = "Required. Enter Name.";
@@ -75,8 +75,8 @@ class Signup extends React.Component {
       collegeerrormsg = "College name can include letters only";
     }
 
-    //Check that email input is valid
-    var emailpatt = new RegExp("\\S+@\\S+\\.\\S+");
+    // Check that email input is valid
+    const emailpatt = new RegExp("\\S+@\\S+\\.\\S+");
 
     if (data.email === "") {
       emailerrormsg = "Required. Enter Email.";
@@ -84,8 +84,8 @@ class Signup extends React.Component {
       emailerrormsg = "Email is not valid.";
     }
 
-    //password is at least 8 characters and 1 number
-    var passpatt = new RegExp("^[a-zA-Z0-9]{8,16}$");
+    // password is at least 8 characters and 1 number
+    const passpatt = new RegExp("^[a-zA-Z0-9]{8,16}$");
 
     if (data.password === "") {
       passerrormsg = "Required. Enter Password.";
@@ -94,11 +94,13 @@ class Signup extends React.Component {
     }
 
     if (
-      nameerrormsg === "" &&
-      collegeerrormsg === "" &&
-      emailerrormsg === "" &&
-      passerrormsg === ""
+      nameerrormsg === ""
+      && collegeerrormsg === ""
+      && emailerrormsg === ""
+      && passerrormsg === ""
     ) {
+      axios.defaults.withCredentials = true;
+
       axios
         .post("http://localhost:3001/student/signup", data)
         .then(response => {
@@ -118,7 +120,6 @@ class Signup extends React.Component {
           emailerrormsg,
           passerrormsg,
           collegeerrormsg,
-          accounterrormsg
         }
       });
     }
