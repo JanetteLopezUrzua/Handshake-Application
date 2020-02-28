@@ -1,0 +1,125 @@
+/* Front page */
+#buttons {
+  width: 40%;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
+a .btn {
+  width: 40%;
+  margin: 10px;
+  margin-left: 40px;
+  margin-right: 20px;
+  padding: 60px 0 60px 0;
+  font-size: 35px;
+  background-color: gray;
+  border: none;
+  color: white;
+}
+
+/* Sign Up and Sign In*/
+#signup-form {
+  border: 1px solid;
+  border-radius: 4px;
+  padding: 50px 50px;
+  margin: 0 auto;
+  width: 40%;
+  background-color: #e8e8e8;
+}
+
+#banner {
+  display: block;
+  height: 200px;
+  margin: 0 auto;
+  width: 40%;
+}
+
+h2 {
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+#button {
+  background-color: #9f9fa1;
+  width: 50%;
+  display: block;
+  margin: 40px auto 0;
+  border: none;
+}
+
+p {
+  color: red;
+}
+
+/* Navigation bar */
+#navbar,
+.card {
+  background: #fff;
+  padding: 0;
+  box-shadow: 0 0.5px 2px #d1d1d1;
+  position: relative;
+  z-index: 1;
+  transition: box-shadow, 0.5s, -webkit-box-shadow;
+}
+
+#logo {
+  margin-left: 200px;
+}
+
+.navbar-nav {
+  margin-right: 20%;
+}
+
+.nav-item,
+.nav-link {
+  color: black;
+  font-weight: bold;
+  padding-right: 20px;
+}
+
+.dropdown-menu {
+  right: 0;
+  left: auto;
+}
+
+.dropdown-item,
+.dropdown-item a {
+  color: black;
+  font-weight: 500;
+}
+
+.dropdown-item a {
+  text-decoration: none;
+}
+
+/* All Containers */
+.save {
+  background-color: #0d7f02;
+  color: #fff;
+  border: none;
+  margin-left: 15px;
+}
+
+.save:hover {
+  background-color: #004600;
+}
+
+.cancel {
+  background-color: rgba(0, 0, 0, 0.06);
+  color: rgba(0, 0, 0, 0.98);
+  border: none;
+}
+
+.cancel:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.card {
+  padding: 20px;
+  margin: 15px;
+}
+
+.card-footer {
+  text-align: right;
+}

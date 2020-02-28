@@ -101,6 +101,47 @@ app.post("/student/signup", (req, res) => {
   });
 });
 
+app.post("/student/signin", (req, res) => {
+  connection.query(`select id, email, password from students where email='${req.body.email}'`, (err, rows) => {
+    if (err) throw err;
+
+    let password = "";
+    let id = "";
+
+    if (rows.length > 0) {
+      rows.forEach(row => {
+        password = row.password;
+        id = row.id;
+      });
+    }
+
+
+    const bytes = CryptoJS.AES.decrypt(password.toString(), 'secret key 123');
+    const plaintext = bytes.toString(CryptoJS.enc.Utf8);
+
+    console.log(plaintext);
+    console.log(req.body.password);
+    if (plaintext === req.body.password) {
+      res.cookie('id', id, {
+        maxAge: 900000,
+        httpOnly: false,
+        path: "/"
+      });
+
+      res.writeHead(200, {
+        'Content-Type': 'text/plain'
+      });
+
+      res.end("Successful Save");
+    } else {
+      res.writeHead(400, {
+        "Content-Type": "text/plain"
+      });
+      res.end("Incorrect Credentials.");
+    }
+  });
+});
+
 
 app.post("/company/signup", (req, res) => {
   connection.query("select email from companies", (err, rows) => {
@@ -214,7 +255,7 @@ app.get("/student/personalinfo/:id", (req, res) => {
   }
 });
 
-app.post("/student/personalinfo/", (req, res) => {
+app.post("/student/personalinfo", (req, res) => {
   console.log(req.body.id);
 
   if (req.body.id !== undefined) {
@@ -231,6 +272,118 @@ app.post("/student/personalinfo/", (req, res) => {
     });
   }
 });
+
+app.get("/student/careerobjective/:id", (req, res) => {
+  console.log(req.params.id);
+  if (req.params.id !== undefined) {
+    let data = {
+      objective: "",
+    };
+
+    connection.query(`select careerobjective from career_objective where id='${req.params.id}'`, (err, rows) => {
+      if (err) res.end("Can't get information");
+      console.log(rows);
+
+      if (rows !== undefined) {
+        rows.forEach((row) => {
+          data = {
+            objective: row.objective,
+          };
+        });
+
+        res.writeHead(200, {
+          'Content-Type': 'application/json'
+        });
+
+        console.log(data);
+
+        res.end(JSON.stringify(data));
+      }
+    });
+  }
+});
+
+app.post("/student/careerobjective", (req, res) => {
+  console.log(req.body.id);
+
+  if (req.body.id !== undefined) {
+    connection.query(`insert into career_objective (id, careerobjective) values ('${req.body.id}', '${req.body.objective}') ON DUPLICATE KEY UPDATE careerobjective='${req.body.objective}'`, (err, result) => {
+      if (err) res.end("Can't update information");
+
+      console.log('Last insert ID:', result.insertId);
+
+      res.writeHead(200, {
+        'Content-Type': 'text/plain'
+      });
+
+      res.end("Successful Save");
+    });
+  }
+});
+
+app.get("/student/skill/:id", (req, res) => {
+  console.log(req.params.id);
+  if (req.params.id !== undefined) {
+    const data = {
+      skills: [],
+    };
+
+    connection.query(`select skill from skills where id='${req.params.id}'`, (err, rows) => {
+      if (err) res.end("Can't get information");
+      console.log(rows);
+
+      if (rows !== undefined) {
+        rows.forEach((row) => {
+          data.skills.push(row.skill);
+        });
+
+        res.writeHead(200, {
+          'Content-Type': 'application/json'
+        });
+
+        console.log(data);
+
+        res.end(JSON.stringify(data));
+      }
+    });
+  }
+});
+
+app.post("/student/skill", (req, res) => {
+  console.log(req.body.id);
+
+  if (req.body.id !== undefined) {
+    connection.query(`insert into skills (id, skill) values ('${req.body.id}', '${req.body.skill}')`, (err, result) => {
+      if (err) res.end("Can't insert information");
+
+      console.log('Last insert ID:', result.insertId);
+
+      res.writeHead(200, {
+        'Content-Type': 'text/plain'
+      });
+
+      res.end("Successful Save");
+    });
+  }
+});
+
+// app.delete("/student/skill/delete", (req, res) => {
+//   console.log(req.body.id);
+
+//   if (req.body.id !== undefined) {
+//     connection.query(`delete from skills where id='${req.body.id}' and skill='${req.body.skill}' LIMIT 1`, (err, result) => {
+//       if (err) res.end("Can't delete information");
+
+//       console.log(`Deleted ${result.affectedRows} row(s)`);
+
+//       res.writeHead(200, {
+//         'Content-Type': 'text/plain'
+//       });
+
+//       res.end("Successful Save");
+//     });
+//   }
+// });
 
 // start server on port 3001
 app.listen(3001);

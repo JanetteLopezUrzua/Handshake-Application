@@ -2,11 +2,13 @@ import React from "react";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import "./Signup.css";
+import { Link } from 'react-router-dom';
 import axios from "axios";
-// import cookie from "react-cookies";
-// import { Redirect } from "react-router";
-import hsimage from "../../../assets/handshake.png";
+import cookie from "react-cookies";
+import { Redirect } from "react-router";
+import "../components.css";
+import hsimage from "../../assets/handshake.png";
+
 
 class Signup extends React.Component {
   constructor() {
@@ -15,12 +17,12 @@ class Signup extends React.Component {
       name: "",
       email: "",
       password: "",
-      location: "",
+      college: "",
       errormessages: {}
     };
   }
 
-  companyNameChangeHandler = e => {
+  nameChangeHandler = e => {
     this.setState({
       name: e.target.value
     });
@@ -38,43 +40,41 @@ class Signup extends React.Component {
     });
   };
 
-  locationChangeHandler = e => {
+  collegeChangeHandler = e => {
     this.setState({
-      location: e.target.value
+      college: e.target.value
     });
   };
 
   signup = e => {
     e.preventDefault();
+    // cookie.remove('id', { path: '/' });
 
     const data = {
       name: this.state.name,
       email: this.state.email,
       password: this.state.password,
-      location: this.state.location
+      college: this.state.college
     };
 
     let nameerrormsg = "";
-    let locationerrormsg = "";
+    let collegeerrormsg = "";
     let emailerrormsg = "";
     let passerrormsg = "";
 
-    // Check that name input includes letters only
+    // Check that name and college inputs include letters only
     const lettpatt = new RegExp("^[a-zA-Z ]*$");
 
     if (data.name === "") {
-      nameerrormsg = "Required. Enter Company Name.";
+      nameerrormsg = "Required. Enter Name.";
     } else if (!lettpatt.test(data.name)) {
       nameerrormsg = "Name can include letters only";
     }
 
-    // Check that location input includes letters and numbers only
-    const lettandnumpatt = new RegExp("^[A-Za-z0-9 ]*$");
-
-    if (data.location === "") {
-      locationerrormsg = "Required. Enter Location.";
-    } else if (!lettandnumpatt.test(data.location)) {
-      locationerrormsg = "Location can include letters and numbers only";
+    if (data.college === "") {
+      collegeerrormsg = "Required. Enter College Name.";
+    } else if (!lettpatt.test(data.college)) {
+      collegeerrormsg = "College name can include letters only";
     }
 
     // Check that email input is valid
@@ -97,14 +97,21 @@ class Signup extends React.Component {
 
     if (
       nameerrormsg === ""
-      && locationerrormsg === ""
+      && collegeerrormsg === ""
       && emailerrormsg === ""
       && passerrormsg === ""
     ) {
+      axios.defaults.withCredentials = true;
+
       axios
-        .post("http://localhost:3001/company/signup", data)
+        .post("http://localhost:3001/student/signup", data)
         .then(response => {
           console.log("Status Code : ", response.status);
+          this.setState({
+            errormessages: {
+              accounterrormsg: "",
+            }
+          });
         })
         .catch(error => {
           this.setState({
@@ -119,23 +126,31 @@ class Signup extends React.Component {
           nameerrormsg,
           emailerrormsg,
           passerrormsg,
-          locationerrormsg,
+          collegeerrormsg,
         }
       });
     }
   };
 
   render() {
+    // if sign up then redirecto the student profile
+    let redirectVar = null;
+    const path = `/student/${cookie.load('id')}`;
+    if (cookie.load('id')) {
+      redirectVar = <Redirect to={path} />;
+    }
+
     return (
       <div>
-        <img id="logo" src={hsimage} alt="handshake logo" />
+        {redirectVar}
+        <img id="banner" src={hsimage} alt="handshake banner" />
         <h2>Sign Up</h2>
         <Form id="signup-form">
           <Form.Group controlId="Name">
-            <Form.Label>Company Name</Form.Label>
+            <Form.Label>Name</Form.Label>
             <Form.Control
-              onChange={this.companyNameChangeHandler}
-              placeholder="Enter Company Name"
+              onChange={this.nameChangeHandler}
+              placeholder="Enter Name"
             />
             <p> {this.state.errormessages.nameerrormsg}</p>
           </Form.Group>
@@ -146,7 +161,7 @@ class Signup extends React.Component {
               <Form.Control
                 onChange={this.emailChangeHandler}
                 type="email"
-                placeholder="Enter Email"
+                placeholder="Enter email"
               />
               <p> {this.state.errormessages.emailerrormsg}</p>
             </Form.Group>
@@ -162,13 +177,13 @@ class Signup extends React.Component {
             </Form.Group>
           </Form.Row>
 
-          <Form.Group controlId="Location">
-            <Form.Label>Location</Form.Label>
+          <Form.Group controlId="CollegeName">
+            <Form.Label>College Name</Form.Label>
             <Form.Control
-              onChange={this.locationChangeHandler}
-              placeholder="Enter Location"
+              onChange={this.collegeChangeHandler}
+              placeholder="Enter College Name"
             />
-            <p> {this.state.errormessages.locationerrormsg}</p>
+            <p> {this.state.errormessages.collegeerrormsg}</p>
           </Form.Group>
 
           <p> {this.state.errormessages.accounterrormsg}</p>
@@ -176,6 +191,12 @@ class Signup extends React.Component {
           <Button onClick={this.signup} id="button" type="submit">
             Sign Up
           </Button>
+
+          <Link to="/student/signin">
+            <div>
+              Already have an account? Sign In
+            </div>
+          </Link>
         </Form>
       </div>
     );

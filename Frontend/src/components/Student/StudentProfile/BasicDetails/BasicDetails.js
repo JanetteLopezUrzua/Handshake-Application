@@ -62,6 +62,8 @@ class BasicDetails extends React.Component {
   handleClick = () => {
     console.log("button was pressed!!!!");
     this.setState({ editWasTriggered: true });
+
+    this.getInfo();
   };
 
   nameChangeHandler = e => {
@@ -104,7 +106,7 @@ class BasicDetails extends React.Component {
       country: this.state.country,
     };
 
-    axios.post("http://localhost:3001/student/personalinfo/", data)
+    axios.post("http://localhost:3001/student/personalinfo", data)
       .then(response => {
         console.log(response);
       })

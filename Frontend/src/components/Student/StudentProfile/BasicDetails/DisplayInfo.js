@@ -11,7 +11,7 @@ const DisplayInfo = (props) => {
   const country = (props.country === "") ? "No Country Entered" : props.country;
 
   return (
-    <Card style={{ width: '18rem' }}>
+    <Card>
       <Card.Title>Personal Information</Card.Title>
       <Button onClick={props.clicked}>
         <MdEdit />
