@@ -1,6 +1,8 @@
 import React from 'react';
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
 const EditInfo = (props) => {
@@ -12,7 +14,10 @@ const EditInfo = (props) => {
 
   return (
     <Card>
-      <Card.Title>Personal Information</Card.Title>
+      <Row>
+        <Col><Card.Title>Personal Information</Card.Title></Col>
+        <Col />
+      </Row>
       <Form.Group controlId="Name">
         <Form.Label>Name</Form.Label>
         <Form.Control onChange={props.namechange} name="name" type="text" placeholder={nameholder} />
@@ -33,8 +38,10 @@ const EditInfo = (props) => {
         <Form.Label>Country</Form.Label>
         <Form.Control onChange={props.countrychange} name="country" type="text" placeholder={countryholder} />
       </Form.Group>
-      <Button onClick={props.cancel}>Cancel</Button>
-      <Button onClick={props.save}>Save</Button>
+      <Card.Footer>
+        <Button className="cancel" onClick={props.cancel}>Cancel</Button>
+        <Button className="save" onClick={props.save}>Save</Button>
+      </Card.Footer>
     </Card>
   );
 };

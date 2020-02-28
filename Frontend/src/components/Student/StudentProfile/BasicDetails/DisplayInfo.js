@@ -1,5 +1,7 @@
 import React from 'react';
 import Card from "react-bootstrap/Card";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import { MdEdit } from 'react-icons/md';
 
@@ -12,10 +14,14 @@ const DisplayInfo = (props) => {
 
   return (
     <Card>
-      <Card.Title>Personal Information</Card.Title>
-      <Button onClick={props.clicked}>
-        <MdEdit />
-      </Button>
+      <Row>
+        <Col><Card.Title>Personal Information</Card.Title></Col>
+        <Col style={{ textAlign: "right" }}>
+          <Button className="editbutton" onClick={props.clicked}>
+            <MdEdit style={{ color: "black" }} />
+          </Button>
+        </Col>
+      </Row>
       <Card.Subtitle>Name</Card.Subtitle>
       <Card.Text>{ name }</Card.Text>
       <Card.Subtitle>Date of Birth</Card.Subtitle>
