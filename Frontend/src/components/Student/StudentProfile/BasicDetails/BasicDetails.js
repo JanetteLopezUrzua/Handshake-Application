@@ -63,7 +63,7 @@ class BasicDetails extends React.Component {
     console.log("button was pressed!!!!");
     this.setState({ editWasTriggered: true });
 
-    this.getInfo();
+    // this.getInfo();
   };
 
   nameChangeHandler = e => {

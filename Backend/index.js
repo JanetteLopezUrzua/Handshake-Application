@@ -274,20 +274,20 @@ app.post("/student/personalinfo", (req, res) => {
 });
 
 app.get("/student/careerobjective/:id", (req, res) => {
-  console.log(req.params.id);
+  console.log(`id:${req.params.id}`);
   if (req.params.id !== undefined) {
-    let data = {
-      objective: "",
-    };
-
     connection.query(`select careerobjective from career_objective where id='${req.params.id}'`, (err, rows) => {
       if (err) res.end("Can't get information");
       console.log(rows);
 
+      let data = {
+        objective: "",
+      };
+
       if (rows !== undefined) {
         rows.forEach((row) => {
           data = {
-            objective: row.objective,
+            objective: row.careerobjective,
           };
         });
 
@@ -384,6 +384,35 @@ app.post("/student/skill", (req, res) => {
 //     });
 //   }
 // });
+
+app.get("/student/pictureinfo/:id", (req, res) => {
+  console.log(req.params.id);
+  if (req.params.id !== undefined) {
+    let data = {
+      name: "",
+      college: "",
+    };
+
+    connection.query(`select name, college from students where id='${req.params.id}'`, (err, rows) => {
+      if (err) res.end("Can't get information");
+      console.log(rows);
+      rows.forEach((row) => {
+        data = {
+          name: row.name,
+          college: row.college,
+        };
+      });
+
+      res.writeHead(200, {
+        'Content-Type': 'application/json'
+      });
+
+      console.log(data);
+
+      res.end(JSON.stringify(data));
+    });
+  }
+});
 
 // start server on port 3001
 app.listen(3001);

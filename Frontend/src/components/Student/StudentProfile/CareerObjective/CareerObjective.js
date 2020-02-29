@@ -6,26 +6,26 @@ import EditObjective from "./EditObjective";
 
 
 class CareerObjective extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
-      id: cookie.load('id'),
+      id: "",
       objective: "",
       editWasTriggered: false,
     };
   }
+
+  static getDerivedStateFromProps = (props, state) => ({ id: props.id })
 
   componentDidMount() {
     this.getInfo();
   }
 
   getInfo = () => {
-    const { id } = this.state;
-    axios.get(`http://localhost:3001/student/careerobjective/${id}`)
+    axios.get(`http://localhost:3001/student/careerobjective/${this.state.id}`)
       .then(response => {
         const info = response.data;
-
         this.setState({
           objective: info.objective,
         });
@@ -33,10 +33,6 @@ class CareerObjective extends React.Component {
       .catch(error => {
         console.log(error);
       });
-
-    if (this.state.objective === "" || this.state.objective === undefined) {
-      this.setState({ editWasTriggered: true });
-    }
   }
 
   handleClick = () => {
@@ -51,7 +47,7 @@ class CareerObjective extends React.Component {
   };
 
   handleSave = () => {
-    // objective has whitespace only
+  // objective has whitespace only
     const wspatt = new RegExp("^ *$");
 
     if (this.state.objective === undefined || wspatt.test(this.state.objective)) {
@@ -73,16 +69,15 @@ class CareerObjective extends React.Component {
         console.log(error);
       });
 
+    this.setState({ editWasTriggered: false });
 
-    if (this.state.objective === "") {
-      this.setState({ editWasTriggered: true });
-    } else this.setState({ editWasTriggered: false });
-
-    this.getInfo();
+    // this.getInfo();
   };
 
   handleCancel = () => {
-
+    this.setState({
+      editWasTriggered: false
+    });
   };
 
   render() {

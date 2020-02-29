@@ -165,3 +165,17 @@ p {
   border: none;
   color: red;
 }
+
+.ProfilePicButton {
+  border-radius: 50%;
+  width: 104px;
+  height: 104px;
+  background-color: #f5f9ff;
+  border: 1px solid #e0e0e0;
+  color: #1569e0;
+  font-size: 13px;
+  font-weight: Bold;
+  text-align: center;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
