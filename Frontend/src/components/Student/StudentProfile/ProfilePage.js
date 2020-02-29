@@ -10,6 +10,7 @@ import BasicDetails from "./BasicDetails/BasicDetails";
 import CareerObjective from './CareerObjective/CareerObjective';
 import Skillset from './Skillset/Skillset';
 import PictureDetails from './PictureDetails/PictureDetails';
+import ContactInformation from './ContactInfo/ContactInformation';
 
 
 class ProfilePage extends React.Component {
@@ -26,12 +27,13 @@ class ProfilePage extends React.Component {
         <Container>
           <Row>
             <Col sm={4}>
-              <PictureDetails />
-              <Skillset />
-              <BasicDetails />
+              <PictureDetails id={this.props.match.params.id} />
+              <Skillset id={this.props.match.params.id} />
+              <BasicDetails id={this.props.match.params.id} />
             </Col>
             <Col sm={8}>
               <CareerObjective id={this.props.match.params.id} />
+              <ContactInformation id={this.props.match.params.id} />
             </Col>
           </Row>
         </Container>

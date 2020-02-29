@@ -7,10 +7,10 @@ import Button from "react-bootstrap/Button";
 
 const EditInfo = (props) => {
   const nameholder = (props.data.name === "") ? "Enter Name" : props.data.name;
-  const dobholder = (props.data.name === "") ? "Enter Data of Birth" : props.data.dob;
-  const cityholder = (props.data.name === "") ? "Enter City" : props.data.city;
-  const stateholder = (props.data.name === "") ? "Enter State" : props.data.state;
-  const countryholder = (props.data.name === "") ? "Enter Country" : props.data.country;
+  const dobholder = (props.data.dob === "") ? "Enter Data of Birth" : props.data.dob;
+  const cityholder = (props.data.city === "") ? "Enter City" : props.data.city;
+  const stateholder = (props.data.state === "") ? "Enter State" : props.data.state;
+  const countryholder = (props.data.country === "") ? "Enter Country" : props.data.country;
 
   return (
     <Card>

@@ -43,6 +43,7 @@ app.use((req, res, next) => {
 
 
 app.post("/student/signup", (req, res) => {
+  console.log("student signup");
   connection.query("select email from students", (err, rows) => {
     if (err) throw err;
     let exists = false;
@@ -62,7 +63,7 @@ app.post("/student/signup", (req, res) => {
         req.body.password,
         "secret key 123"
       );
-      console.log("encrypted text", ciphertext.toString());
+      // console.log("encrypted text", ciphertext.toString());
       // var bytes  = CryptoJS.AES.decrypt(ciphertext.toString(), 'secret key 123');
       // var plaintext = bytes.toString(CryptoJS.enc.Utf8);
       // console.log("decrypted text", plaintext);
@@ -89,7 +90,7 @@ app.post("/student/signup", (req, res) => {
                   'Content-Type': 'application/json'
                 });
 
-                console.log(req.session.userId);
+                // console.log(req.session.userId);
 
                 res.end(JSON.stringify(req.session.userId));
               }
@@ -102,6 +103,7 @@ app.post("/student/signup", (req, res) => {
 });
 
 app.post("/student/signin", (req, res) => {
+  console.log("student sign in");
   connection.query(`select id, email, password from students where email='${req.body.email}'`, (err, rows) => {
     if (err) throw err;
 
@@ -119,8 +121,8 @@ app.post("/student/signin", (req, res) => {
     const bytes = CryptoJS.AES.decrypt(password.toString(), 'secret key 123');
     const plaintext = bytes.toString(CryptoJS.enc.Utf8);
 
-    console.log(plaintext);
-    console.log(req.body.password);
+    // console.log(plaintext);
+    // console.log(req.body.password);
     if (plaintext === req.body.password) {
       res.cookie('id', id, {
         maxAge: 900000,
@@ -144,6 +146,7 @@ app.post("/student/signin", (req, res) => {
 
 
 app.post("/company/signup", (req, res) => {
+  console.log("company sign up");
   connection.query("select email from companies", (err, rows) => {
     if (err) throw err;
     let exists = false;
@@ -163,7 +166,7 @@ app.post("/company/signup", (req, res) => {
         req.body.password,
         "secret key 123"
       );
-      console.log("encrypted text", ciphertext.toString());
+      // console.log("encrypted text", ciphertext.toString());
       // var bytes  = CryptoJS.AES.decrypt(ciphertext.toString(), 'secret key 123');
       // var plaintext = bytes.toString(CryptoJS.enc.Utf8);
       // console.log("decrypted text", plaintext);
@@ -221,7 +224,8 @@ app.post("/company/signup", (req, res) => {
 // });
 
 app.get("/student/personalinfo/:id", (req, res) => {
-  console.log(req.params.id);
+  console.log("get personal info");
+  // console.log(req.params.id);
   if (req.params.id !== undefined) {
     let data = {
       name: "",
@@ -233,7 +237,7 @@ app.get("/student/personalinfo/:id", (req, res) => {
 
     connection.query(`select name, dob, city, state, country from students where id='${req.params.id}'`, (err, rows) => {
       if (err) res.end("Can't get information");
-      console.log(rows);
+      // console.log(rows);
       rows.forEach((row) => {
         data = {
           name: row.name,
@@ -248,7 +252,7 @@ app.get("/student/personalinfo/:id", (req, res) => {
         'Content-Type': 'application/json'
       });
 
-      console.log(data);
+      // console.log(data);
 
       res.end(JSON.stringify(data));
     });
@@ -256,13 +260,63 @@ app.get("/student/personalinfo/:id", (req, res) => {
 });
 
 app.post("/student/personalinfo", (req, res) => {
-  console.log(req.body.id);
+  console.log("post personal info");
+  // console.log(req.body.id);
 
   if (req.body.id !== undefined) {
     connection.query(`update students set name='${req.body.name}', dob='${req.body.dob}', city='${req.body.city}', state='${req.body.state}', country='${req.body.country}' where id='${req.body.id}'`, (err, result) => {
       if (err) res.end("Can't update information");
 
-      console.log(`Changed ${result.changedRows} row(s)`);
+      // console.log(`Changed ${result.changedRows} row(s)`);
+
+      res.writeHead(200, {
+        'Content-Type': 'text/plain'
+      });
+
+      res.end("Successful Save");
+    });
+  }
+});
+
+app.get("/student/contactinfo/:id", (req, res) => {
+  console.log("get contact info");
+  // console.log(req.params.id);
+  if (req.params.id !== undefined) {
+    let data = {
+      email: "",
+      phonenum: "",
+    };
+
+    connection.query(`select email, phonenumber from students where id='${req.params.id}'`, (err, rows) => {
+      if (err) res.end("Can't get information");
+      // console.log(rows);
+      rows.forEach((row) => {
+        data = {
+          email: row.email,
+          phonenum: row.phonenumber,
+        };
+      });
+
+      res.writeHead(200, {
+        'Content-Type': 'application/json'
+      });
+
+      // console.log(data);
+
+      res.end(JSON.stringify(data));
+    });
+  }
+});
+
+app.post("/student/contactinfo", (req, res) => {
+  console.log("post contact info");
+  // console.log(req.body.id);
+
+  if (req.body.id !== undefined) {
+    connection.query(`update students set email='${req.body.email}', phonenumber='${req.body.phonenum}' where id='${req.body.id}'`, (err, result) => {
+      if (err) res.end("Can't update information");
+
+      // console.log(`Changed ${result.changedRows} row(s)`);
 
       res.writeHead(200, {
         'Content-Type': 'text/plain'
@@ -274,11 +328,12 @@ app.post("/student/personalinfo", (req, res) => {
 });
 
 app.get("/student/careerobjective/:id", (req, res) => {
-  console.log(`id:${req.params.id}`);
+  console.log("get career objective");
+  // console.log(`id:${req.params.id}`);
   if (req.params.id !== undefined) {
     connection.query(`select careerobjective from career_objective where id='${req.params.id}'`, (err, rows) => {
       if (err) res.end("Can't get information");
-      console.log(rows);
+      // console.log(rows);
 
       let data = {
         objective: "",
@@ -295,7 +350,7 @@ app.get("/student/careerobjective/:id", (req, res) => {
           'Content-Type': 'application/json'
         });
 
-        console.log(data);
+        // console.log(data);
 
         res.end(JSON.stringify(data));
       }
@@ -304,13 +359,14 @@ app.get("/student/careerobjective/:id", (req, res) => {
 });
 
 app.post("/student/careerobjective", (req, res) => {
-  console.log(req.body.id);
+  console.log("post career objective");
+  // console.log(req.body.id);
 
   if (req.body.id !== undefined) {
     connection.query(`insert into career_objective (id, careerobjective) values ('${req.body.id}', '${req.body.objective}') ON DUPLICATE KEY UPDATE careerobjective='${req.body.objective}'`, (err, result) => {
       if (err) res.end("Can't update information");
 
-      console.log('Last insert ID:', result.insertId);
+      // console.log('Last insert ID:', result.insertId);
 
       res.writeHead(200, {
         'Content-Type': 'text/plain'
@@ -322,7 +378,8 @@ app.post("/student/careerobjective", (req, res) => {
 });
 
 app.get("/student/skill/:id", (req, res) => {
-  console.log(req.params.id);
+  console.log("get skill");
+  // console.log(req.params.id);
   if (req.params.id !== undefined) {
     const data = {
       skills: [],
@@ -330,7 +387,7 @@ app.get("/student/skill/:id", (req, res) => {
 
     connection.query(`select skill from skills where id='${req.params.id}'`, (err, rows) => {
       if (err) res.end("Can't get information");
-      console.log(rows);
+      // console.log(rows);
 
       if (rows !== undefined) {
         rows.forEach((row) => {
@@ -341,7 +398,7 @@ app.get("/student/skill/:id", (req, res) => {
           'Content-Type': 'application/json'
         });
 
-        console.log(data);
+        // console.log(data);
 
         res.end(JSON.stringify(data));
       }
@@ -350,13 +407,43 @@ app.get("/student/skill/:id", (req, res) => {
 });
 
 app.post("/student/skill", (req, res) => {
-  console.log(req.body.id);
+  console.log("post skill");
+  if (req.body.id !== undefined) {
+    connection.query(`select skill from skills where id='${req.body.id}' and skill='${req.body.skill}'`, (err, rows) => {
+      if (err) res.end("Can't get information");
+      console.log(rows);
+      if (rows.length > 0 || rows === undefined) {
+        res.writeHead(400, {
+          'Content-Type': 'text/plain'
+        });
+
+        res.end("Skill is already added.");
+      } else {
+        connection.query(`insert into skills (id, skill) values ('${req.body.id}', '${req.body.skill}')`, (err2, result) => {
+          if (err2) res.end("Can't insert information");
+
+          console.log('Last insert ID:', result.insertId);
+
+          res.writeHead(200, {
+            'Content-Type': 'text/plain'
+          });
+
+          res.end("Successful Save");
+        });
+      }
+    });
+  }
+});
+
+app.delete("/student/skill/delete", (req, res) => {
+  console.log("delete skill");
+  console.log(req.body.skill);
 
   if (req.body.id !== undefined) {
-    connection.query(`insert into skills (id, skill) values ('${req.body.id}', '${req.body.skill}')`, (err, result) => {
-      if (err) res.end("Can't insert information");
+    connection.query(`delete from skills where id='${req.body.id}' and skill='${req.body.skill}'`, (err, result) => {
+      if (err) res.end("Can't delete information");
 
-      console.log('Last insert ID:', result.insertId);
+      console.log(`Deleted ${result.affectedRows} row(s)`);
 
       res.writeHead(200, {
         'Content-Type': 'text/plain'
@@ -367,26 +454,9 @@ app.post("/student/skill", (req, res) => {
   }
 });
 
-// app.delete("/student/skill/delete", (req, res) => {
-//   console.log(req.body.id);
-
-//   if (req.body.id !== undefined) {
-//     connection.query(`delete from skills where id='${req.body.id}' and skill='${req.body.skill}' LIMIT 1`, (err, result) => {
-//       if (err) res.end("Can't delete information");
-
-//       console.log(`Deleted ${result.affectedRows} row(s)`);
-
-//       res.writeHead(200, {
-//         'Content-Type': 'text/plain'
-//       });
-
-//       res.end("Successful Save");
-//     });
-//   }
-// });
-
 app.get("/student/pictureinfo/:id", (req, res) => {
-  console.log(req.params.id);
+  console.log("get picture info");
+  // console.log(req.params.id);
   if (req.params.id !== undefined) {
     let data = {
       name: "",
@@ -395,7 +465,7 @@ app.get("/student/pictureinfo/:id", (req, res) => {
 
     connection.query(`select name, college from students where id='${req.params.id}'`, (err, rows) => {
       if (err) res.end("Can't get information");
-      console.log(rows);
+      // console.log(rows);
       rows.forEach((row) => {
         data = {
           name: row.name,
@@ -407,7 +477,7 @@ app.get("/student/pictureinfo/:id", (req, res) => {
         'Content-Type': 'application/json'
       });
 
-      console.log(data);
+      // console.log(data);
 
       res.end(JSON.stringify(data));
     });

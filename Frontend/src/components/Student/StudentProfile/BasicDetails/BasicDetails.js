@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import cookie from 'react-cookies';
+// import cookie from 'react-cookies';
 import DisplayInfo from "./DisplayInfo";
 import EditInfo from "./EditInfo";
 
@@ -10,7 +10,7 @@ class BasicDetails extends React.Component {
     super();
 
     this.state = {
-      id: cookie.load('id'),
+      id: "",
       name: "",
       dob: "",
       city: "",
@@ -20,29 +20,32 @@ class BasicDetails extends React.Component {
     };
   }
 
+  static getDerivedStateFromProps = (props) => ({ id: props.id })
+
   componentDidMount() {
     this.getInfo();
   }
 
   getInfo = () => {
-    const { id } = this.state;
-    axios.get(`http://localhost:3001/student/personalinfo/${id}`)
+    axios.get(`http://localhost:3001/student/personalinfo/${this.state.id}`)
       .then(response => {
         const info = response.data;
 
-        if (info.name === 'null') {
+        const wspatt = new RegExp("^ *$");
+
+        if (info.name === 'null' || wspatt.test(info.name)) {
           info.name = "";
         }
-        if (info.dob === 'null') {
+        if (info.dob === 'null' || wspatt.test(info.dob)) {
           info.dob = "";
         }
-        if (info.city === 'null') {
+        if (info.city === 'null' || wspatt.test(info.city)) {
           info.city = "";
         }
-        if (info.state === 'null') {
+        if (info.state === 'null' || wspatt.test(info.state)) {
           info.state = "";
         }
-        if (info.country === 'null') {
+        if (info.country === 'null' || wspatt.test(info.country)) {
           info.country = "";
         }
 
@@ -59,7 +62,8 @@ class BasicDetails extends React.Component {
       });
   }
 
-  handleClick = () => {
+  handleClick = (e) => {
+    e.preventDefault();
     console.log("button was pressed!!!!");
     this.setState({ editWasTriggered: true });
 
@@ -96,7 +100,8 @@ class BasicDetails extends React.Component {
     });
   };
 
-  handleSave = () => {
+  handleSave = (e) => {
+    e.preventDefault();
     const data = {
       id: this.state.id,
       name: this.state.name,

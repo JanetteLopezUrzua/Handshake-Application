@@ -12,21 +12,22 @@ class PictureDetails extends React.Component {
     super();
 
     this.state = {
-      id: cookie.load("id"),
+      id: "",
       name: "",
       college: "",
       show: false
     };
   }
 
+  static getDerivedStateFromProps = (props) => ({ id: props.id })
+
   componentDidMount() {
     this.getInfo();
   }
 
   getInfo = () => {
-    const { id } = this.state;
     axios
-      .get(`http://localhost:3001/student/pictureinfo/${id}`)
+      .get(`http://localhost:3001/student/pictureinfo/${this.state.id}`)
       .then(response => {
         const info = response.data;
 
@@ -45,8 +46,6 @@ class PictureDetails extends React.Component {
       picture: this.state.picture
     };
 
-    alert("pic");
-
     axios
       .post("http://localhost:3001/student/pictureinfo", data)
       .then(response => {
@@ -62,7 +61,6 @@ class PictureDetails extends React.Component {
     this.setState({
       show: false
     });
-    alert("yes");
   };
 
   handleShow = () =>

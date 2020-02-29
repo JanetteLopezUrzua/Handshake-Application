@@ -35,7 +35,8 @@ class CareerObjective extends React.Component {
       });
   }
 
-  handleClick = () => {
+  handleClick = (e) => {
+    e.preventDefault();
     console.log("button was pressed!!!!");
     this.setState({ editWasTriggered: true });
   };
@@ -46,8 +47,9 @@ class CareerObjective extends React.Component {
     });
   };
 
-  handleSave = () => {
-  // objective has whitespace only
+  handleSave = (e) => {
+    e.preventDefault();
+    // objective has whitespace only
     const wspatt = new RegExp("^ *$");
 
     if (this.state.objective === undefined || wspatt.test(this.state.objective)) {
@@ -74,7 +76,8 @@ class CareerObjective extends React.Component {
     // this.getInfo();
   };
 
-  handleCancel = () => {
+  handleCancel = (e) => {
+    e.preventDefault();
     this.setState({
       editWasTriggered: false
     });
