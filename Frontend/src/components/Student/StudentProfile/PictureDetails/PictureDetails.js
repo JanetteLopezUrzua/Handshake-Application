@@ -19,13 +19,14 @@ class PictureDetails extends React.Component {
       college: "",
       show: false,
       has_image: false,
-      file: "",
-      imagePreviewURL: "",
+      image: "",
       photo: "",
+      validimage: "",
+      errormessage: ""
     };
   }
 
-  static getDerivedStateFromProps = (props) => ({ id: props.id })
+  static getDerivedStateFromProps = props => ({ id: props.id });
 
   componentDidMount() {
     this.getInfo();
@@ -37,74 +38,96 @@ class PictureDetails extends React.Component {
       .then(response => {
         const info = response.data;
 
+        console.log(response.data);
         this.setState({
           name: info.name,
           college: info.college,
-          photo: info.photo,
+          photo: info.photo
         });
+
+        if (this.state.photo === "" || this.state.photo === null) {
+          this.setState({
+            has_image: false
+          });
+        } else {
+          const imageURL = `${Buffer.from(info.photo).toString()}`;
+
+          this.setState({
+            photo: imageURL,
+            has_image: true
+          });
+        }
+
+        console.log(response.data);
       })
       .catch(error => {
         console.log(error);
+        console.log(error.response.data);
       });
   };
 
-  photoHandler = (e) => {
-    const reader = new FileReader();
+  photoHandler = e => {
+    e.preventDefault();
     const file = e.target.files[0];
 
-    if (file && file.type.match('image.*')) {
+    console.log(file);
+    this.getImage(file);
+  };
+
+  getImage = file => {
+    const reader = new FileReader();
+
+    if (file && file.type.match("image.*")) {
       reader.readAsDataURL(file);
-    }
 
-    reader.onloadend = () => {
-      this.setState({
-        file,
-        imagePreviewURL: reader.result
-      });
-    };
-  }
-
-  onUpload = (e) => {
-    e.preventDefault();
-    const imgdata = this.state.imagePreviewURL.split(',')[1];
-    const raw = window.atob(imgdata);
-    const rawlength = raw.length;
-    const arr = new Uint8Array(new ArrayBuffer(rawlength));
-
-    for (let i = 0; i < rawlength; i++) {
-      arr[i] = raw.charCodeAt(i);
-    }
-
-    const image = [];
-    for (let i = 0; i < rawlength; i++) {
-      image.push((arr[i]));
-    }
-
-    const data = {
-      id: this.state.id,
-      photo: image
-    };
-
-    axios
-      .post("http://localhost:3001/student/pictureinfo", data)
-      .then(response => {
-        console.log(response);
-
+      reader.onloadend = () => {
         this.setState({
-          photo: image,
-          has_image: true,
-          show: false,
+          image: reader.result,
+          validimage: true,
+          errormessage: ""
         });
-      })
-      .catch(error => {
-        console.log(error);
+      };
+    } else {
+      this.setState({
+        validimage: false,
+        errormessage: "File not accepted. Choose an Image."
       });
+    }
+  };
+
+  onUpload = e => {
+    console.log(this.state.validimage);
+    e.preventDefault();
+    if (this.state.validimage === true) {
+      const { image } = this.state;
+
+      const data = {
+        id: this.state.id,
+        photo: this.state.image
+      };
+
+      axios
+        .post("http://localhost:3001/student/pictureinfo", data)
+        .then(response => {
+          console.log(response);
+
+          this.setState({
+            photo: image,
+            has_image: true,
+            show: false
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
   };
 
   handleClose = () => {
     // eslint-disable-next-line implicit-arrow-linebreak
     this.setState({
-      show: false
+      show: false,
+      errormessage: ""
     });
   };
 
@@ -118,7 +141,6 @@ class PictureDetails extends React.Component {
 
   render() {
     let studentPhoto = "";
-    const image = `data:image/jpeg;base64, ${this.state.photo}`;
 
     if (this.state.has_image === false) {
       studentPhoto = (
@@ -133,9 +155,27 @@ class PictureDetails extends React.Component {
       );
     } else {
       studentPhoto = (
-        <Image className="ProfilePicButton" src={image} roundedCircle />
+        <>
+          <Image
+            className="ProfilePicImage"
+            src={this.state.photo}
+            roundedCircle
+          />
+          <Button className="ProfilePicButtononImage" onClick={this.handleShow}>
+            <Row>
+              <FaCamera size={25} style={{ margin: "0 auto" }} />
+            </Row>
+            <Row>
+              <h5 style={{ margin: "0 auto", fontSize: "13px" }}>
+                Change Photo
+              </h5>
+            </Row>
+          </Button>
+        </>
       );
     }
+
+    // later <Image className="ProfilePicButton" src={this.state.photo} roundedCircle />
 
     return (
       <Card>
@@ -144,6 +184,7 @@ class PictureDetails extends React.Component {
           close={this.handleClose}
           onUpload={this.onUpload}
           photoHandler={this.photoHandler}
+          errormessage={this.state.errormessage}
         />
         {studentPhoto}
         <Card.Title

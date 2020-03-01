@@ -33,7 +33,7 @@ class Navigationbar extends React.Component {
              <NavDropdown.Item href="#action/3.1">Profile</NavDropdown.Item>
              <NavDropdown.Item href="#action/3.2">Applications</NavDropdown.Item>
              <NavDropdown.Divider />
-             <NavDropdown.Item onClick={this.handleLogout}><Link to="/">Sign Out</Link></NavDropdown.Item>
+             <Link onClick={this.handleLogout} to="/">Sign Out</Link>
            </NavDropdown>
          </Nav>
        </Navbar>

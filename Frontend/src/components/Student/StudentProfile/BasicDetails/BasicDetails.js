@@ -33,19 +33,19 @@ class BasicDetails extends React.Component {
 
         const wspatt = new RegExp("^ *$");
 
-        if (info.name === 'null' || wspatt.test(info.name)) {
+        if (info.name === null || wspatt.test(info.name)) {
           info.name = "";
         }
-        if (info.dob === 'null' || wspatt.test(info.dob)) {
+        if (info.dob === null || wspatt.test(info.dob)) {
           info.dob = "";
         }
-        if (info.city === 'null' || wspatt.test(info.city)) {
+        if (info.city === null || wspatt.test(info.city)) {
           info.city = "";
         }
-        if (info.state === 'null' || wspatt.test(info.state)) {
+        if (info.state === null || wspatt.test(info.state)) {
           info.state = "";
         }
-        if (info.country === 'null' || wspatt.test(info.country)) {
+        if (info.country === null || wspatt.test(info.country)) {
           info.country = "";
         }
 

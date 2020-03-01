@@ -459,56 +459,53 @@ app.delete("/student/skill/delete", (req, res) => {
 
 app.get("/student/pictureinfo/:id", (req, res) => {
   console.log("get picture info");
-  // console.log(req.params.id);
+  console.log(req.params.id);
   if (req.params.id !== undefined) {
-    let data = {
-      name: "",
-      college: "",
-      photo: "",
-    };
-
-    connection.query(`select name, college from students where id='${req.params.id}'`, (err, rows) => {
+    console.log("Inside");
+    connection.query(`select name, college, photo
+    from (SELECT students.id, name, college, photo
+    FROM students
+    LEFT JOIN students_photos ON students.id=students_photos.id 
+    where students.id=${req.params.id}) as tb`, (err, rows) => {
       if (err) res.end("Can't get information");
-      // console.log(rows);
-      rows.forEach((row) => {
-        data = {
-          name: row.name,
-          college: row.college,
-        };
-      });
-    });
-
-    connection.query(`select photo students_photos where id='${req.params.id}'`, (err, rows) => {
-      if (err) res.end("Can't get information");
+      console.log(rows);
 
       if (rows !== undefined) {
+        let data = {
+          name: "",
+          college: "",
+          photo: "",
+        };
+
         rows.forEach((row) => {
           data = {
+            name: row.name,
+            college: row.college,
             photo: row.photo,
           };
         });
+
+        res.writeHead(200, {
+          'Content-Type': 'application/json'
+        });
+
+        // console.log(data);
+
+        res.end(JSON.stringify(data));
       }
     });
-
-    res.writeHead(200, {
-      'Content-Type': 'application/json'
-    });
-
-    // console.log(data);
-
-    res.end(JSON.stringify(data));
   }
 });
 
 app.post("/student/pictureinfo", (req, res) => {
   console.log("post picture ");
-  // console.log(req.body.id);
+  console.log(req.body.id);
 
   if (req.body.id !== undefined) {
     connection.query(`insert into students_photos (id, photo) values ('${req.body.id}', '${req.body.photo}') ON DUPLICATE KEY UPDATE photo='${req.body.photo}'`, (err, result) => {
       if (err) res.end("Can't update information");
 
-      // console.log('Last insert ID:', result.insertId);
+      console.log('Last insert ID:', result.insertId);
 
       res.writeHead(200, {
         'Content-Type': 'text/plain'

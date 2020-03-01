@@ -1,23 +1,20 @@
-import React from 'react';
+import React from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 
-const ModalPicture = (props) => (
+const ModalPicture = props => (
   <Modal show={props.show} onHide={props.close}>
     <Modal.Header closeButton>
-      <Modal.Title>Edit Profile Picture</Modal.Title>
+      <Modal.Title>Upload Profile Picture</Modal.Title>
     </Modal.Header>
     <Modal.Body>
       <Form.Control onChange={props.photoHandler} type="file" />
-      <Button onClick={props.onUpload}>Upload</Button>
+      <p>{props.errormessage}</p>
     </Modal.Body>
     <Modal.Footer>
-      <Button variant="secondary" onClick={props.close}>
-              Close
-      </Button>
-      <Button variant="primary" onClick={props.close}>
-              Save Changes
+      <Button className="save" onClick={props.onUpload}>
+        Upload
       </Button>
     </Modal.Footer>
   </Modal>

@@ -30,10 +30,10 @@ class ContactInformation extends React.Component {
 
         const wspatt = new RegExp("^ *$");
 
-        if (info.email === 'null' || wspatt.test(info.email)) {
+        if (info.email === null || wspatt.test(info.email)) {
           info.email = "";
         }
-        if (info.phonenum === 'null' || wspatt.test(info.phonenum)) {
+        if (info.phonenum === null || wspatt.test(info.phonenum)) {
           info.phonenum = "";
         }
 

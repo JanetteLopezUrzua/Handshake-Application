@@ -172,8 +172,8 @@ p {
 
 .ProfilePicButton {
   border-radius: 50%;
-  width: 104px;
-  height: 104px;
+  width: 180px;
+  height: 180px;
   background-color: #f5f9ff;
   border: 1px solid #e0e0e0;
   color: #1569e0;
@@ -182,4 +182,42 @@ p {
   text-align: center;
   margin: 0 auto;
   margin-bottom: 10px;
+}
+
+.ProfilePicImage {
+  border-radius: 50%;
+  width: 180px;
+  height: 180px;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+
+.ProfilePicButtononImage {
+  position: absolute;
+  top: 37%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  border-radius: 50%;
+  width: 184px;
+  height: 184px;
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 3.8px solid rgba(255, 255, 255, 0);
+  color: rgba(255, 255, 255, 0.06);
+  font-size: 13px;
+  font-weight: Bold;
+  text-align: center;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+
+.ProfilePicButtononImage:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: white;
+}
+
+.btn-primary:focus,
+.btn-primary:active {
+  box-shadow: none !important;
+  outline: 0px !important;
 }
