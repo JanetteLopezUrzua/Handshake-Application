@@ -107,7 +107,7 @@ class Skillset extends React.Component {
     return (
       <Card>
         <Card.Title>Skills</Card.Title>
-        <Container style={{ maxHeight: "200px", overflow: "scroll" }}>{skillsList}</Container>
+        <Container style={{ maxHeight: "200px", overflowY: "scroll" }}>{skillsList}</Container>
         <EditSkills
           skillschange={this.skillsChangeHandler}
           save={this.handleSave}

@@ -1,55 +1,74 @@
 /* Front page */
-#buttons {
+#firstscreenbuttonscontainer {
   width: 40%;
   margin: 0 auto;
-  margin-top: 50px;
+  margin-top: 100px;
 }
 
-a .btn {
-  width: 40%;
-  margin: 10px;
-  margin-left: 40px;
-  margin-right: 20px;
-  padding: 60px 0 60px 0;
-  font-size: 35px;
-  background-color: gray;
-  border: none;
+.firstscreenbuttons {
+  background-color: #9f9fa1;
   color: white;
+  padding: 50px;
+  border-radius: 10px;
+  font-size: 28px;
+  text-decoration: none;
+  margin: auto 50px;
+  font-weight: 500;
+}
+
+.firstscreenbuttons:hover {
+  background-color: #5a5a5a;
+  color: white;
+  text-decoration: none;
+}
+
+#banner {
+  display: block;
+  height: 120px;
+  margin: 0 auto;
+  width: 40%;
 }
 
 /* Sign Up and Sign In*/
 #signup-form {
-  border: 1px solid;
-  border-radius: 4px;
-  padding: 50px 50px;
+  border-radius: 10px;
+  padding: 30px 30px;
   margin: 0 auto;
   width: 40%;
   background-color: #e8e8e8;
 }
 
-#banner {
-  display: block;
-  height: 200px;
-  margin: 0 auto;
-  width: 40%;
-}
-
-h2 {
+.pagetitle {
   text-align: center;
-  padding-top: 20px;
+  padding-top: 40px;
   padding-bottom: 20px;
+  letter-spacing: 0.1em;
 }
 
-#button {
+.errormessage {
+  color: #f10f10;
+  padding-top: 10px;
+  margin: 0;
+}
+
+.submitbutton {
   background-color: #9f9fa1;
   width: 50%;
   display: block;
-  margin: 40px auto 0;
+  margin: 0 auto;
+  margin-bottom: 10px;
   border: none;
 }
 
-p {
-  color: red;
+.submitbutton:hover {
+  background-color: #5a5a5a;
+}
+
+.signinlink,
+.labels {
+  font-weight: 500;
+  margin-top: 30px;
+  margin-bottom: 0;
 }
 
 /* Navigation bar */
@@ -92,7 +111,7 @@ p {
   text-decoration: none;
 }
 
-/* All Containers */
+/* Other buttons */
 .save {
   background-color: #0d7f02;
   color: #fff;
@@ -122,6 +141,8 @@ p {
 .delete:hover {
   background-color: #b20000;
 }
+
+/* Cards */
 
 .card {
   padding: 24px;
@@ -156,6 +177,7 @@ p {
   color: rgba(0, 0, 0, 0.4);
 }
 
+/* Skills component */
 #skillbox {
   background-color: rgba(0, 0, 0, 0.06);
   display: inline-block;
@@ -178,6 +200,8 @@ p {
   border: none;
   color: red;
 }
+
+/* Profile Component */
 
 .ProfilePicButton {
   border-radius: 50%;

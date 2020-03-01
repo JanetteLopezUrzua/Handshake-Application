@@ -7,7 +7,7 @@ import axios from "axios";
 import cookie from "react-cookies";
 import { Redirect } from "react-router";
 import "../components.css";
-import hsimage from "../../assets/handshake.png";
+import hsimage from '../../assets/Handshakebanner.jpg';
 
 
 class Signup extends React.Component {
@@ -144,58 +144,56 @@ class Signup extends React.Component {
       <div>
         {redirectVar}
         <img id="banner" src={hsimage} alt="handshake banner" />
-        <h2>Sign Up</h2>
+        <h2 className="pagetitle">Sign Up</h2>
         <Form id="signup-form">
           <Form.Group controlId="Name">
-            <Form.Label>Name</Form.Label>
+            <Form.Label className="labels">Name</Form.Label>
             <Form.Control
               onChange={this.nameChangeHandler}
               placeholder="Enter Name"
             />
-            <p> {this.state.errormessages.nameerrormsg}</p>
+            <p className="errormessage"> {this.state.errormessages.nameerrormsg}</p>
           </Form.Group>
 
           <Form.Row>
             <Form.Group as={Col} controlId="Email">
-              <Form.Label>Email</Form.Label>
+              <Form.Label className="labels">Email</Form.Label>
               <Form.Control
                 onChange={this.emailChangeHandler}
                 type="email"
                 placeholder="Enter email"
               />
-              <p> {this.state.errormessages.emailerrormsg}</p>
+              <p className="errormessage"> {this.state.errormessages.emailerrormsg}</p>
             </Form.Group>
 
             <Form.Group as={Col} controlId="Password">
-              <Form.Label>Password</Form.Label>
+              <Form.Label className="labels">Password</Form.Label>
               <Form.Control
                 onChange={this.passwordChangeHandler}
                 type="password"
                 placeholder="Password"
               />
-              <p> {this.state.errormessages.passerrormsg}</p>
+              <p className="errormessage"> {this.state.errormessages.passerrormsg}</p>
             </Form.Group>
           </Form.Row>
 
           <Form.Group controlId="CollegeName">
-            <Form.Label>College Name</Form.Label>
+            <Form.Label className="labels">College Name</Form.Label>
             <Form.Control
               onChange={this.collegeChangeHandler}
               placeholder="Enter College Name"
             />
-            <p> {this.state.errormessages.collegeerrormsg}</p>
+            <p className="errormessage"> {this.state.errormessages.collegeerrormsg}</p>
           </Form.Group>
 
-          <p> {this.state.errormessages.accounterrormsg}</p>
+          <p className="errormessage"> {this.state.errormessages.accounterrormsg}</p>
 
-          <Button onClick={this.signup} id="button" type="submit">
+          <Button onClick={this.signup} className="submitbutton" type="submit">
             Sign Up
           </Button>
 
-          <Link to="/student/signin">
-            <div>
+          <Link className="signinlink" to="/student/signin">
               Already have an account? Sign In
-            </div>
           </Link>
         </Form>
       </div>

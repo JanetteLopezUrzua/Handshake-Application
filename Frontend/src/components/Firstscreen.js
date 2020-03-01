@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import cookie from "react-cookies";
 import { Redirect } from "react-router";
 import "./components.css";
-import hsimage from '../assets/handshake.png';
+import Container from "react-bootstrap/Container";
+import hsimage from '../assets/Handshakebanner.jpg';
 
 class Firstscreen extends React.Component {
   constructor() {
@@ -22,17 +23,13 @@ class Firstscreen extends React.Component {
       <div>
         {redirectVar}
         <img id="banner" src={hsimage} alt="handshake banner" />
-        <h2>Choose an Option</h2>
-        <div id="buttons">
-          <Link to="/student/signin">
-            <div className="btn">
-              Student
-            </div>
+        <h2 className="pagetitle">Choose an Option</h2>
+        <div id="firstscreenbuttonscontainer">
+          <Link className="firstscreenbuttons" to="/student/signin">
+            Student
           </Link>
-          <Link to="/company/signup">
-            <div className="btn">
-              Company
-            </div>
+          <Link className="firstscreenbuttons" to="/company/signup">
+            Company
           </Link>
         </div>
       </div>
