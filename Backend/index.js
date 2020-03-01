@@ -23,7 +23,9 @@ app.use(
   })
 );
 
-app.use(bodyParser.json());
+
+app.use(bodyParser.json({ limit: '10mb', extended: true }));
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 
 // Allow Access Control
 app.use((req, res, next) => {
@@ -78,7 +80,7 @@ app.post("/student/signup", (req, res) => {
               else {
                 rows1.forEach((row) => {
                   res.cookie('id', row.id, {
-                    maxAge: 900000,
+                    maxAge: 30 * 60 * 1000,
                     httpOnly: false,
                     path: "/"
                   });
@@ -125,7 +127,7 @@ app.post("/student/signin", (req, res) => {
     // console.log(req.body.password);
     if (plaintext === req.body.password) {
       res.cookie('id', id, {
-        maxAge: 900000,
+        maxAge: 30 * 60 * 1000,
         httpOnly: false,
         path: "/"
       });
@@ -180,7 +182,7 @@ app.post("/company/signup", (req, res) => {
             if (err3) req.session.userId = undefined;
 
             res.cookie("cookie", "admin", {
-              maxAge: 900000,
+              maxAge: 30 * 60 * 1000,
               httpOnly: false,
               path: "/"
             });
@@ -437,6 +439,7 @@ app.post("/student/skill", (req, res) => {
 
 app.delete("/student/skill/delete", (req, res) => {
   console.log("delete skill");
+  console.log(req.body.id);
   console.log(req.body.skill);
 
   if (req.body.id !== undefined) {
@@ -449,7 +452,7 @@ app.delete("/student/skill/delete", (req, res) => {
         'Content-Type': 'text/plain'
       });
 
-      res.end("Successful Save");
+      res.end("Successful Delete");
     });
   }
 });
@@ -461,6 +464,7 @@ app.get("/student/pictureinfo/:id", (req, res) => {
     let data = {
       name: "",
       college: "",
+      photo: "",
     };
 
     connection.query(`select name, college from students where id='${req.params.id}'`, (err, rows) => {
@@ -472,14 +476,63 @@ app.get("/student/pictureinfo/:id", (req, res) => {
           college: row.college,
         };
       });
+    });
+
+    connection.query(`select photo students_photos where id='${req.params.id}'`, (err, rows) => {
+      if (err) res.end("Can't get information");
+
+      if (rows !== undefined) {
+        rows.forEach((row) => {
+          data = {
+            photo: row.photo,
+          };
+        });
+      }
+    });
+
+    res.writeHead(200, {
+      'Content-Type': 'application/json'
+    });
+
+    // console.log(data);
+
+    res.end(JSON.stringify(data));
+  }
+});
+
+app.post("/student/pictureinfo", (req, res) => {
+  console.log("post picture ");
+  // console.log(req.body.id);
+
+  if (req.body.id !== undefined) {
+    connection.query(`insert into students_photos (id, photo) values ('${req.body.id}', '${req.body.photo}') ON DUPLICATE KEY UPDATE photo='${req.body.photo}'`, (err, result) => {
+      if (err) res.end("Can't update information");
+
+      // console.log('Last insert ID:', result.insertId);
 
       res.writeHead(200, {
-        'Content-Type': 'application/json'
+        'Content-Type': 'text/plain'
       });
 
-      // console.log(data);
+      res.end("Successful Post");
+    });
+  }
+});
 
-      res.end(JSON.stringify(data));
+app.delete("/student/pictureinfo/delete", (req, res) => {
+  console.log("delete picture");
+
+  if (req.body.id !== undefined) {
+    connection.query(`delete from students_photos where id='${req.body.id}'`, (err, result) => {
+      if (err) res.end("Can't delete information");
+
+      console.log(`Deleted ${result.affectedRows} row(s)`);
+
+      res.writeHead(200, {
+        'Content-Type': 'text/plain'
+      });
+
+      res.end("Successful Delete");
     });
   }
 });

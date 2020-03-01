@@ -7,18 +7,17 @@ class DisplaySkills extends React.Component {
     super(props);
 
     this.state = {
-      id: "",
       skill: "",
     };
   }
 
-  static getDerivedStateFromProps = (props) => ({ id: props.id, skill: props.skill })
+  static getDerivedStateFromProps = (props) => ({ skill: props.skill })
 
   render() {
     return (
       <div id="skillbox">
         {this.state.skill}
-        <Button variant="link" onClick={(e) => { this.props.handleDelete(this.state.id, this.state.skill, e); }} id="skillbutton">&#10006;</Button>
+        <Button variant="link" onClick={(e) => { this.props.handleDelete(this.state.skill, e); }} id="skillbutton">&#10006;</Button>
       </div>
     );
   }

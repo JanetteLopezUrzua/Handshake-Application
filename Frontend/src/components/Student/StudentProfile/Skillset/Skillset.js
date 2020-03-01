@@ -16,6 +16,7 @@ class Skillset extends React.Component {
       skills: [],
       skill: "",
       errormessage: "",
+      value: "",
     };
   }
 
@@ -42,6 +43,7 @@ class Skillset extends React.Component {
   skillsChangeHandler = e => {
     this.setState({
       skill: e.target.value,
+      value: e.target.value
     });
   };
 
@@ -70,6 +72,7 @@ class Skillset extends React.Component {
             skill: "",
             skills: [...data.skills, data.skill],
             errormessage: "",
+            value: "",
           });
         })
         .catch(error => {
@@ -77,31 +80,30 @@ class Skillset extends React.Component {
           this.setState({
             skill: "",
             errormessage: error.response.data,
+            value: "",
           });
         });
     }
   };
 
-  handleDelete = (id, skill, e) => {
+  handleDelete = (skill, e) => {
     e.preventDefault();
-    const data = {
-      id: this.state.id,
-      skill,
-    };
 
-    axios.delete(`http://localhost:3001/student/skill/delete`, data)
+    axios.delete("http://localhost:3001/student/skill/delete", { data: { id: this.state.id, skill } })
       .then(response => {
         console.log(response);
       })
       .catch(error => {
         console.log(error);
       });
+
+    this.getInfo();
   };
 
   render() {
     let skillsList = "";
     if (this.state.skills.length === 0) skillsList = "";
-    else skillsList = this.state.skills.map((skill) => <DisplaySkills skill={skill} id={this.state.id} handleDelete={this.handleDelete} />);
+    else skillsList = this.state.skills.map((skill) => <DisplaySkills skill={skill} handleDelete={this.handleDelete} />);
     return (
       <Card>
         <Card.Title>Skills</Card.Title>
@@ -109,6 +111,7 @@ class Skillset extends React.Component {
         <EditSkills
           skillschange={this.skillsChangeHandler}
           save={this.handleSave}
+          value={this.state.value}
         />
         <p>{this.state.errormessage}</p>
       </Card>
