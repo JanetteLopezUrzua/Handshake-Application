@@ -114,6 +114,15 @@ p {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
+.delete {
+  background-color: #e50000;
+  border: none;
+}
+
+.delete:hover {
+  background-color: #b20000;
+}
+
 .card {
   padding: 24px;
   margin: 15px;

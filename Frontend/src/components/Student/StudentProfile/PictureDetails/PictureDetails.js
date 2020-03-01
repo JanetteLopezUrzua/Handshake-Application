@@ -137,7 +137,26 @@ class PictureDetails extends React.Component {
       show: true
     });
 
-  onDelete = () => {};
+  onDelete = e => {
+    e.preventDefault();
+
+    axios
+      .delete("http://localhost:3001/student/pictureinfo/delete", {
+        data: { id: this.state.id }
+      })
+      .then(response => {
+        console.log(response);
+        this.setState({
+          show: false,
+          has_image: false,
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    this.getInfo();
+  };
 
   render() {
     let studentPhoto = "";
@@ -185,6 +204,8 @@ class PictureDetails extends React.Component {
           onUpload={this.onUpload}
           photoHandler={this.photoHandler}
           errormessage={this.state.errormessage}
+          has_image={this.state.has_image}
+          onDelete={this.onDelete}
         />
         {studentPhoto}
         <Card.Title

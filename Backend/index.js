@@ -518,6 +518,7 @@ app.post("/student/pictureinfo", (req, res) => {
 
 app.delete("/student/pictureinfo/delete", (req, res) => {
   console.log("delete picture");
+  console.log(`BOODYYY: ${req.body.id}`);
 
   if (req.body.id !== undefined) {
     connection.query(`delete from students_photos where id='${req.body.id}'`, (err, result) => {
