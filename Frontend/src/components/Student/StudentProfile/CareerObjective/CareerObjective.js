@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import cookie from 'react-cookies';
+// import cookie from 'react-cookies';
 import DisplayObjective from "./DisplayObjective";
 import EditObjective from "./EditObjective";
 
@@ -16,7 +16,7 @@ class CareerObjective extends React.Component {
     };
   }
 
-  static getDerivedStateFromProps = (props, state) => ({ id: props.id })
+  static getDerivedStateFromProps = (props) => ({ id: props.id })
 
   componentDidMount() {
     this.getInfo();
@@ -26,9 +26,19 @@ class CareerObjective extends React.Component {
     axios.get(`http://localhost:3001/student/careerobjective/${this.state.id}`)
       .then(response => {
         const info = response.data;
-        this.setState({
-          objective: info.objective,
-        });
+
+        // objective has whitespace only
+        const wspatt = new RegExp("^ *$");
+
+        if (info.objective === undefined || wspatt.test(info.objective)) {
+          this.setState({
+            objective: "",
+          });
+        } else {
+          this.setState({
+            objective: info.objective,
+          });
+        }
       })
       .catch(error => {
         console.log(error);

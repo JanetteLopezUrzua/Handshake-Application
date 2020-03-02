@@ -2,11 +2,20 @@ import React from 'react';
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { MdEdit } from 'react-icons/md';
 
 const DisplayObjective = (props) => {
-  const obj = (props.objective === undefined || props.objective === "") ? "Enter a career objective..." : props.objective;
+  const obj = (props.objective === undefined || props.objective === "") ? <Form.Label style={{ color: "blue", cursor: 'pointer' }} onClick={props.clicked}>Enter a career objective...</Form.Label> : (
+    <Card.Text
+      style={{
+        fontSize: "24px", lineHeight: "32px", color: "black", cursor: "pointer"
+      }}
+      onClick={props.clicked}
+    >{ props.objective }
+    </Card.Text>
+  );
   return (
     <Card>
       <Row>
@@ -18,7 +27,7 @@ const DisplayObjective = (props) => {
         </Col>
       </Row>
       <Card.Subtitle></Card.Subtitle>
-      <Card.Text style={{ fontSize: "24px", lineHeight: "32px", color: "black" }} onClick={props.clicked}>{ obj }</Card.Text>
+      { obj }
     </Card>
   );
 };

@@ -18,13 +18,13 @@ const EditContactInfo = (props) => {
       <Row>
         <Col sm={6}>
           <Form.Group controlId="Email">
-            <Form.Label>Email</Form.Label>
+            <Form.Label className="labels">Email</Form.Label>
             <Form.Control onChange={props.emailchange} name="email" type="email" placeholder={emailholder} />
           </Form.Group>
         </Col>
         <Col sm={6}>
           <Form.Group controlId="Phone">
-            <Form.Label>Phone Number</Form.Label>
+            <Form.Label className="labels">Phone Number</Form.Label>
             <Form.Control onChange={props.phonechange} name="phone" type="tel" placeholder={phonenumholder} />
           </Form.Group>
         </Col>

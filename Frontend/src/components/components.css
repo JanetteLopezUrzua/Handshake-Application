@@ -64,11 +64,19 @@
   background-color: #5a5a5a;
 }
 
-.signinlink,
-.labels {
+.signinlink {
   font-weight: 500;
   margin-top: 30px;
   margin-bottom: 0;
+}
+
+.labels {
+  font-size: 1rem;
+  margin-top: 0.3px;
+  margin-bottom: 0;
+  font-family: Suisse Int\'l,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,sans-serif;
+  font-weight: 500;
+  line-height: 1.2;
 }
 
 /* Navigation bar */
@@ -194,6 +202,7 @@
   font-weight: bold;
   color: rgba(0, 0, 0, 0.6);
   text-decoration: none;
+  cursor: pointer;
 }
 
 #skillbutton:hover {
@@ -215,6 +224,7 @@
   text-align: center;
   margin: 0 auto;
   margin-bottom: 10px;
+  cursor: pointer;
 }
 
 .ProfilePicImage {
@@ -253,4 +263,64 @@
 .btn-primary:active {
   box-shadow: none !important;
   outline: 0px !important;
+}
+
+/* Education Details */
+.BottomAddButton {
+  display: inline-block;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+  text-decoration: none;
+  border: 0;
+  border-radius: 3px;
+  padding: 8px 12px;
+  -webkit-transition: background-color 0.2s;
+  -o-transition: background-color 0.2s;
+  transition: background-color 0.2s;
+  font-family: Suisse Int\'l,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,sans-serif;
+  background: rgba(0, 0, 0, 0);
+  border: 0;
+  color: #1569e0;
+  margin: 0;
+  width: 100%;
+}
+
+.BottomAddButton:hover {
+  background-color: rgba(0, 0, 0, 0.06);
+  color: #1153b1;
+}
+
+.schoolname,
+.schooldegree,
+.schooldate,
+.schooldata {
+  text-transform: capitalize;
+  margin: 0;
+  padding: 0;
+  display: block;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.schoolname {
+  font-family: Suisse Int\'l,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,sans-serif;
+  color: rgba(0, 0, 0, 0.98);
+  font-weight: 500;
+  line-height: 1.8em;
+}
+
+.schooldegree {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.schooldate {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.schooldata {
+  font-size: 13px;
+  font-weight: 400;
 }

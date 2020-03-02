@@ -12,7 +12,7 @@ const EditInfo = (props) => {
       <Form>
         <Form.Group controlId="Name">
           <Form.Label style={{ color: "blue" }}>{subtitle}</Form.Label>
-          <Form.Control as="textarea" rows="3" onChange={props.objectivechange} name="objective" type="text" placeholder="Type your introduction..." autoFocus />
+          <Form.Control as="textarea" rows="3" onChange={props.objectivechange} name="objective" type="text" placeholder="Type your career objective..." autoFocus />
         </Form.Group>
       </Form>
       <Card.Footer>

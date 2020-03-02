@@ -23,7 +23,7 @@ connection.connect((err) => {
   connection.query('CREATE TABLE IF NOT EXISTS career_objective(id int unique NOT NULL, careerobjective text, foreign key(id) references students(id));');
   connection.query('CREATE TABLE IF NOT EXISTS skills(id int NOT NULL, skill varchar(100), foreign key(id) references students(id));');
   connection.query('CREATE TABLE IF NOT EXISTS students_photos(id int unique NOT NULL, photo longblob, foreign key(id) references students(id));');
-
+  connection.query('CREATE TABLE IF NOT EXISTS schools(id int NOT NULL, schoolname varchar(255), location varchar(255), degree varchar(50), major varchar(255), passingmonth varchar(50), passingyear int, gpa float, foreign key(id) references students(id));');
 
   connection.query('CREATE TABLE IF NOT EXISTS companies(id int NOT NULL AUTO_INCREMENT, name varchar(100), email varchar(255), password varchar(50), location varchar(255), PRIMARY KEY(id));');
 });

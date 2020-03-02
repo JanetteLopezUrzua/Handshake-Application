@@ -5,7 +5,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
-const EditInfo = (props) => {
+const EditEducation = (props) => {
   const nameholder = (props.data.name === "") ? "Enter Name" : props.data.name;
   const dobholder = (props.data.dob === "") ? "Enter Data of Birth" : props.data.dob;
   const cityholder = (props.data.city === "") ? "Enter City" : props.data.city;
@@ -20,7 +20,7 @@ const EditInfo = (props) => {
       </Row>
       <Form.Group controlId="Name">
         <Form.Label className="labels">Name</Form.Label>
-        <Form.Control style={{ textTransform: "capitalize" }} onChange={props.namechange} name="name" type="text" placeholder={nameholder} />
+        <Form.Control onChange={props.namechange} name="name" type="text" placeholder={nameholder} />
       </Form.Group>
       <Form.Group controlId="dob">
         <Form.Label className="labels">Date of Birth</Form.Label>
@@ -28,15 +28,15 @@ const EditInfo = (props) => {
       </Form.Group>
       <Form.Group controlId="City">
         <Form.Label className="labels">City</Form.Label>
-        <Form.Control style={{ textTransform: "capitalize" }} onChange={props.citychange} name="city" type="text" placeholder={cityholder} />
+        <Form.Control onChange={props.citychange} name="city" type="text" placeholder={cityholder} />
       </Form.Group>
       <Form.Group controlId="State">
         <Form.Label className="labels">State</Form.Label>
-        <Form.Control style={{ textTransform: "capitalize" }} onChange={props.statechange} name="state" type="text" placeholder={stateholder} />
+        <Form.Control onChange={props.statechange} name="state" type="text" placeholder={stateholder} />
       </Form.Group>
       <Form.Group controlId="Country">
         <Form.Label className="labels">Country</Form.Label>
-        <Form.Control style={{ textTransform: "capitalize" }} onChange={props.countrychange} name="country" type="text" placeholder={countryholder} />
+        <Form.Control onChange={props.countrychange} name="country" type="text" placeholder={countryholder} />
       </Form.Group>
       <Card.Footer>
         <Button className="cancel" onClick={props.cancel}>Cancel</Button>
@@ -46,4 +46,4 @@ const EditInfo = (props) => {
   );
 };
 
-export default EditInfo;
+export default EditEducation;

@@ -102,7 +102,7 @@ class Skillset extends React.Component {
 
   render() {
     let skillsList = "";
-    if (this.state.skills.length === 0) skillsList = "";
+    if (this.state.skills === undefined || this.state.skills.length === 0) skillsList = "";
     else skillsList = this.state.skills.map((skill) => <DisplaySkills skill={skill} handleDelete={this.handleDelete} />);
     return (
       <Card>
@@ -113,7 +113,7 @@ class Skillset extends React.Component {
           save={this.handleSave}
           value={this.state.value}
         />
-        <p>{this.state.errormessage}</p>
+        <p className="errormessage">{this.state.errormessage}</p>
       </Card>
     );
   }
