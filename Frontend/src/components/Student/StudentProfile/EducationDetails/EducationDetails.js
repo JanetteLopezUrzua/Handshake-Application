@@ -7,7 +7,7 @@ import Form from "react-bootstrap/Form";
 // import cookie from 'react-cookies';
 import NavDropdown from "react-bootstrap/NavDropdown";
 import EducationContainer from "./EducationContainer";
-import EditEducation from "./EditEducation";
+import NewFormEducation from "./NewFormEducation";
 
 
 class EducationDetails extends React.Component {
@@ -19,6 +19,16 @@ class EducationDetails extends React.Component {
       schools: [],
       newform: false,
       message: "",
+      school: {
+        schoolname: "",
+        location: "",
+        degree: "",
+        major: "",
+        passingmonth: "",
+        passingyear: "",
+        gpa: "",
+      },
+      errormessage: ""
     };
   }
 
@@ -60,12 +70,151 @@ class EducationDetails extends React.Component {
     });
   }
 
-  closenewform=(e) => {
+  schoolNameChangeHandler = e => {
+    const school = { ...this.state.school };
+    school.schoolname = e.target.value;
+    this.setState({
+      school,
+    });
+  };
+
+  locationChangeHandler = e => {
+    const school = { ...this.state.school };
+    school.location = e.target.value;
+    this.setState({
+      school,
+    });
+  };
+
+  degreeChangeHandler = e => {
+    const school = { ...this.state.school };
+    school.degree = e.target.value;
+    this.setState({
+      school,
+    });
+  };
+
+  majorChangeHandler = e => {
+    const school = { ...this.state.school };
+    school.major = e.target.value;
+    this.setState({
+      school,
+    });
+  };
+
+  passingMonthChangeHandler = e => {
+    const school = { ...this.state.school };
+    school.passingmonth = e.target.value;
+    this.setState({
+      school,
+    });
+  };
+
+  passingYearChangeHandler = e => {
+    const school = { ...this.state.school };
+    school.passingyear = e.target.value;
+    this.setState({
+      school,
+    });
+  };
+
+  gpaChangeHandler = e => {
+    const school = { ...this.state.school };
+    school.gpa = e.target.value;
+    this.setState({
+      school,
+    });
+  };
+
+  handleSave = (e) => {
     e.preventDefault();
 
-    this.setState({
-      newform: false,
-    });
+    const wspatt = new RegExp("^ *$");
+    if (this.state.school.schoolname === "" || wspatt.test(this.state.school.schoolname) || this.state.school.schoolname === undefined) {
+      this.setState({
+        errormessage: "School name must be entered."
+      });
+    } else {
+      const name = (this.state.school.schoolname === undefined) ? null : this.state.school.schoolname;
+      const loc = (this.state.school.location === undefined) ? null : this.state.school.location;
+      const deg = (this.state.school.degree === undefined) ? null : this.state.school.degree;
+      const maj = (this.state.school.major === undefined) ? null : this.state.school.major;
+      const pm = (this.state.school.passingmonth === undefined) ? null : this.state.school.passingmonth;
+      const py = (this.state.school.passingyear === undefined) ? null : this.state.school.passingyear;
+      const gpascore = (this.state.school.gpa === undefined) ? null : this.state.school.gpa;
+
+
+      const data = {
+        id: this.state.id,
+        schoolname: name,
+        location: loc,
+        degree: deg,
+        major: maj,
+        passingmonth: pm,
+        passingyear: py,
+        gpa: gpascore,
+      };
+
+      const school = {
+        schoolname: name,
+        location: loc,
+        degree: deg,
+        major: maj,
+        passingmonth: pm,
+        passingyear: py,
+        gpa: gpascore,
+      };
+
+      axios.post("http://localhost:3001/student/educationinfo/newform", data)
+        .then(response => {
+          console.log(response);
+          this.setState({
+            schools: [...this.state.schools, school],
+            school: {
+              schoolname: "",
+              location: "",
+              degree: "",
+              major: "",
+              passingmonth: "",
+              passingyear: "",
+              gpa: "",
+            },
+            errormessage: "",
+            newform: false
+          });
+        })
+        .catch(error => {
+          console.log(error);
+          this.setState({
+            school: {
+              schoolname: "",
+              location: "",
+              degree: "",
+              major: "",
+              passingmonth: "",
+              passingyear: "",
+              gpa: "",
+            },
+            errormessage: error.response.data,
+          });
+        });
+    }
+  };
+
+  handleCancel = () => {
+    this.setState({ newform: false });
+  };
+
+  handleDelete = (schoolname) => {
+    axios.delete("http://localhost:3001/student/educationinfo/delete", { data: { id: this.state.id, schoolname } })
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    this.getInfo();
   }
 
   render() {
@@ -84,20 +233,36 @@ class EducationDetails extends React.Component {
     };
 
     const primary = this.state.schools.sort(compare);
-    console.log(primary);
 
     if (this.state.schools === undefined || this.state.schools.length === 0) schoolsList = "";
-    else schoolsList = primary.map((school) => <EducationContainer id={this.state.id} school={school} />);
+    else schoolsList = primary.map((school) => <EducationContainer id={this.state.id} school={school} delete={this.handleDelete} />);
 
     if (this.state.newform === false) newschoolform = "";
-    else newschoolform = <EditEducation />;
+    else {
+      newschoolform = (
+        <NewFormEducation
+          school={this.state.school}
+          schoolnamechange={this.schoolNameChangeHandler}
+          locationchange={this.locationChangeHandler}
+          degreechange={this.degreeChangeHandler}
+          majorchange={this.majorChangeHandler}
+          passingmonthchange={this.passingMonthChangeHandler}
+          passingyearchange={this.passingYearChangeHandler}
+          gpachange={this.gpaChangeHandler}
+          save={this.handleSave}
+          cancel={this.handleCancel}
+          errormessage={this.state.errormessage}
+        />
+      );
+    }
 
     return (
       <Card style={{ padding: "0" }}>
         <Card.Title style={{ paddingLeft: "24px", paddingTop: "24px" }}>Education</Card.Title>
         <Form.Label style={{ color: "blue", padding: "0 24px" }}>{this.state.message}</Form.Label>
-        <Container style={{ maxHeight: "400px", overflowY: "scroll" }}>{schoolsList}</Container>
-        {newschoolform}
+        <Container style={{ maxHeight: "800px", overflowY: "scroll" }}>{schoolsList}
+          {newschoolform}
+        </Container>
         <NavDropdown.Divider style={{ margin: "0" }}></NavDropdown.Divider>
         <Button onClick={this.addSchool} className="BottomAddButton">Add School</Button>
       </Card>

@@ -294,20 +294,22 @@ app.get("/student/contactinfo/:id", (req, res) => {
     connection.query(`select email, phonenumber from students where id='${req.params.id}'`, (err, rows) => {
       if (err) res.end("Can't get information");
       // console.log(rows);
-      rows.forEach((row) => {
-        data = {
-          email: row.email,
-          phonenum: row.phonenumber,
-        };
-      });
+      if (rows !== undefined) {
+        rows.forEach((row) => {
+          data = {
+            email: row.email,
+            phonenum: row.phonenumber,
+          };
+        });
 
-      res.writeHead(200, {
-        'Content-Type': 'application/json'
-      });
+        res.writeHead(200, {
+          'Content-Type': 'application/json'
+        });
 
-      // console.log(data);
+        // console.log(data);
 
-      res.end(JSON.stringify(data));
+        res.end(JSON.stringify(data));
+      }
     });
   }
 });
@@ -571,6 +573,74 @@ app.get("/student/educationinfo/:id", (req, res) => {
 
         res.end(JSON.stringify(data));
       }
+    });
+  }
+});
+
+app.post("/student/educationinfo/newform", (req, res) => {
+  console.log("post education info - new form");
+  console.log(req.body.location);
+  if (req.body.id !== undefined) {
+    connection.query(`select schoolname from schools where id='${req.body.id}' and schoolname='${req.body.schoolname}'`, (err, rows) => {
+      if (err) res.end("Can't get information");
+      console.log(rows);
+      if (rows.length > 0 || rows === undefined) {
+        res.writeHead(400, {
+          'Content-Type': 'text/plain'
+        });
+
+        res.end("School already exists.");
+      } else {
+        connection.query(`insert into schools (id, schoolname, location, degree, major, passingmonth, passingyear, gpa) values ('${req.body.id}', '${req.body.schoolname}', '${req.body.location}', '${req.body.degree}', '${req.body.major}', '${req.body.passingmonth}', '${req.body.passingyear}', '${req.body.gpa}')`, (err2, result) => {
+          if (err2) console.log(err2);
+
+          console.log('Last insert ID:', result.insertId);
+
+          res.writeHead(200, {
+            'Content-Type': 'text/plain'
+          });
+
+          res.end("Successful Save");
+        });
+      }
+    });
+  }
+});
+
+app.post("/student/educationinfo", (req, res) => {
+  console.log("post education info");
+  console.log(req.body.location);
+  if (req.body.id !== undefined) {
+    connection.query(`update schools set location='${req.body.location}', degree='${req.body.degree}', major='${req.body.major}', passingmonth='${req.body.passingmonth}', passingyear='${req.body.passingyear}', gpa='${req.body.gpa}' where id='${req.body.id}' and schoolname='${req.body.schoolname}'`, (err, result) => {
+      if (err) res.end("Can't update information");
+
+      // console.log(`Changed ${result.changedRows} row(s)`);
+
+      res.writeHead(200, {
+        'Content-Type': 'text/plain'
+      });
+
+      res.end("Successful Save");
+    });
+  }
+});
+
+app.delete("/student/educationinfo/delete", (req, res) => {
+  console.log("delete education info");
+  // console.log(req.body.id);
+  // console.log(req.body.schoolname);
+
+  if (req.body.id !== undefined) {
+    connection.query(`delete from schools where id='${req.body.id}' and schoolname='${req.body.schoolname}'`, (err, result) => {
+      if (err) res.end("Can't delete information");
+
+      // console.log(`Deleted ${result.affectedRows} row(s)`);
+
+      res.writeHead(200, {
+        'Content-Type': 'text/plain'
+      });
+
+      res.end("Successful Delete");
     });
   }
 });

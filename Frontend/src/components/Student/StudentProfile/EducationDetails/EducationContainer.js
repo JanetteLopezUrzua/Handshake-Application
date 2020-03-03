@@ -6,123 +6,119 @@ import EditEducation from "./EditEducation";
 
 
 class EducationContainer extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       id: "",
-      school: {},
-      editWasTriggered: false
+      school: this.props.school,
+      editWasTriggered: false,
     };
   }
 
-  static getDerivedStateFromProps = (props) => ({ id: props.id, school: props.school })
-
-  componentDidMount() {
-    const wspatt = new RegExp("^ *$");
-    let {
-      schoolname, location, degree, major, passingmonth, passingyear, gpa
-    } = this.state.school;
-
-    console.log(schoolname, location, degree);
-
-    if (schoolname === null || wspatt.test(schoolname)) {
-      schoolname = "";
-    }
-    if (location === null || wspatt.test(location)) {
-      location = "";
-    }
-    if (degree === null || wspatt.test(degree)) {
-      degree = "";
-    }
-    if (major === null || wspatt.test(major)) {
-      major = "";
-    }
-    if (passingmonth === null || wspatt.test(passingmonth)) {
-      passingmonth = "";
-    }
-    if (passingyear === null || wspatt.test(passingyear)) {
-      passingyear = "";
-    }
-    if (gpa === null || wspatt.test(gpa)) {
-      gpa = "";
-    }
-
-    this.setState({
-      school: {
-        schoolname,
-        location,
-        degree,
-        major,
-        passingmonth,
-        passingyear,
-        gpa,
-      }
-    });
-  }
+  static getDerivedStateFromProps = (props) => ({ id: props.id })
 
   handleClick = (e) => {
     e.preventDefault();
-    console.log("button was pressed!!!!");
+
     this.setState({ editWasTriggered: true });
 
     // this.getInfo();
   };
 
-  nameChangeHandler = e => {
+  schoolNameChangeHandler = e => {
+    const school = { ...this.state.school };
+    school.schoolname = e.target.value;
     this.setState({
-      name: e.target.value
+      school,
     });
   };
 
-  dobChangeHandler = e => {
+  locationChangeHandler = e => {
+    const school = { ...this.state.school };
+    school.location = e.target.value;
     this.setState({
-      dob: e.target.value
+      school,
     });
   };
 
-  cityChangeHandler = e => {
+  degreeChangeHandler = e => {
+    const school = { ...this.state.school };
+    school.degree = e.target.value;
     this.setState({
-      city: e.target.value
+      school,
     });
   };
 
-  stateChangeHandler = e => {
+  majorChangeHandler = e => {
+    const school = { ...this.state.school };
+    school.major = e.target.value;
     this.setState({
-      state: e.target.value
+      school,
     });
   };
 
-  countryChangeHandler = e => {
+  passingMonthChangeHandler = e => {
+    const school = { ...this.state.school };
+    school.passingmonth = e.target.value;
     this.setState({
-      country: e.target.value
+      school,
+    });
+  };
+
+  passingYearChangeHandler = e => {
+    const school = { ...this.state.school };
+    school.passingyear = e.target.value;
+    this.setState({
+      school,
+    });
+  };
+
+  gpaChangeHandler = e => {
+    const school = { ...this.state.school };
+    school.gpa = e.target.value;
+    this.setState({
+      school,
     });
   };
 
   handleSave = (e) => {
     e.preventDefault();
+
     const data = {
       id: this.state.id,
-      name: this.state.name,
-      dob: this.state.dob,
-      city: this.state.city,
-      state: this.state.state,
-      country: this.state.country,
+      schoolname: this.state.school.schoolname,
+      location: this.state.school.location,
+      degree: this.state.school.degree,
+      major: this.state.school.major,
+      passingmonth: this.state.school.passingmonth,
+      passingyear: this.state.school.passingyear,
+      gpa: this.state.school.gpa,
+
     };
 
-    axios.post("http://localhost:3001/student/personalinfo", data)
+    axios.post("http://localhost:3001/student/educationinfo", data)
       .then(response => {
         console.log(response);
+        this.setState({
+          editWasTriggered: false
+        });
       })
       .catch(error => {
         console.log(error);
+        this.setState({
+          school: "",
+        });
       });
-
-    this.setState({ editWasTriggered: false });
   };
 
   handleCancel = () => {
     this.setState({ editWasTriggered: false });
+  };
+
+  handleDelete = (schoolname, e) => {
+    e.preventDefault();
+    this.props.delete(schoolname);
   };
 
   render() {
@@ -137,14 +133,17 @@ class EducationContainer extends React.Component {
     if (this.state.editWasTriggered) {
       display = (
         <EditEducation
-          namechange={this.nameChangeHandler}
-          dobchange={this.dobChangeHandler}
-          citychange={this.cityChangeHandler}
-          statechange={this.stateChangeHandler}
-          countrychange={this.countryChangeHandler}
+          schoolnamechange={this.schoolNameChangeHandler}
+          locationchange={this.locationChangeHandler}
+          degreechange={this.degreeChangeHandler}
+          majorchange={this.majorChangeHandler}
+          passingmonthchange={this.passingMonthChangeHandler}
+          passingyearchange={this.passingYearChangeHandler}
+          gpachange={this.gpaChangeHandler}
           save={this.handleSave}
           cancel={this.handleCancel}
-          data={this.state}
+          school={this.state.school}
+          delete={this.handleDelete}
         />
       );
     }
