@@ -7,13 +7,8 @@ import { Redirect } from "react-router";
 import cookie from "react-cookies";
 import Navbar from "../Navigationbar";
 import BasicDetails from "./BasicDetails/BasicDetails";
-import CareerObjective from './CareerObjective/CareerObjective';
-import Skillset from './Skillset/Skillset';
 import PictureDetails from './PictureDetails/PictureDetails';
 import ContactInformation from './ContactInfo/ContactInformation';
-import EducationDetails from './EducationDetails/EducationDetails';
-import WorkDetails from './WorkDetails/WorkDetails';
-
 
 class ProfilePage extends React.Component {
   constructor() {
@@ -41,14 +36,10 @@ class ProfilePage extends React.Component {
           <Row>
             <Col sm={4}>
               <PictureDetails id={this.props.match.params.id} photochange={this.handlephotochange} />
-              <Skillset id={this.props.match.params.id} />
-              <BasicDetails id={this.props.match.params.id} />
+              <ContactInformation id={this.props.match.params.id} />
             </Col>
             <Col sm={8}>
-              <CareerObjective id={this.props.match.params.id} />
-              <EducationDetails id={this.props.match.params.id} />
-              <WorkDetails id={this.props.match.params.id} />
-              <ContactInformation id={this.props.match.params.id} />
+              <BasicDetails id={this.props.match.params.id} />
             </Col>
           </Row>
         </Container>

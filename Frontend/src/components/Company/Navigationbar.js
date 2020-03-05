@@ -12,7 +12,7 @@ import cookie from 'react-cookies';
 import { FaSearch } from 'react-icons/fa';
 import axios from "axios";
 // import {Redirect} from 'react-router';
-import hslogo from '../assets/logo.JPG';
+import hslogo from '../../assets/logo.JPG';
 
 
 class Navigationbar extends React.Component {
@@ -20,11 +20,10 @@ class Navigationbar extends React.Component {
     super(props);
     this.state = {
       id: "",
-      fname: "",
+      name: "",
       photo: "",
       has_image: false,
-      firstnameletter: "",
-      lastnameletter: "",
+      nameletter: "",
     };
   }
 
@@ -47,19 +46,17 @@ class Navigationbar extends React.Component {
   getImage() {
     console.log("COMPNENT FI MOINT");
     axios
-      .get(`http://localhost:3001/student/navbar/${this.state.id}`)
+      .get(`http://localhost:3001/company/navbar/${this.state.id}`)
       .then(response => {
         const info = response.data;
 
-        const fn = info.fname.charAt(0);
-        const ln = info.lname.charAt(0);
+        const cn = info.name.charAt(0);
 
         console.log(response.data);
         this.setState({
-          fname: info.fname,
+          name: info.name,
           photo: info.photo,
-          firstnameletter: fn,
-          lastnameletter: ln
+          nameletter: cn,
         });
 
         if (this.state.photo === "" || this.state.photo === null) {
@@ -86,6 +83,7 @@ class Navigationbar extends React.Component {
   // handle logout to destroy the cookie
   handleLogout = () => {
     cookie.remove('id', { path: '/' });
+    cookie.remove('user', { path: '/' });
   }
 
   render() {
@@ -100,7 +98,7 @@ class Navigationbar extends React.Component {
             alt="user profile pic"
             roundedCircle
           />
-          <p id="navbarname"> {this.state.fname} </p>
+          <p id="navbarname"> {this.state.name} </p>
         </Container>
       );
     } else {
@@ -109,8 +107,7 @@ class Navigationbar extends React.Component {
           <p
             className="navbarpic"
           >
-            {this.state.firstnameletter}
-            {this.state.lastnameletter}
+            {this.state.nameletter}
           </p>
         </div>
       );

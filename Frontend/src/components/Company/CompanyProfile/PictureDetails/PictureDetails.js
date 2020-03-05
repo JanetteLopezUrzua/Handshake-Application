@@ -15,9 +15,7 @@ class PictureDetails extends React.Component {
 
     this.state = {
       id: "",
-      fname: "",
-      lname: "",
-      college: "",
+      name: "",
       show: false,
       has_image: false,
       image: "",
@@ -35,15 +33,13 @@ class PictureDetails extends React.Component {
 
   getInfo = () => {
     axios
-      .get(`http://localhost:3001/student/pictureinfo/${this.state.id}`)
+      .get(`http://localhost:3001/company/pictureinfo/${this.state.id}`)
       .then(response => {
         const info = response.data;
 
         console.log(response.data);
         this.setState({
-          fname: info.fname,
-          lname: info.lname,
-          college: info.college,
+          name: info.name,
           photo: info.photo
         });
 
@@ -109,7 +105,7 @@ class PictureDetails extends React.Component {
       };
 
       axios
-        .post("http://localhost:3001/student/pictureinfo", data)
+        .post("http://localhost:3001/company/pictureinfo", data)
         .then(response => {
           console.log(response);
 
@@ -144,7 +140,7 @@ class PictureDetails extends React.Component {
     e.preventDefault();
 
     axios
-      .delete("http://localhost:3001/student/pictureinfo/delete", {
+      .delete("http://localhost:3001/company/pictureinfo/delete", {
         data: { id: this.state.id }
       })
       .then(response => {
@@ -166,7 +162,7 @@ class PictureDetails extends React.Component {
     let studentPhoto = "";
 
     if (this.state.has_image === false) {
-      if (cookie.load('id') === this.state.id && cookie.load('user') === "student") {
+      if (cookie.load('id') === this.state.id && cookie.load('user') === "company") {
         studentPhoto = (
           <Button className="ProfilePicButton" onClick={this.handleShow}>
             <Row>
@@ -183,14 +179,13 @@ class PictureDetails extends React.Component {
             <p
               className="ProfilePicNoImage"
             >
-              {this.state.fname.charAt(0)}
-              {this.state.lname.charAt(0)}
+              {this.state.name.charAt(0)}
             </p>
           </div>
         );
       }
     } else if (this.state.has_image === true) {
-      if (cookie.load('id') === this.state.id && cookie.load('user') === "student") {
+      if (cookie.load('id') === this.state.id && cookie.load('user') === "company") {
         studentPhoto = (
           <>
             <Image
@@ -235,17 +230,6 @@ class PictureDetails extends React.Component {
           onDelete={this.onDelete}
         />
         {studentPhoto}
-        <Card.Title
-          style={{
-            fontSize: "34px", fontWeight: "500", textAlign: "center", textTransform: "capitalize"
-          }}
-        >
-          {this.state.fname}<br />
-          {this.state.lname}
-        </Card.Title>
-        <Card.Subtitle style={{ fontSize: "18px", textAlign: "center", textTransform: "capitalize" }}>
-          {this.state.college}
-        </Card.Subtitle>
       </Card>
     );
   }

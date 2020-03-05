@@ -32,17 +32,17 @@ const DisplayInfo = (props) => {
         {button}
       </Row>
       <Card.Subtitle>First Name</Card.Subtitle>
-      <Card.Text>{ fname }</Card.Text>
+      <Card.Text style={{ textTransform: "capitalize" }}>{ fname }</Card.Text>
       <Card.Subtitle>Last Name</Card.Subtitle>
-      <Card.Text>{ lname }</Card.Text>
+      <Card.Text style={{ textTransform: "capitalize" }}>{ lname }</Card.Text>
       <Card.Subtitle>Date of Birth</Card.Subtitle>
       <Card.Text>{ dob }</Card.Text>
       <Card.Subtitle>City</Card.Subtitle>
-      <Card.Text>{ city }</Card.Text>
+      <Card.Text style={{ textTransform: "capitalize" }}>{ city }</Card.Text>
       <Card.Subtitle>State</Card.Subtitle>
-      <Card.Text>{ state }</Card.Text>
+      <Card.Text style={{ textTransform: "capitalize" }}>{ state }</Card.Text>
       <Card.Subtitle>Country</Card.Subtitle>
-      <Card.Text>{ country }</Card.Text>
+      <Card.Text style={{ textTransform: "capitalize" }}>{ country }</Card.Text>
     </Card>
   );
 };

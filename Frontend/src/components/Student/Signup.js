@@ -55,7 +55,6 @@ class Signup extends React.Component {
 
   signup = e => {
     e.preventDefault();
-    // cookie.remove('id', { path: '/' });
 
     const data = {
       fname: this.state.fname,
@@ -73,20 +72,21 @@ class Signup extends React.Component {
 
     // Check that name and college inputs include letters only
     const lettpatt = new RegExp("^[a-zA-Z ]*$");
+    const wspatt = new RegExp("^ *$");
 
-    if (data.fname === "") {
+    if (data.fname === "" || wspatt.test(data.fname)) {
       fnameerrormsg = "Required. Enter First Name.";
     } else if (!lettpatt.test(data.fname)) {
       fnameerrormsg = "First name can include letters only";
     }
 
-    if (data.lname === "") {
+    if (data.lname === "" || wspatt.test(data.lname)) {
       lnameerrormsg = "Required. Enter Last Name.";
     } else if (!lettpatt.test(data.lname)) {
       lnameerrormsg = "Last name can include letters only";
     }
 
-    if (data.college === "") {
+    if (data.college === "" || wspatt.test(data.college)) {
       collegeerrormsg = "Required. Enter College Name.";
     } else if (!lettpatt.test(data.college)) {
       collegeerrormsg = "College name can include letters only";
@@ -95,7 +95,7 @@ class Signup extends React.Component {
     // Check that email input is valid
     const emailpatt = new RegExp("\\S+@\\S+\\.\\S+");
 
-    if (data.email === "") {
+    if (data.email === "" || wspatt.test(data.email)) {
       emailerrormsg = "Required. Enter Email.";
     } else if (!emailpatt.test(data.email)) {
       emailerrormsg = "Email is not valid.";
@@ -104,7 +104,7 @@ class Signup extends React.Component {
     // password is at least 8 characters and 1 number
     const passpatt = new RegExp("^[a-zA-Z0-9]{8,16}$");
 
-    if (data.password === "") {
+    if (data.password === "" || wspatt.test(data.password)) {
       passerrormsg = "Required. Enter Password.";
     } else if (!passpatt.test(data.password)) {
       passerrormsg = "Password must be between 8 and 16 characters.";
@@ -153,7 +153,7 @@ class Signup extends React.Component {
     // if sign up then redirecto the student profile
     let redirectVar = null;
     const path = `/student/${cookie.load('id')}`;
-    if (cookie.load('id')) {
+    if (cookie.load('user') === "student") {
       redirectVar = <Redirect to={path} />;
     }
 
@@ -166,6 +166,7 @@ class Signup extends React.Component {
           <Form.Group controlId="fName">
             <Form.Label className="labels">First Name</Form.Label>
             <Form.Control
+              style={{ textTransform: "capitalize" }}
               onChange={this.fnameChangeHandler}
               placeholder="Enter First Name"
             />
@@ -175,6 +176,7 @@ class Signup extends React.Component {
           <Form.Group controlId="lName">
             <Form.Label className="labels">Last Name</Form.Label>
             <Form.Control
+              style={{ textTransform: "capitalize" }}
               onChange={this.lnameChangeHandler}
               placeholder="Enter Last Name"
             />
@@ -206,6 +208,7 @@ class Signup extends React.Component {
           <Form.Group controlId="CollegeName">
             <Form.Label className="labels">College Name</Form.Label>
             <Form.Control
+              style={{ textTransform: "capitalize" }}
               onChange={this.collegeChangeHandler}
               placeholder="Enter College Name"
             />

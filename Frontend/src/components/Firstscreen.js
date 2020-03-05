@@ -14,10 +14,17 @@ class Firstscreen extends React.Component {
   render() {
     // if sign in then redirect to the student profile
     let redirectVar = null;
-    const path = `/student/${cookie.load('id')}`;
-    if (cookie.load('id')) {
-      redirectVar = <Redirect to={path} />;
+    const studentpath = `/student/${cookie.load('id')}`;
+    const companypath = `/company/${cookie.load('id')}`;
+
+    if (cookie.load('user') === "student") {
+      redirectVar = <Redirect to={studentpath} />;
     }
+
+    if (cookie.load('user') === "company") {
+      redirectVar = <Redirect to={companypath} />;
+    }
+
     return (
       <div>
         {redirectVar}
@@ -27,7 +34,7 @@ class Firstscreen extends React.Component {
           <Link className="firstscreenbuttons" to="/student/signin">
             Student
           </Link>
-          <Link className="firstscreenbuttons" to="/company/signup">
+          <Link className="firstscreenbuttons" to="/company/signin">
             Company
           </Link>
         </div>

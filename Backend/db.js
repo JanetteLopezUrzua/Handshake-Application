@@ -30,7 +30,8 @@ connection.connect((err) => {
 
 
   /* Company Profile tables */
-  connection.query('CREATE TABLE IF NOT EXISTS companies(id int NOT NULL AUTO_INCREMENT, name varchar(100), email varchar(255), password varchar(50), location varchar(255), PRIMARY KEY(id));');
+  connection.query('CREATE TABLE IF NOT EXISTS companies(id int NOT NULL AUTO_INCREMENT, name varchar(100), email varchar(255), password varchar(50), location varchar(255), description text, phonenumber varchar(255), PRIMARY KEY(id));');
+  connection.query('CREATE TABLE IF NOT EXISTS companies_photos(id int unique NOT NULL, photo longblob, foreign key(id) references companies(id));');
 });
 
 exports.connection = connection;

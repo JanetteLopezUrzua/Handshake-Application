@@ -33,7 +33,6 @@ class Signup extends React.Component {
 
   signin = e => {
     e.preventDefault();
-    // cookie.remove('id', { path: '/' });
 
     const data = {
       email: this.state.email,
@@ -43,13 +42,15 @@ class Signup extends React.Component {
     let emailerrormsg = "";
     let passerrormsg = "";
 
+    const wspatt = new RegExp("^ *$");
+
     // Check that email input is valid
-    if (data.email === "") {
+    if (wspatt.test(data.email) || data.email === "") {
       emailerrormsg = "Required. Enter Email.";
     }
 
     // password is at least 8 characters and 1 number
-    if (data.password === "") {
+    if (wspatt.test(data.password) || data.password === "") {
       passerrormsg = "Required. Enter Password.";
     }
 
@@ -84,7 +85,7 @@ class Signup extends React.Component {
     // if sign in then redirect to the student profile
     let redirectVar = null;
     const path = `/student/${cookie.load('id')}`;
-    if (cookie.load('id')) {
+    if (cookie.load('user') === "student") {
       redirectVar = <Redirect to={path} />;
     }
 

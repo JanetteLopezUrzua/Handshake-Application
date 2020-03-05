@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import "./App.css";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Firstscreen from "./components/Firstscreen";
 import StudentSignup from "./components/Student/Signup";
 import StudentSignin from "./components/Student/Signin";
-// import Navbar from "./components/Navbar/Navigationbar";
-import Firstscreen from "./components/Firstscreen";
+import StudentProfile from "./components/Student/StudentProfile/ProfilePage";
 import CompanySignup from "./components/Company/Signup";
-// import BasicDetails from "./components/Student/StudentProfile/BasicDetails/BasicDetails";
-import ProfilePage from "./components/Student/StudentProfile/ProfilePage";
+import CompanySignin from "./components/Company/Signin";
+import CompanyProfile from "./components/Company/CompanyProfile/ProfilePage";
+
 
 // App Component
 class App extends Component {
@@ -19,8 +20,10 @@ class App extends Component {
           <Route exact path="/" component={Firstscreen} />
           <Route path="/student/signup" component={StudentSignup} />
           <Route path="/student/signin" component={StudentSignin} />
+          <Route path="/student/:id" component={StudentProfile} />
           <Route path="/company/signup" component={CompanySignup} />
-          <Route path="/student/:id" component={ProfilePage} />
+          <Route path="/company/signin" component={CompanySignin} />
+          <Route path="/company/:id" component={CompanyProfile} />
         </Switch>
       </BrowserRouter>
     );

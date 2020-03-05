@@ -178,6 +178,7 @@
   text-align: center;
   cursor: pointer;
   line-height: 2.3;
+  text-transform: uppercase;
 }
 
 #navbarname {
@@ -333,6 +334,7 @@
   font-weight: Bold;
   text-align: center;
   line-height: 4.5;
+  text-transform: uppercase;
 }
 
 .ProfilePicButtononImage {
