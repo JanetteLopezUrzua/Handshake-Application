@@ -359,7 +359,6 @@ app.get("/student/contactinfo/:id", (req, res) => {
 app.post("/student/contactinfo", (req, res) => {
   console.log("post contact info");
   // console.log(req.body.id);
-
   if (req.body.id !== undefined) {
     connection.query(`update students set email='${req.body.email}', phonenumber='${req.body.phonenum}' where id='${req.body.id}'`, (err, result) => {
       if (err) res.end("Can't update information");

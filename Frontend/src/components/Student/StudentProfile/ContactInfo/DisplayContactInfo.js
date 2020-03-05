@@ -7,7 +7,7 @@ import { MdEdit } from 'react-icons/md';
 
 const DisplayContactInfo = (props) => {
   const email = (props.email === "") ? "No Email Entered" : props.email;
-  const phonenum = (props.phonenum === "") ? "No Phone Number Registered" : props.phonenum;
+  const phonenum = (props.phonenum === "") ? "No Phone Number Registered" : `(${props.phonenum.substring(0, 3)})${props.phonenum.substring(3, 6)}-${props.phonenum.substring(6)}`;
 
   return (
     <Card>
@@ -26,7 +26,7 @@ const DisplayContactInfo = (props) => {
         </Col>
         <Col sm={6}>
           <Card.Subtitle>Phone Number</Card.Subtitle>
-          <Card.Text>{ phonenum }</Card.Text>
+          <Card.Text>{phonenum}</Card.Text>
         </Col>
       </Row>
     </Card>

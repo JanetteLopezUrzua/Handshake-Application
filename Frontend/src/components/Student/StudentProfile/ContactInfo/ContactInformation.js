@@ -13,7 +13,8 @@ class ContactInformation extends React.Component {
       id: "",
       email: "",
       phonenum: "",
-      editWasTriggered: false
+      editWasTriggered: false,
+      errormessage: "",
     };
   }
 
@@ -69,30 +70,59 @@ class ContactInformation extends React.Component {
 
   handleSave = (e) => {
     e.preventDefault();
-    const data = {
-      id: this.state.id,
-      email: this.state.email,
-      phonenum: this.state.phonenum,
-    };
 
-    axios.post("http://localhost:3001/student/contactinfo", data)
-      .then(response => {
-        console.log(response);
-      })
-      .catch(error => {
-        console.log(error);
+    const numbers = this.state.phonenum.replace(/\D/g, '');
+
+    // Check that email input is valid
+    const emailpatt = new RegExp("\\S+@\\S+\\.\\S+");
+    const wspatt = new RegExp("^ *$");
+
+    if (wspatt.test(this.state.email)) {
+      this.setState({
+        errormessage: "Required. Enter Email."
       });
+    } else if (!emailpatt.test(this.state.email)) {
+      this.setState({
+        errormessage: "Email is not valid."
+      });
+    } else if (numbers.length > 10 || numbers.length < 10) {
+      this.setState({
+        errormessage: "Please enter a 10 digit phone number."
+      });
+    } else {
+      const data = {
+        id: this.state.id,
+        email: this.state.email,
+        phonenum: numbers,
+      };
 
-    this.setState({ editWasTriggered: false });
+      axios.post("http://localhost:3001/student/contactinfo", data)
+        .then(response => {
+          console.log(response);
+          this.setState({
+            email: data.email,
+            phonenum: data.phonenum,
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+
+      this.setState({ editWasTriggered: false });
+    }
   };
 
   handleCancel = () => {
-    this.setState({ editWasTriggered: false });
+    this.setState({
+      errormessage: "",
+      editWasTriggered: false
+    });
+    this.getInfo();
   };
 
   render() {
     const {
-      email, phonenum, editWasTriggered
+      email, phonenum, editWasTriggered, errormessage
     } = this.state;
 
     let display = "";
@@ -111,7 +141,9 @@ class ContactInformation extends React.Component {
           phonechange={this.phoneChangeHandler}
           save={this.handleSave}
           cancel={this.handleCancel}
-          data={this.state}
+          email={email}
+          phonenum={phonenum}
+          errormessage={errormessage}
         />
       );
     }

@@ -6,8 +6,8 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
 const EditContactInfo = (props) => {
-  const emailholder = (props.data.email === "") ? "Enter Email" : props.data.email;
-  const phonenumholder = (props.data.phonenum === "") ? "Enter Phone Number" : props.data.phonenum;
+  const emailholder = (props.email === "") ? "Enter Email" : props.email;
+  const phonenumholder = (props.phonenum === "") ? "Enter Phone Number" : props.phonenum;
 
   return (
     <Card>
@@ -29,6 +29,7 @@ const EditContactInfo = (props) => {
           </Form.Group>
         </Col>
       </Row>
+      <p className="errormessage">{props.errormessage}</p>
       <Card.Footer>
         <Button className="cancel" onClick={props.cancel}>Cancel</Button>
         <Button className="save" onClick={props.save}>Save</Button>
