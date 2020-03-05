@@ -7,6 +7,7 @@ import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import { FaCamera } from "react-icons/fa";
+// import { Redirect } from "react-router";
 import ModalPicture from "./Modal";
 
 class PictureDetails extends React.Component {
@@ -15,14 +16,15 @@ class PictureDetails extends React.Component {
 
     this.state = {
       id: "",
-      name: "",
+      fname: "",
+      lname: "",
       college: "",
       show: false,
       has_image: false,
       image: "",
       photo: "",
       validimage: "",
-      errormessage: ""
+      errormessage: "",
     };
   }
 
@@ -40,7 +42,8 @@ class PictureDetails extends React.Component {
 
         console.log(response.data);
         this.setState({
-          name: info.name,
+          fname: info.fname,
+          lname: info.lname,
           college: info.college,
           photo: info.photo
         });
@@ -114,8 +117,9 @@ class PictureDetails extends React.Component {
           this.setState({
             photo: image,
             has_image: true,
-            show: false
+            show: false,
           });
+          this.props.photochange();
         })
         .catch(error => {
           console.log(error);
@@ -150,12 +154,13 @@ class PictureDetails extends React.Component {
           show: false,
           has_image: false,
         });
+        this.props.photochange();
       })
       .catch(error => {
         console.log(error);
       });
 
-    this.getInfo();
+    // this.getInfo();
   };
 
   render() {
@@ -211,7 +216,8 @@ class PictureDetails extends React.Component {
         <Card.Title
           style={{ fontSize: "34px", fontWeight: "500", textAlign: "center" }}
         >
-          {this.state.name}
+          {this.state.fname}<br />
+          {this.state.lname}
         </Card.Title>
         <Card.Subtitle style={{ fontSize: "18px", textAlign: "center" }}>
           {this.state.college}

@@ -6,7 +6,8 @@ import Button from "react-bootstrap/Button";
 import { MdEdit } from 'react-icons/md';
 
 const DisplayInfo = (props) => {
-  const name = (props.name === "") ? "No Name Entered" : props.name;
+  const fname = (props.fname === "") ? "No First Name Entered" : props.fname;
+  const lname = (props.lname === "") ? "No Last Name Entered" : props.lname;
   const dob = (props.dob === "") ? "No Date of Birth Entered" : props.dob;
   const city = (props.city === "") ? "No City Entered" : props.city;
   const state = (props.state === "") ? "No State Entered" : props.state;
@@ -22,8 +23,10 @@ const DisplayInfo = (props) => {
           </Button>
         </Col>
       </Row>
-      <Card.Subtitle>Name</Card.Subtitle>
-      <Card.Text>{ name }</Card.Text>
+      <Card.Subtitle>First Name</Card.Subtitle>
+      <Card.Text>{ fname }</Card.Text>
+      <Card.Subtitle>Last Name</Card.Subtitle>
+      <Card.Text>{ lname }</Card.Text>
       <Card.Subtitle>Date of Birth</Card.Subtitle>
       <Card.Text>{ dob }</Card.Text>
       <Card.Subtitle>City</Card.Subtitle>

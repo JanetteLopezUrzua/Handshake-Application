@@ -29,7 +29,8 @@
     "react/prefer-stateless-function": "off",
     "react/destructuring-assignment": "off",
     "react/prop-types": "off",
-    "max-len": "off"
+    "max-len": "off",
+    "react/no-access-state-in-setstate": "off"
   },
   "parser": "babel-eslint"
 }

@@ -14,7 +14,8 @@ class Signup extends React.Component {
   constructor() {
     super();
     this.state = {
-      name: "",
+      fname: "",
+      lname: "",
       email: "",
       password: "",
       college: "",
@@ -22,9 +23,15 @@ class Signup extends React.Component {
     };
   }
 
-  nameChangeHandler = e => {
+  fnameChangeHandler = e => {
     this.setState({
-      name: e.target.value
+      fname: e.target.value
+    });
+  };
+
+  lnameChangeHandler = e => {
+    this.setState({
+      lname: e.target.value
     });
   };
 
@@ -51,13 +58,15 @@ class Signup extends React.Component {
     // cookie.remove('id', { path: '/' });
 
     const data = {
-      name: this.state.name,
+      fname: this.state.fname,
+      lname: this.state.lname,
       email: this.state.email,
       password: this.state.password,
       college: this.state.college
     };
 
-    let nameerrormsg = "";
+    let fnameerrormsg = "";
+    let lnameerrormsg = "";
     let collegeerrormsg = "";
     let emailerrormsg = "";
     let passerrormsg = "";
@@ -65,10 +74,16 @@ class Signup extends React.Component {
     // Check that name and college inputs include letters only
     const lettpatt = new RegExp("^[a-zA-Z ]*$");
 
-    if (data.name === "") {
-      nameerrormsg = "Required. Enter Name.";
-    } else if (!lettpatt.test(data.name)) {
-      nameerrormsg = "Name can include letters only";
+    if (data.fname === "") {
+      fnameerrormsg = "Required. Enter First Name.";
+    } else if (!lettpatt.test(data.fname)) {
+      fnameerrormsg = "First name can include letters only";
+    }
+
+    if (data.lname === "") {
+      lnameerrormsg = "Required. Enter Last Name.";
+    } else if (!lettpatt.test(data.lname)) {
+      lnameerrormsg = "Last name can include letters only";
     }
 
     if (data.college === "") {
@@ -96,7 +111,8 @@ class Signup extends React.Component {
     }
 
     if (
-      nameerrormsg === ""
+      fnameerrormsg === ""
+      && lnameerrormsg === ""
       && collegeerrormsg === ""
       && emailerrormsg === ""
       && passerrormsg === ""
@@ -123,7 +139,8 @@ class Signup extends React.Component {
     } else {
       this.setState({
         errormessages: {
-          nameerrormsg,
+          fnameerrormsg,
+          lnameerrormsg,
           emailerrormsg,
           passerrormsg,
           collegeerrormsg,
@@ -146,13 +163,22 @@ class Signup extends React.Component {
         <img id="banner" src={hsimage} alt="handshake banner" />
         <h2 className="pagetitle">Sign Up</h2>
         <Form id="signup-form">
-          <Form.Group controlId="Name">
-            <Form.Label className="labels">Name</Form.Label>
+          <Form.Group controlId="fName">
+            <Form.Label className="labels">First Name</Form.Label>
             <Form.Control
-              onChange={this.nameChangeHandler}
-              placeholder="Enter Name"
+              onChange={this.fnameChangeHandler}
+              placeholder="Enter First Name"
             />
-            <p className="errormessage"> {this.state.errormessages.nameerrormsg}</p>
+            <p className="errormessage"> {this.state.errormessages.fnameerrormsg}</p>
+          </Form.Group>
+
+          <Form.Group controlId="lName">
+            <Form.Label className="labels">Last Name</Form.Label>
+            <Form.Control
+              onChange={this.lnameChangeHandler}
+              placeholder="Enter Last Name"
+            />
+            <p className="errormessage"> {this.state.errormessages.lnameerrormsg}</p>
           </Form.Group>
 
           <Form.Row>

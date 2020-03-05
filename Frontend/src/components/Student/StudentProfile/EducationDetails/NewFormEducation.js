@@ -14,11 +14,12 @@ const NewFormEducation = (props) => (
     <Form.Group controlId="Schoolname">
       <Form.Label className="labels">School Name</Form.Label>
       <Form.Control onChange={props.schoolnamechange} name="name" type="text" placeholder={props.school.schoolname} />
-      <p className="errormessage">{props.errormessage}</p>
+      <p className="errormessage">{props.errormessages.schoolnameerror}</p>
     </Form.Group>
     <Form.Group controlId="degree">
       <Form.Label className="labels">Education Level</Form.Label>
       <Form.Control as="select" onChange={props.degreechange} name="degree" type="text" placeholder={props.school.degree}>
+        <option value="" hidden> </option>
         <option>High school</option>
         <option>Associates</option>
         <option>Certificate</option>
@@ -29,6 +30,7 @@ const NewFormEducation = (props) => (
         <option>Postdoctoral studies</option>
         <option>Non-degree seeking</option>
       </Form.Control>
+      <p className="errormessage">{props.errormessages.degreeerror}</p>
     </Form.Group>
     <Form.Group controlId="Passingmonth">
       <Form.Label className="labels">End Date</Form.Label>
@@ -147,6 +149,7 @@ const NewFormEducation = (props) => (
           </Form.Control>
         </Col>
       </Row>
+      <p className="errormessage">{props.errormessages.passingdateerror}</p>
     </Form.Group>
     <Form.Group controlId="major">
       <Form.Label className="labels">Major</Form.Label>

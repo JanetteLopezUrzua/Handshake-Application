@@ -6,7 +6,8 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
 const EditInfo = (props) => {
-  const nameholder = (props.data.name === "") ? "Enter Name" : props.data.name;
+  const fnameholder = (props.data.fname === "") ? "Enter First Name" : props.data.fname;
+  const lnameholder = (props.data.lname === "") ? "Enter Last Name" : props.data.lname;
   const dobholder = (props.data.dob === "") ? "Enter Data of Birth" : props.data.dob;
   const cityholder = (props.data.city === "") ? "Enter City" : props.data.city;
   const stateholder = (props.data.state === "") ? "Enter State" : props.data.state;
@@ -18,9 +19,13 @@ const EditInfo = (props) => {
         <Col><Card.Title>Personal Information</Card.Title></Col>
         <Col />
       </Row>
-      <Form.Group controlId="Name">
-        <Form.Label className="labels">Name</Form.Label>
-        <Form.Control style={{ textTransform: "capitalize" }} onChange={props.namechange} name="name" type="text" placeholder={nameholder} />
+      <Form.Group controlId="fName">
+        <Form.Label className="labels">First Name</Form.Label>
+        <Form.Control style={{ textTransform: "capitalize" }} onChange={props.fnamechange} name="fname" type="text" placeholder={fnameholder} />
+      </Form.Group>
+      <Form.Group controlId="lName">
+        <Form.Label className="labels">Last Name</Form.Label>
+        <Form.Control style={{ textTransform: "capitalize" }} onChange={props.lnamechange} name="lname" type="text" placeholder={lnameholder} />
       </Form.Group>
       <Form.Group controlId="dob">
         <Form.Label className="labels">Date of Birth</Form.Label>

@@ -113,7 +113,10 @@ class EducationContainer extends React.Component {
   };
 
   handleCancel = () => {
-    this.setState({ editWasTriggered: false });
+    this.setState({
+      school: this.props.school,
+      editWasTriggered: false
+    });
   };
 
   handleDelete = (schoolname, e) => {

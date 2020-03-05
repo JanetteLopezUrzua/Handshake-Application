@@ -28,7 +28,7 @@ class EducationDetails extends React.Component {
         passingyear: "",
         gpa: "",
       },
-      errormessage: ""
+      errormessages: {}
     };
   }
 
@@ -128,11 +128,25 @@ class EducationDetails extends React.Component {
 
   handleSave = (e) => {
     e.preventDefault();
-
+    console.log(this.state.school);
     const wspatt = new RegExp("^ *$");
     if (this.state.school.schoolname === "" || wspatt.test(this.state.school.schoolname) || this.state.school.schoolname === undefined) {
       this.setState({
-        errormessage: "School name must be entered."
+        errormessages: {
+          schoolnameerror: "School name must be entered."
+        }
+      });
+    } else if (this.state.school.degree === "" || wspatt.test(this.state.school.degree) || this.state.school.degree === undefined) {
+      this.setState({
+        errormessages: {
+          degreeerror: "Degree must be selected."
+        }
+      });
+    } else if ((this.state.school.passingmonth === "" || wspatt.test(this.state.school.passingmonth) || this.state.school.passingmonth === undefined) || (this.state.school.passingyear === 0 || this.state.school.passingyear === "" || wspatt.test(this.state.school.passingyear) || this.state.school.passingyear === undefined)) {
+      this.setState({
+        errormessages: {
+          passingdateerror: "Complete end date must be selected."
+        }
       });
     } else {
       const name = (this.state.school.schoolname === undefined) ? null : this.state.school.schoolname;
@@ -179,42 +193,54 @@ class EducationDetails extends React.Component {
               passingyear: "",
               gpa: "",
             },
-            errormessage: "",
+            errormessages: {
+              schoolnameerror: "",
+              degreeerror: "",
+              passingdateerror: "",
+            },
             newform: false
           });
         })
         .catch(error => {
           console.log(error);
           this.setState({
-            school: {
-              schoolname: "",
-              location: "",
-              degree: "",
-              major: "",
-              passingmonth: "",
-              passingyear: "",
-              gpa: "",
+            errormessages: {
+              schoolnameerror: error.response.data
             },
-            errormessage: error.response.data,
           });
         });
     }
   };
 
   handleCancel = () => {
-    this.setState({ newform: false });
+    this.setState({
+      school: {
+        schoolname: "",
+        location: "",
+        degree: "",
+        major: "",
+        passingmonth: "",
+        passingyear: "",
+        gpa: "",
+      },
+      newform: false,
+      errormessages: {
+        schoolnameerror: "",
+        degreeerror: "",
+        passingdateerror: "",
+      }
+    });
   };
 
   handleDelete = (schoolname) => {
     axios.delete("http://localhost:3001/student/educationinfo/delete", { data: { id: this.state.id, schoolname } })
       .then(response => {
         console.log(response);
+        this.getInfo();
       })
       .catch(error => {
         console.log(error);
       });
-
-    this.getInfo();
   }
 
   render() {
@@ -251,7 +277,7 @@ class EducationDetails extends React.Component {
           gpachange={this.gpaChangeHandler}
           save={this.handleSave}
           cancel={this.handleCancel}
-          errormessage={this.state.errormessage}
+          errormessages={this.state.errormessages}
         />
       );
     }

@@ -70,7 +70,7 @@ app.post("/student/signup", (req, res) => {
       // var plaintext = bytes.toString(CryptoJS.enc.Utf8);
       // console.log("decrypted text", plaintext);
       connection.query(
-        `insert into students (name, email, password, college) values ('${req.body.name}', '${req.body.email}',
+        `insert into students (fname, lname, email, password, college) values ('${req.body.fname}', '${req.body.lname}', '${req.body.email}',
         '${ciphertext}', '${req.body.college}')`,
         (err2) => {
           if (err2) res.end("Error. Could not sign up.");
@@ -144,6 +144,46 @@ app.post("/student/signin", (req, res) => {
       res.end("Incorrect Credentials.");
     }
   });
+});
+
+app.get("/student/navbar/:id", (req, res) => {
+  console.log("get navbar info");
+  // console.log(req.params.id);
+  if (req.params.id !== undefined) {
+    // console.log("Inside");
+    connection.query(`select fname, lname, photo
+    from (SELECT students.id, fname, lname, photo
+    FROM students
+    LEFT JOIN students_photos ON students.id=students_photos.id 
+    where students.id=${req.params.id}) as tb`, (err, rows) => {
+      if (err) res.end("Can't get information");
+      // console.log(rows);
+
+      if (rows !== undefined) {
+        let data = {
+          fname: "",
+          lname: "",
+          photo: "",
+        };
+
+        rows.forEach((row) => {
+          data = {
+            fname: row.fname,
+            lname: row.lname,
+            photo: row.photo,
+          };
+        });
+
+        res.writeHead(200, {
+          'Content-Type': 'application/json'
+        });
+
+        // console.log(data);
+
+        res.end(JSON.stringify(data));
+      }
+    });
+  }
 });
 
 
@@ -230,20 +270,22 @@ app.get("/student/personalinfo/:id", (req, res) => {
   // console.log(req.params.id);
   if (req.params.id !== undefined) {
     let data = {
-      name: "",
+      fname: "",
+      lname: "",
       dob: "",
       city: "",
       state: "",
       country: "",
     };
 
-    connection.query(`select name, dob, city, state, country from students where id='${req.params.id}'`, (err, rows) => {
+    connection.query(`select fname, lname, dob, city, state, country from students where id='${req.params.id}'`, (err, rows) => {
       if (err) res.end("Can't get information");
       // console.log(rows);
       if (rows !== undefined) {
         rows.forEach((row) => {
           data = {
-            name: row.name,
+            fname: row.fname,
+            lname: row.lname,
             dob: row.dob,
             city: row.city,
             state: row.state,
@@ -268,7 +310,7 @@ app.post("/student/personalinfo", (req, res) => {
   // console.log(req.body.id);
 
   if (req.body.id !== undefined) {
-    connection.query(`update students set name='${req.body.name}', dob='${req.body.dob}', city='${req.body.city}', state='${req.body.state}', country='${req.body.country}' where id='${req.body.id}'`, (err, result) => {
+    connection.query(`update students set fname='${req.body.fname}', lname='${req.body.lname}', dob='${req.body.dob}', city='${req.body.city}', state='${req.body.state}', country='${req.body.country}' where id='${req.body.id}'`, (err, result) => {
       if (err) res.end("Can't update information");
 
       // console.log(`Changed ${result.changedRows} row(s)`);
@@ -466,8 +508,8 @@ app.get("/student/pictureinfo/:id", (req, res) => {
   // console.log(req.params.id);
   if (req.params.id !== undefined) {
     // console.log("Inside");
-    connection.query(`select name, college, photo
-    from (SELECT students.id, name, college, photo
+    connection.query(`select fname, lname, college, photo
+    from (SELECT students.id, fname, lname, college, photo
     FROM students
     LEFT JOIN students_photos ON students.id=students_photos.id 
     where students.id=${req.params.id}) as tb`, (err, rows) => {
@@ -476,14 +518,16 @@ app.get("/student/pictureinfo/:id", (req, res) => {
 
       if (rows !== undefined) {
         let data = {
-          name: "",
+          fname: "",
+          lname: "",
           college: "",
           photo: "",
         };
 
         rows.forEach((row) => {
           data = {
-            name: row.name,
+            fname: row.fname,
+            lname: row.lname,
             college: row.college,
             photo: row.photo,
           };
@@ -581,7 +625,7 @@ app.post("/student/educationinfo/newform", (req, res) => {
   console.log("post education info - new form");
   console.log(req.body.location);
   if (req.body.id !== undefined) {
-    connection.query(`select schoolname from schools where id='${req.body.id}' and schoolname='${req.body.schoolname}'`, (err, rows) => {
+    connection.query(`select schoolname, degree from schools where id='${req.body.id}' and schoolname='${req.body.schoolname}' and degree='${req.body.degree}'`, (err, rows) => {
       if (err) res.end("Can't get information");
       console.log(rows);
       if (rows.length > 0 || rows === undefined) {
@@ -589,7 +633,7 @@ app.post("/student/educationinfo/newform", (req, res) => {
           'Content-Type': 'text/plain'
         });
 
-        res.end("School already exists.");
+        res.end("School with same degree already exists.");
       } else {
         connection.query(`insert into schools (id, schoolname, location, degree, major, passingmonth, passingyear, gpa) values ('${req.body.id}', '${req.body.schoolname}', '${req.body.location}', '${req.body.degree}', '${req.body.major}', '${req.body.passingmonth}', '${req.body.passingyear}', '${req.body.gpa}')`, (err2, result) => {
           if (err2) console.log(err2);
@@ -632,6 +676,113 @@ app.delete("/student/educationinfo/delete", (req, res) => {
 
   if (req.body.id !== undefined) {
     connection.query(`delete from schools where id='${req.body.id}' and schoolname='${req.body.schoolname}'`, (err, result) => {
+      if (err) res.end("Can't delete information");
+
+      // console.log(`Deleted ${result.affectedRows} row(s)`);
+
+      res.writeHead(200, {
+        'Content-Type': 'text/plain'
+      });
+
+      res.end("Successful Delete");
+    });
+  }
+});
+
+
+app.get("/student/workinfo/:id", (req, res) => {
+  console.log("get work info");
+  console.log(req.params.id);
+
+  if (req.params.id !== undefined) {
+    const data = {
+      jobs: [],
+    };
+
+    connection.query(`select companyname, title, startdatemonth, startdateyear, enddatemonth, enddateyear, description from jobs where id='${req.params.id}'`, (err, rows) => {
+      if (err) res.end("Can't get information");
+      console.log(rows);
+
+      if (rows !== undefined) {
+        rows.forEach((row) => {
+          data.jobs.push({
+            companyname: row.companyname,
+            title: row.title,
+            startdatemonth: row.startdatemonth,
+            startdateyear: row.startdateyear,
+            enddatemonth: row.enddatemonth,
+            enddateyear: row.enddateyear,
+            description: row.description
+          });
+        });
+
+        res.writeHead(200, {
+          'Content-Type': 'application/json'
+        });
+
+        console.log(data);
+
+        res.end(JSON.stringify(data));
+      }
+    });
+  }
+});
+
+app.post("/student/workinfo/newform", (req, res) => {
+  console.log("post work info - new form");
+  console.log(req.body.location);
+  if (req.body.id !== undefined) {
+    connection.query(`select companyname from jobs where id='${req.body.id}' and companyname='${req.body.companyname}' and title='${req.body.title}'`, (err, rows) => {
+      if (err) res.end("Can't get information");
+      console.log(rows);
+      if (rows.length > 0 || rows === undefined) {
+        res.writeHead(400, {
+          'Content-Type': 'text/plain'
+        });
+
+        res.end("Company with that job title already exists.");
+      } else {
+        connection.query(`insert into jobs (id, companyname, title, startdatemonth, startdateyear, enddatemonth, enddateyear, description) values ('${req.body.id}', '${req.body.companyname}', '${req.body.title}', '${req.body.startdatemonth}', '${req.body.startdateyear}', '${req.body.enddatemonth}', '${req.body.enddateyear}', '${req.body.description}')`, (err2, result) => {
+          if (err2) console.log(err2);
+
+          console.log('Last insert ID:', result.insertId);
+
+          res.writeHead(200, {
+            'Content-Type': 'text/plain'
+          });
+
+          res.end("Successful Save");
+        });
+      }
+    });
+  }
+});
+
+app.post("/student/workinfo", (req, res) => {
+  console.log("post work info");
+  console.log(req.body.location);
+  if (req.body.id !== undefined) {
+    connection.query(`update jobs set enddatemonth='${req.body.enddatemonth}', enddateyear='${req.body.enddateyear}', description='${req.body.description}' where id='${req.body.id}' and companyname='${req.body.companyname}'`, (err, result) => {
+      if (err) res.end("Can't update information");
+
+      // console.log(`Changed ${result.changedRows} row(s)`);
+
+      res.writeHead(200, {
+        'Content-Type': 'text/plain'
+      });
+
+      res.end("Successful Save");
+    });
+  }
+});
+
+app.delete("/student/workinfo/delete", (req, res) => {
+  console.log("delete work info");
+  // console.log(req.body.id);
+  // console.log(req.body.schoolname);
+
+  if (req.body.id !== undefined) {
+    connection.query(`delete from jobs where id='${req.body.id}' and companyname='${req.body.companyname}'`, (err, result) => {
       if (err) res.end("Can't delete information");
 
       // console.log(`Deleted ${result.affectedRows} row(s)`);

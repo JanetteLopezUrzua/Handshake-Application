@@ -46,7 +46,7 @@ const EditEducation = (props) => {
       </Form.Group>
       <Form.Group controlId="degree">
         <Form.Label className="labels">Education Level</Form.Label>
-        <Form.Control as="select" onChange={props.degreechange} name="degree" type="text" placeholder={degree}>
+        <Form.Control as="select" onChange={props.degreechange} name="degree" type="text" placeholder={degree} disabled="true">
           <option>High school</option>
           <option>Associates</option>
           <option>Certificate</option>

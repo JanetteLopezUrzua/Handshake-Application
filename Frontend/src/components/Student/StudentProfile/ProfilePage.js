@@ -16,6 +16,17 @@ import WorkDetails from './WorkDetails/WorkDetails';
 
 
 class ProfilePage extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      photochange: false,
+    };
+  }
+
+  handlephotochange = () => {
+    this.setState(prevState => ({ photochange: !prevState.photochange }));
+  };
+
   render() {
     // if not logged in go to login page
     let redirectVar = null;
@@ -25,11 +36,11 @@ class ProfilePage extends React.Component {
     return (
       <div>
         {redirectVar}
-        <Navbar />
+        <Navbar id={this.props.match.params.id} photochange={this.state.photochange} />
         <Container>
           <Row>
             <Col sm={4}>
-              <PictureDetails id={this.props.match.params.id} />
+              <PictureDetails id={this.props.match.params.id} photochange={this.handlephotochange} />
               <Skillset id={this.props.match.params.id} />
               <BasicDetails id={this.props.match.params.id} />
             </Col>

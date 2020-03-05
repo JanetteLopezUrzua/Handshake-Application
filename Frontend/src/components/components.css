@@ -167,6 +167,44 @@
   object-fit: contain;
 }
 
+.navbarpic {
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  background-color: #707070;
+  color: #fff;
+  font-size: 14px;
+  font-weight: Bold;
+  text-align: center;
+  cursor: pointer;
+  line-height: 2.3;
+}
+
+#navbarname {
+  font-size: 14px;
+  font-weight: Bold;
+  cursor: pointer;
+  color: #707070;
+}
+
+.navbardropdown {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin: 0 8px 0 0;
+  padding: 35px 8px;
+  position: relative;
+  white-space: nowrap;
+  height: 80px;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
 /* Other buttons */
 .save {
   background-color: #0d7f02;
@@ -285,7 +323,7 @@
 
 .ProfilePicButtononImage {
   position: absolute;
-  top: 37%;
+  top: 32%;
   left: 50%;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);

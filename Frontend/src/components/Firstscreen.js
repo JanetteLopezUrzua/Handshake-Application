@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import cookie from "react-cookies";
 import { Redirect } from "react-router";
 import "./components.css";
-import Container from "react-bootstrap/Container";
 import hsimage from '../assets/Handshakebanner.jpg';
 
 class Firstscreen extends React.Component {

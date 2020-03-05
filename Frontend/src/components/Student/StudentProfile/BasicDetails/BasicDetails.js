@@ -11,7 +11,8 @@ class BasicDetails extends React.Component {
 
     this.state = {
       id: "",
-      name: "",
+      fname: "",
+      lname: "",
       dob: "",
       city: "",
       state: "",
@@ -33,8 +34,11 @@ class BasicDetails extends React.Component {
 
         const wspatt = new RegExp("^ *$");
 
-        if (info.name === null || wspatt.test(info.name)) {
-          info.name = "";
+        if (info.fname === null || wspatt.test(info.fname)) {
+          info.fname = "";
+        }
+        if (info.lname === null || wspatt.test(info.lname)) {
+          info.lname = "";
         }
         if (info.dob === null || wspatt.test(info.dob)) {
           info.dob = "";
@@ -50,7 +54,8 @@ class BasicDetails extends React.Component {
         }
 
         this.setState({
-          name: info.name,
+          fname: info.fname,
+          lname: info.lname,
           dob: info.dob,
           city: info.city,
           state: info.state,
@@ -70,9 +75,15 @@ class BasicDetails extends React.Component {
     // this.getInfo();
   };
 
-  nameChangeHandler = e => {
+  fnameChangeHandler = e => {
     this.setState({
-      name: e.target.value
+      fname: e.target.value
+    });
+  };
+
+  lnameChangeHandler = e => {
+    this.setState({
+      lname: e.target.value
     });
   };
 
@@ -104,7 +115,8 @@ class BasicDetails extends React.Component {
     e.preventDefault();
     const data = {
       id: this.state.id,
-      name: this.state.name,
+      fname: this.state.fname,
+      lname: this.state.lname,
       dob: this.state.dob,
       city: this.state.city,
       state: this.state.state,
@@ -128,14 +140,15 @@ class BasicDetails extends React.Component {
 
   render() {
     const {
-      name, dob, city, state, country, editWasTriggered
+      fname, lname, dob, city, state, country, editWasTriggered
     } = this.state;
 
     let display = "";
     display = (
       <DisplayInfo
         clicked={this.handleClick}
-        name={name}
+        fname={fname}
+        lname={lname}
         dob={dob}
         city={city}
         state={state}
@@ -146,7 +159,8 @@ class BasicDetails extends React.Component {
     if (editWasTriggered) {
       display = (
         <EditInfo
-          namechange={this.nameChangeHandler}
+          fnamechange={this.fnameChangeHandler}
+          lnamechange={this.lnameChangeHandler}
           dobchange={this.dobChangeHandler}
           citychange={this.cityChangeHandler}
           statechange={this.stateChangeHandler}
