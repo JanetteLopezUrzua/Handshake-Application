@@ -1,4 +1,5 @@
 import React from 'react';
+import cookie from 'react-cookies';
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -47,28 +48,53 @@ const DisplayEducation = (props) => {
   if (location !== "") locationdisplay = "Location:";
   else locationdisplay = "";
 
+  let container = "";
+  if (cookie.load('id') === props.id && cookie.load('user') === "student") {
+    container = (
+      <Container
+        onClick={props.clicked}
+        style={{
+          paddingRight: '0', paddingLeft: '10px', marginBottom: '30px', cursor: 'pointer'
+        }}
+      >
+        <Row>
+          <Col><Card.Title className="schoolname">{schoolname}</Card.Title></Col>
+          <Col style={{ textAlign: "right" }}>
+            <Button className="editbutton" onClick={props.clicked}>
+              <MdEdit style={{ color: "black" }} />
+            </Button>
+          </Col>
+        </Row>
+        <Card.Subtitle className="schooldegree">{degree}</Card.Subtitle>
+        <Card.Text className="schooldate">{ passingmonth } {passingyear}</Card.Text>
+        <Card.Text className="schooldata"><span style={{ fontWeight: "bold" }}>{majordisplay}</span> { major }</Card.Text>
+        <Card.Text className="schooldata"><span style={{ fontWeight: "bold" }}>{gpadisplay}</span> { gpa }</Card.Text>
+        <Card.Text className="schooldata"><span style={{ fontWeight: "bold" }}>{locationdisplay}</span> { location }</Card.Text>
+      </Container>
+    );
+  } else {
+    container = (
+      <Container
+        style={{
+          paddingRight: '0', paddingLeft: '10px', marginBottom: '30px'
+        }}
+      >
+        <Row>
+          <Col><Card.Title className="schoolname">{schoolname}</Card.Title></Col>
+        </Row>
+        <Card.Subtitle className="schooldegree">{degree}</Card.Subtitle>
+        <Card.Text className="schooldate">{ passingmonth } {passingyear}</Card.Text>
+        <Card.Text className="schooldata"><span style={{ fontWeight: "bold" }}>{majordisplay}</span> { major }</Card.Text>
+        <Card.Text className="schooldata"><span style={{ fontWeight: "bold" }}>{gpadisplay}</span> { gpa }</Card.Text>
+        <Card.Text className="schooldata"><span style={{ fontWeight: "bold" }}>{locationdisplay}</span> { location }</Card.Text>
+      </Container>
+    );
+  }
 
   return (
-    <Container
-      onClick={props.clicked}
-      style={{
-        paddingRight: '0', paddingLeft: '10px', marginBottom: '30px', cursor: 'pointer'
-      }}
-    >
-      <Row>
-        <Col><Card.Title className="schoolname">{schoolname}</Card.Title></Col>
-        <Col style={{ textAlign: "right" }}>
-          <Button className="editbutton" onClick={props.clicked}>
-            <MdEdit style={{ color: "black" }} />
-          </Button>
-        </Col>
-      </Row>
-      <Card.Subtitle className="schooldegree">{degree}</Card.Subtitle>
-      <Card.Text className="schooldate">{ passingmonth } {passingyear}</Card.Text>
-      <Card.Text className="schooldata"><span style={{ fontWeight: "bold" }}>{majordisplay}</span> { major }</Card.Text>
-      <Card.Text className="schooldata"><span style={{ fontWeight: "bold" }}>{gpadisplay}</span> { gpa }</Card.Text>
-      <Card.Text className="schooldata"><span style={{ fontWeight: "bold" }}>{locationdisplay}</span> { location }</Card.Text>
-    </Container>
+    <div>
+      { container }
+    </div>
   );
 };
 

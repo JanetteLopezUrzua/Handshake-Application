@@ -1,4 +1,5 @@
 import React from 'react';
+import cookie from 'react-cookies';
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -42,26 +43,50 @@ const DisplayWork = (props) => {
     enddateyear = "";
   } else noenddate = "";
 
+  let container = "";
+  if (cookie.load('id') === props.id && cookie.load('user') === "student") {
+    container = (
+      <Container
+        onClick={props.clicked}
+        style={{
+          paddingRight: '0', paddingLeft: '10px', marginBottom: '30px', cursor: 'pointer'
+        }}
+      >
+        <Row>
+          <Col><Card.Title className="schoolname">{companyname}</Card.Title></Col>
+          <Col style={{ textAlign: "right" }}>
+            <Button className="editbutton" onClick={props.clicked}>
+              <MdEdit style={{ color: "black" }} />
+            </Button>
+          </Col>
+        </Row>
+        <Card.Subtitle className="schooldegree">{title}</Card.Subtitle>
+        <Card.Text className="schooldate">{ startdatemonth } {startdateyear} - {enddatemonth} {enddateyear} {noenddate}</Card.Text>
+        <Card.Text className="schooldata">{ description }</Card.Text>
+      </Container>
+    );
+  } else {
+    container = (
+      <Container
+        style={{
+          paddingRight: '0', paddingLeft: '10px', marginBottom: '30px'
+        }}
+      >
+        <Row>
+          <Col><Card.Title className="schoolname">{companyname}</Card.Title></Col>
+        </Row>
+        <Card.Subtitle className="schooldegree">{title}</Card.Subtitle>
+        <Card.Text className="schooldate">{ startdatemonth } {startdateyear} - {enddatemonth} {enddateyear} {noenddate}</Card.Text>
+        <Card.Text className="schooldata">{ description }</Card.Text>
+      </Container>
+    );
+  }
+
 
   return (
-    <Container
-      onClick={props.clicked}
-      style={{
-        paddingRight: '0', paddingLeft: '10px', marginBottom: '30px', cursor: 'pointer'
-      }}
-    >
-      <Row>
-        <Col><Card.Title className="schoolname">{companyname}</Card.Title></Col>
-        <Col style={{ textAlign: "right" }}>
-          <Button className="editbutton" onClick={props.clicked}>
-            <MdEdit style={{ color: "black" }} />
-          </Button>
-        </Col>
-      </Row>
-      <Card.Subtitle className="schooldegree">{title}</Card.Subtitle>
-      <Card.Text className="schooldate">{ startdatemonth } {startdateyear} - {enddatemonth} {enddateyear} {noenddate}</Card.Text>
-      <Card.Text className="schooldata">{ description }</Card.Text>
-    </Container>
+    <div>
+      { container }
+    </div>
   );
 };
 

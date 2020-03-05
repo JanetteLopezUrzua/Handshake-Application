@@ -128,6 +128,7 @@ class EducationContainer extends React.Component {
     let display = "";
     display = (
       <DisplayEducation
+        id={this.state.id}
         clicked={this.handleClick}
         school={this.state.school}
       />

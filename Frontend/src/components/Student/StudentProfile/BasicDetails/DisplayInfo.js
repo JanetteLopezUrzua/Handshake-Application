@@ -1,4 +1,5 @@
 import React from 'react';
+import cookie from 'react-cookies';
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -13,15 +14,22 @@ const DisplayInfo = (props) => {
   const state = (props.state === "") ? "No State Entered" : props.state;
   const country = (props.country === "") ? "No Country Entered" : props.country;
 
+  let button = "";
+  if (cookie.load('id') === props.id && cookie.load('user') === "student") {
+    button = (
+      <Col style={{ textAlign: "right" }}>
+        <Button className="editbutton" onClick={props.clicked}>
+          <MdEdit style={{ color: "black" }} />
+        </Button>
+      </Col>
+    );
+  }
+
   return (
     <Card>
       <Row>
         <Col><Card.Title>Personal Information</Card.Title></Col>
-        <Col style={{ textAlign: "right" }}>
-          <Button className="editbutton" onClick={props.clicked}>
-            <MdEdit style={{ color: "black" }} />
-          </Button>
-        </Col>
+        {button}
       </Row>
       <Card.Subtitle>First Name</Card.Subtitle>
       <Card.Text>{ fname }</Card.Text>

@@ -1,6 +1,5 @@
 import React from "react";
 import axios from "axios";
-// import cookie from 'react-cookies';
 import DisplayInfo from "./DisplayInfo";
 import EditInfo from "./EditInfo";
 
@@ -146,6 +145,7 @@ class BasicDetails extends React.Component {
     let display = "";
     display = (
       <DisplayInfo
+        id={this.state.id}
         clicked={this.handleClick}
         fname={fname}
         lname={lname}

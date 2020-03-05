@@ -4,7 +4,7 @@ import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-// import cookie from 'react-cookies';
+import cookie from 'react-cookies';
 import NavDropdown from "react-bootstrap/NavDropdown";
 import EducationContainer from "./EducationContainer";
 import NewFormEducation from "./NewFormEducation";
@@ -282,6 +282,11 @@ class EducationDetails extends React.Component {
       );
     }
 
+    let button = "";
+    if (cookie.load('id') === this.state.id && cookie.load('user') === "student") {
+      button = <Button onClick={this.addSchool} className="BottomAddButton">Add School</Button>;
+    } else button = "";
+
     return (
       <Card style={{ padding: "0" }}>
         <Card.Title style={{ paddingLeft: "24px", paddingTop: "24px" }}>Education</Card.Title>
@@ -290,7 +295,7 @@ class EducationDetails extends React.Component {
           {newschoolform}
         </Container>
         <NavDropdown.Divider style={{ margin: "0" }}></NavDropdown.Divider>
-        <Button onClick={this.addSchool} className="BottomAddButton">Add School</Button>
+        {button}
       </Card>
     );
   }

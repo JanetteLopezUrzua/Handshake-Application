@@ -4,7 +4,7 @@ import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-// import cookie from 'react-cookies';
+import cookie from 'react-cookies';
 import NavDropdown from "react-bootstrap/NavDropdown";
 import WorkContainer from "./WorkContainer";
 import NewFormWork from "./NewFormWork";
@@ -274,6 +274,11 @@ class WorkDetails extends React.Component {
       );
     }
 
+    let button = "";
+    if (cookie.load('id') === this.state.id && cookie.load('user') === "student") {
+      button = <Button onClick={this.addWork} className="BottomAddButton">Add Work Experience</Button>;
+    } else button = "";
+
     return (
       <Card style={{ padding: "0" }}>
         <Card.Title style={{ paddingLeft: "24px", paddingTop: "24px" }}>Work Experience</Card.Title>
@@ -282,7 +287,7 @@ class WorkDetails extends React.Component {
           {newjobform}
         </Container>
         <NavDropdown.Divider style={{ margin: "0" }}></NavDropdown.Divider>
-        <Button onClick={this.addWork} className="BottomAddButton">Add Work Experience</Button>
+        {button}
       </Card>
     );
   }

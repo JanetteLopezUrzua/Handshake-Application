@@ -85,6 +85,12 @@ app.post("/student/signup", (req, res) => {
                     path: "/"
                   });
 
+                  res.cookie('user', "student", {
+                    maxAge: 30 * 60 * 1000,
+                    httpOnly: false,
+                    path: "/"
+                  });
+
                   req.session.userId = row.id;
                 });
 
@@ -127,6 +133,12 @@ app.post("/student/signin", (req, res) => {
     // console.log(req.body.password);
     if (plaintext === req.body.password) {
       res.cookie('id', id, {
+        maxAge: 30 * 60 * 1000,
+        httpOnly: false,
+        path: "/"
+      });
+
+      res.cookie('user', "student", {
         maxAge: 30 * 60 * 1000,
         httpOnly: false,
         path: "/"

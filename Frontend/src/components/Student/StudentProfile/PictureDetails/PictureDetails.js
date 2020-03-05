@@ -1,13 +1,12 @@
 import React from "react";
 import axios from "axios";
-// import cookie from "react-cookies";
+import cookie from "react-cookies";
 import Card from "react-bootstrap/Card";
 // import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import { FaCamera } from "react-icons/fa";
-// import { Redirect } from "react-router";
 import ModalPicture from "./Modal";
 
 class PictureDetails extends React.Component {
@@ -167,39 +166,62 @@ class PictureDetails extends React.Component {
     let studentPhoto = "";
 
     if (this.state.has_image === false) {
-      studentPhoto = (
-        <Button className="ProfilePicButton" onClick={this.handleShow}>
-          <Row>
-            <FaCamera size={25} style={{ margin: "0 auto" }} />
-          </Row>
-          <Row>
-            <h5 style={{ margin: "0 auto", fontSize: "13px" }}>Add a Photo</h5>
-          </Row>
-        </Button>
-      );
-    } else {
-      studentPhoto = (
-        <>
-          <Image
-            className="ProfilePicImage"
-            src={this.state.photo}
-            roundedCircle
-          />
-          <Button className="ProfilePicButtononImage" onClick={this.handleShow}>
+      if (cookie.load('id') === this.state.id && cookie.load('user') === "student") {
+        studentPhoto = (
+          <Button className="ProfilePicButton" onClick={this.handleShow}>
             <Row>
               <FaCamera size={25} style={{ margin: "0 auto" }} />
             </Row>
             <Row>
-              <h5 style={{ margin: "0 auto", fontSize: "13px" }}>
-                Change Photo
-              </h5>
+              <h5 style={{ margin: "0 auto", fontSize: "13px" }}>Add a Photo</h5>
             </Row>
           </Button>
-        </>
-      );
+        );
+      } else {
+        studentPhoto = (
+          <div>
+            <p
+              className="ProfilePicNoImage"
+            >
+              {this.state.fname.charAt(0)}
+              {this.state.lname.charAt(0)}
+            </p>
+          </div>
+        );
+      }
+    } else if (this.state.has_image === true) {
+      if (cookie.load('id') === this.state.id && cookie.load('user') === "student") {
+        studentPhoto = (
+          <>
+            <Image
+              className="ProfilePicImage"
+              src={this.state.photo}
+              roundedCircle
+            />
+            <Button className="ProfilePicButtononImage" onClick={this.handleShow}>
+              <Row>
+                <FaCamera size={25} style={{ margin: "0 auto" }} />
+              </Row>
+              <Row>
+                <h5 style={{ margin: "0 auto", fontSize: "13px" }}>
+                    Change Photo
+                </h5>
+              </Row>
+            </Button>
+          </>
+        );
+      } else {
+        studentPhoto = (
+          <>
+            <Image
+              className="ProfilePicImage"
+              src={this.state.photo}
+              roundedCircle
+            />
+          </>
+        );
+      }
     }
-
-    // later <Image className="ProfilePicButton" src={this.state.photo} roundedCircle />
 
     return (
       <Card>

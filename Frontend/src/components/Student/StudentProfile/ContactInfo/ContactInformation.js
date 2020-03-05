@@ -128,6 +128,7 @@ class ContactInformation extends React.Component {
     let display = "";
     display = (
       <DisplayContactInfo
+        id={this.state.id}
         clicked={this.handleClick}
         email={email}
         phonenum={phonenum}

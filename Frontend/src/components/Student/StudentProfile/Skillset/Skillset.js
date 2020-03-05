@@ -103,12 +103,13 @@ class Skillset extends React.Component {
   render() {
     let skillsList = "";
     if (this.state.skills === undefined || this.state.skills.length === 0) skillsList = "";
-    else skillsList = this.state.skills.map((skill) => <DisplaySkills skill={skill} handleDelete={this.handleDelete} />);
+    else skillsList = this.state.skills.map((skill) => <DisplaySkills id={this.state.id} skill={skill} handleDelete={this.handleDelete} />);
     return (
       <Card>
         <Card.Title>Skills</Card.Title>
         <Container style={{ maxHeight: "200px", overflowY: "scroll" }}>{skillsList}</Container>
         <EditSkills
+          id={this.state.id}
           skillschange={this.skillsChangeHandler}
           save={this.handleSave}
           value={this.state.value}

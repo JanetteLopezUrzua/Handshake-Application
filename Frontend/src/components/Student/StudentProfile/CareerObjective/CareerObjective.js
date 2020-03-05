@@ -101,6 +101,7 @@ class CareerObjective extends React.Component {
     let display = "";
     display = (
       <DisplayObjective
+        id={this.state.id}
         clicked={this.handleClick}
         objective={objective}
       />

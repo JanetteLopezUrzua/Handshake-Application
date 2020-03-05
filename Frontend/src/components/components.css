@@ -321,6 +321,20 @@
   margin-bottom: 10px;
 }
 
+.ProfilePicNoImage {
+  border-radius: 50%;
+  width: 180px;
+  height: 180px;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  background-color: #707070;
+  color: #fff;
+  font-size: 40px;
+  font-weight: Bold;
+  text-align: center;
+  line-height: 4.5;
+}
+
 .ProfilePicButtononImage {
   position: absolute;
   top: 32%;

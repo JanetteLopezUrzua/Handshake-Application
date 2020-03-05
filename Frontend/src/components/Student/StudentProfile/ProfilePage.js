@@ -36,7 +36,7 @@ class ProfilePage extends React.Component {
     return (
       <div>
         {redirectVar}
-        <Navbar id={this.props.match.params.id} photochange={this.state.photochange} />
+        <Navbar id={cookie.load('id')} photochange={this.state.photochange} />
         <Container>
           <Row>
             <Col sm={4}>

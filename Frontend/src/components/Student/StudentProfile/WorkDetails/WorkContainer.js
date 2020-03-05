@@ -142,6 +142,7 @@ class WorkContainer extends React.Component {
     let display = "";
     display = (
       <DisplayWork
+        id={this.state.id}
         clicked={this.handleClick}
         job={this.state.job}
       />
