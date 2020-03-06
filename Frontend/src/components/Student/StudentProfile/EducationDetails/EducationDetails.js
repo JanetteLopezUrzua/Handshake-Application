@@ -49,7 +49,7 @@ class EducationDetails extends React.Component {
 
         if (this.state.schools === undefined || this.state.schools.length === 0) {
           this.setState({
-            message: "Where is somewhere you have studied?",
+            message: "Where is somewhere you have studied? - Add your current school here so you can be found on the students list.",
           });
         } else {
           this.setState({
@@ -200,6 +200,8 @@ class EducationDetails extends React.Component {
             },
             newform: false
           });
+
+          this.getInfo();
         })
         .catch(error => {
           console.log(error);
@@ -232,8 +234,8 @@ class EducationDetails extends React.Component {
     });
   };
 
-  handleDelete = (schoolname) => {
-    axios.delete("http://localhost:3001/student/educationinfo/delete", { data: { id: this.state.id, schoolname } })
+  handleDelete = (schoolname, degree) => {
+    axios.delete("http://localhost:3001/student/educationinfo/delete", { data: { id: this.state.id, schoolname, degree } })
       .then(response => {
         console.log(response);
         this.getInfo();
@@ -244,24 +246,12 @@ class EducationDetails extends React.Component {
   }
 
   render() {
+    console.log("RENDERRRRR");
     let schoolsList = "";
     let newschoolform = "";
 
-    const compare = (a, b) => {
-      let comparison = 0;
-
-      if (a.passingyear > b.passingyear) {
-        comparison = 1;
-      } else if (a < b) {
-        comparison = -1;
-      }
-      return comparison;
-    };
-
-    const primary = this.state.schools.sort(compare);
-
     if (this.state.schools === undefined || this.state.schools.length === 0) schoolsList = "";
-    else schoolsList = primary.map((school) => <EducationContainer id={this.state.id} school={school} delete={this.handleDelete} />);
+    else schoolsList = this.state.schools.map((school) => <EducationContainer id={this.state.id} school={school} delete={this.handleDelete} />);
 
     if (this.state.newform === false) newschoolform = "";
     else {

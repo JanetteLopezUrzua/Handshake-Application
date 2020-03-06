@@ -43,6 +43,10 @@ const EditInfo = (props) =>
         <Form.Label className="labels">Country</Form.Label>
         <Form.Control style={{ textTransform: "capitalize" }} onChange={props.countrychange} name="country" type="text" value={props.data.country} />
       </Form.Group>
+      <Form.Group controlId="College">
+        <Form.Label className="labels">Current College</Form.Label>
+        <Form.Control style={{ textTransform: "capitalize" }} onChange={props.collegechange} name="college" type="text" value={props.data.college} />
+      </Form.Group>
       <Card.Footer>
         <Button className="cancel" onClick={props.cancel}>Cancel</Button>
         <Button className="save" onClick={props.save}>Save</Button>

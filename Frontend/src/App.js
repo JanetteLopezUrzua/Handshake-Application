@@ -8,6 +8,7 @@ import StudentProfile from "./components/Student/StudentProfile/ProfilePage";
 import CompanySignup from "./components/Company/Signup";
 import CompanySignin from "./components/Company/Signin";
 import CompanyProfile from "./components/Company/CompanyProfile/ProfilePage";
+import StudentsList from "./components/Student/StudentTab/StudentsPage";
 
 
 // App Component
@@ -24,6 +25,7 @@ class App extends Component {
           <Route path="/company/signup" component={CompanySignup} />
           <Route path="/company/signin" component={CompanySignin} />
           <Route path="/company/:id" component={CompanyProfile} />
+          <Route path="/students" component={StudentsList} />
         </Switch>
       </BrowserRouter>
     );

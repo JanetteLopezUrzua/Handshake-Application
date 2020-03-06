@@ -12,7 +12,7 @@ import cookie from 'react-cookies';
 import { FaSearch } from 'react-icons/fa';
 import axios from "axios";
 // import {Redirect} from 'react-router';
-import hslogo from '../../assets/logo.JPG';
+import hslogo from '../assets/logo.JPG';
 
 
 class Navigationbar extends React.Component {
@@ -20,15 +20,21 @@ class Navigationbar extends React.Component {
     super(props);
     this.state = {
       id: "",
-      name: "",
+      fname: "",
       photo: "",
       has_image: false,
+      firstnameletter: "",
+      lastnameletter: "",
+
+      // Company
+      name: "",
       nameletter: "",
     };
   }
 
   componentDidMount() {
-    this.getImage();
+    if (cookie.load("user") === "student") this.getStudentImage();
+    if (cookie.load("user") === "company") this.getCompanyImage();
   }
 
   static getDerivedStateFromProps = props => ({ id: props.id });
@@ -43,7 +49,46 @@ class Navigationbar extends React.Component {
     console.log("THE CURRENTS STATE", state);
   }
 
-  getImage() {
+  getStudentImage() {
+    console.log("COMPNENT FI MOINT");
+    axios
+      .get(`http://localhost:3001/student/navbar/${this.state.id}`)
+      .then(response => {
+        const info = response.data;
+
+        const fn = info.fname.charAt(0);
+        const ln = info.lname.charAt(0);
+
+        console.log(response.data);
+        this.setState({
+          fname: info.fname,
+          photo: info.photo,
+          firstnameletter: fn,
+          lastnameletter: ln
+        });
+
+        if (this.state.photo === "" || this.state.photo === null) {
+          this.setState({
+            has_image: false
+          });
+        } else {
+          const imageURL = `${Buffer.from(info.photo).toString()}`;
+
+          this.setState({
+            photo: imageURL,
+            has_image: true
+          });
+        }
+
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+        console.log(error.response.data);
+      });
+  }
+
+  getCompanyImage() {
     console.log("COMPNENT FI MOINT");
     axios
       .get(`http://localhost:3001/company/navbar/${this.state.id}`)
@@ -87,30 +132,59 @@ class Navigationbar extends React.Component {
   }
 
   render() {
-    console.log("NAV RENDERING");
     let img = "";
-    if (this.state.has_image === true) {
-      img = (
-        <Container>
-          <img
-            className="navbarpic"
-            src={this.state.photo}
-            alt="user profile pic"
-            roundedCircle
-          />
-          <p id="navbarname"> {this.state.name} </p>
-        </Container>
-      );
-    } else {
-      img = (
-        <div>
-          <p
-            className="navbarpic"
-          >
-            {this.state.nameletter}
-          </p>
-        </div>
-      );
+
+    if (cookie.load("user") === "student") {
+      if (this.state.has_image === true) {
+        img = (
+          <Container>
+            <img
+              className="navbarpic"
+              src={this.state.photo}
+              alt="user profile pic"
+              roundedcircle
+            />
+            <p id="navbarname"> {this.state.fname} </p>
+          </Container>
+        );
+      } else {
+        img = (
+          <div>
+            <p
+              className="navbarpic"
+            >
+              {this.state.firstnameletter}
+              {this.state.lastnameletter}
+            </p>
+          </div>
+        );
+      }
+    }
+
+    if (cookie.load("user") === "company") {
+      if (this.state.has_image === true) {
+        img = (
+          <Container>
+            <img
+              className="navbarpic"
+              src={this.state.photo}
+              alt="user profile pic"
+              roundedcircle
+            />
+            <p id="navbarname"> {this.state.name} </p>
+          </Container>
+        );
+      } else {
+        img = (
+          <div>
+            <p
+              className="navbarpic"
+            >
+              {this.state.nameletter}
+            </p>
+          </div>
+        );
+      }
     }
 
     return (
@@ -135,14 +209,14 @@ class Navigationbar extends React.Component {
           <Nav.Link className="navbaritem" href="#home"><span>Jobs</span></Nav.Link>
           <Nav.Link className="navbaritem" href="#link"><span>Events</span></Nav.Link>
           <Nav.Link className="navbaritem" href="#link"><span>Q&amp;A</span></Nav.Link>
-          <Nav.Link className="navbaritem" href="#link"><span>Students</span></Nav.Link>
+          <Link className="navbaritem" to="/students"><span>Students</span></Link>
           <Nav.Link className="navbaritem" href="#link"><span>Messages</span></Nav.Link>
           <Nav.Link className="navbaritem" href="#link"><span>Career Center</span></Nav.Link>
           <NavDropdown
             className="navbardropdown"
             title={img}
           >
-            <NavDropdown.Item href="#action/3.1">Profile</NavDropdown.Item>
+            <Link to={`/${cookie.load("user")}/${cookie.load("id")}`}>Profile</Link>
             <NavDropdown.Item href="#action/3.2">Applications</NavDropdown.Item>
             <NavDropdown.Divider />
             <Link onClick={this.handleLogout} to="/">Sign Out</Link>

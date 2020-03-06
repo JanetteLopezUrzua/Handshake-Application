@@ -22,8 +22,6 @@ class EducationContainer extends React.Component {
     e.preventDefault();
 
     this.setState({ editWasTriggered: true });
-
-    // this.getInfo();
   };
 
   schoolNameChangeHandler = e => {
@@ -119,12 +117,16 @@ class EducationContainer extends React.Component {
     });
   };
 
-  handleDelete = (schoolname, e) => {
+  handleDelete = (schoolname, degree, e) => {
     e.preventDefault();
-    this.props.delete(schoolname);
+    this.props.delete(schoolname, degree);
+    this.setState({
+      editWasTriggered: false,
+    });
   };
 
   render() {
+    console.log("render2");
     let display = "";
     display = (
       <DisplayEducation

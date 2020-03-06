@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { Redirect } from "react-router";
 import cookie from "react-cookies";
-import Navbar from "../Navigationbar";
+import Navbar from "../../Navigationbar";
 import BasicDetails from "./BasicDetails/BasicDetails";
 import PictureDetails from './PictureDetails/PictureDetails';
 import ContactInformation from './ContactInfo/ContactInformation';

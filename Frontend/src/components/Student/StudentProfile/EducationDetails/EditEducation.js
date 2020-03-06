@@ -47,6 +47,7 @@ const EditEducation = (props) => {
       <Form.Group controlId="degree">
         <Form.Label className="labels">Education Level</Form.Label>
         <Form.Control as="select" onChange={props.degreechange} name="degree" type="text" placeholder={degree} disabled="true">
+          <option value="" hidden>{degree}</option>
           <option>High school</option>
           <option>Associates</option>
           <option>Certificate</option>
@@ -189,7 +190,7 @@ const EditEducation = (props) => {
         <Form.Control onChange={props.locationchange} name="location" type="text" placeholder={location} />
       </Form.Group>
       <Row>
-        <Col><Button className="delete" onClick={(e) => { props.delete(schoolname, e); }}>Delete</Button></Col>
+        <Col><Button className="delete" onClick={(e) => { props.delete(schoolname, degree, e); }}>Delete</Button></Col>
         <Col style={{ textAlign: "right" }}>
           <Button className="cancel" onClick={props.cancel}>Cancel</Button>
           <Button className="save" onClick={props.save}>Save</Button>
