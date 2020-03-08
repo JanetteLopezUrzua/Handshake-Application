@@ -7,7 +7,8 @@ import Button from "react-bootstrap/Button";
 
 const EditEducation = (props) => {
   let {
-    schoolname, location, degree, major, passingmonth, passingyear, gpa
+    // eslint-disable-next-line prefer-const
+    schoolname, primaryschool, location, degree, major, passingmonth, passingyear, gpa
   } = props.school;
 
   const wspatt = new RegExp("^ *$");
@@ -34,6 +35,11 @@ const EditEducation = (props) => {
     gpa = "";
   }
 
+  let del = "";
+  if (primaryschool === "false") {
+    del = (<Col><Button className="delete" onClick={(e) => { props.delete(schoolname, degree, e); }}>Delete</Button></Col>);
+  }
+
   return (
 
     <Container style={{
@@ -46,7 +52,7 @@ const EditEducation = (props) => {
       </Form.Group>
       <Form.Group controlId="degree">
         <Form.Label className="labels">Education Level</Form.Label>
-        <Form.Control as="select" onChange={props.degreechange} name="degree" type="text" placeholder={degree} disabled="true">
+        <Form.Control as="select" onChange={props.degreechange} name="degree" type="text" placeholder={degree}>
           <option value="" hidden>{degree}</option>
           <option>High school</option>
           <option>Associates</option>
@@ -190,7 +196,7 @@ const EditEducation = (props) => {
         <Form.Control onChange={props.locationchange} name="location" type="text" placeholder={location} />
       </Form.Group>
       <Row>
-        <Col><Button className="delete" onClick={(e) => { props.delete(schoolname, degree, e); }}>Delete</Button></Col>
+        {del}
         <Col style={{ textAlign: "right" }}>
           <Button className="cancel" onClick={props.cancel}>Cancel</Button>
           <Button className="save" onClick={props.save}>Save</Button>

@@ -21,6 +21,7 @@ class EducationDetails extends React.Component {
       message: "",
       school: {
         schoolname: "",
+        primaryschool: "",
         location: "",
         degree: "",
         major: "",
@@ -161,6 +162,7 @@ class EducationDetails extends React.Component {
       const data = {
         id: this.state.id,
         schoolname: name,
+        primaryschool: "false",
         location: loc,
         degree: deg,
         major: maj,

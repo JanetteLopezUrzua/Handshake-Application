@@ -19,7 +19,7 @@ class Navigationbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: "",
+      id: cookie.load("id"),
       fname: "",
       photo: "",
       has_image: false,
@@ -37,17 +37,15 @@ class Navigationbar extends React.Component {
     if (cookie.load("user") === "company") this.getCompanyImage();
   }
 
-  static getDerivedStateFromProps = props => ({ id: props.id });
-
-  componentDidUpdate(props, state) {
-    if (this.props.photochange !== props.photochange) {
-      this.getImage();
-    }
-    // this.props.photochange = false;
-    console.log("THIS PROPS ARE", this.props);
-    console.log("THE CURRENT PROPS ARE", props);
-    console.log("THE CURRENTS STATE", state);
-  }
+  // componentDidUpdate(props, state) {
+  //   if (this.props.photochange !== props.photochange) {
+  //     this.getImage();
+  //   }
+  //   // this.props.photochange = false;
+  //   console.log("THIS PROPS ARE", this.props);
+  //   console.log("THE CURRENT PROPS ARE", props);
+  //   console.log("THE CURRENTS STATE", state);
+  // }
 
   getStudentImage() {
     console.log("COMPNENT FI MOINT");
@@ -201,7 +199,7 @@ class Navigationbar extends React.Component {
           <Form.Control
             className="searchbar"
             id="searchtext"
-            type="text"
+            type="search"
             placeholder="Search"
           />
         </InputGroup>

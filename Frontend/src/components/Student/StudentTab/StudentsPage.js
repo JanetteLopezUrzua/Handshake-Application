@@ -10,7 +10,6 @@ import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import { Redirect } from "react-router";
 import cookie from "react-cookies";
-import Navbar from "../../Navigationbar";
 import DisplayStudent from "./StudentsList/DisplayStudent";
 
 
@@ -47,7 +46,6 @@ class StudentTab extends React.Component {
     if (name === "" && college !== "" && major !== "") path = "collegeandmajor";
     if (name !== "" && college !== "" && major !== "") path = "nameandcollegeandmajor";
 
-    console.log("PAAAAAATH:", path);
 
     const data = {
       name: this.state.name,
@@ -82,24 +80,27 @@ class StudentTab extends React.Component {
     this.setState({
       name: e.target.value
     });
+    this.getInfo();
   };
 
   handleCollege = (e) => {
     this.setState({
       college: e.target.value
     });
+    this.getInfo();
   };
 
   handleMajor = (e) => {
     this.setState({
       major: e.target.value
     });
-  };
-
-  handleClick = (e) => {
-    e.preventDefault();
     this.getInfo();
   };
+
+  // handleClick = (e) => {
+  //   e.preventDefault();
+  //   this.getInfo();
+  // };
 
   // clear = (e) => {
   //   e.preventDefault();
@@ -126,7 +127,6 @@ class StudentTab extends React.Component {
     return (
       <div>
         {redirectVar}
-        <Navbar id={cookie.load('id')} photochange={false} />
         <Card className="studentslistbarcard">
           <Container>
             <Row>
@@ -165,7 +165,7 @@ class StudentTab extends React.Component {
                     <Form.Control onChange={this.handleMajor} name="major" type="search" value={this.state.major} />
                   </ListGroup.Item>
                 </ListGroup>
-                <Button onClick={this.handleClick}>Search</Button>
+                {/* <Button onClick={this.handleClick}>Search</Button> */}
               </Card>
             </Col>
             <Col sm={8}>

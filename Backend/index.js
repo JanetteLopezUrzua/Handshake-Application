@@ -20,7 +20,7 @@ const WorkInfo = require("./Student/ProfilePage/WorkInfo");
 const CompanySignup = require("./Company/Signup");
 const CompanySignin = require("./Company/Signin");
 const CompanyNavbar = require("./Company/Navbar");
-const CompanyPictureInfo = require("./Student/ProfilePage/PictureInfo");
+const CompanyPictureInfo = require("./Company/ProfilePage/PictureInfo");
 const CompanyPersonalInfo = require("./Company/ProfilePage/PersonalInfo");
 const CompanyContactInfo = require("./Company/ProfilePage/ContactInfo");
 const StudentStudentsList = require("./Student/StudentsList/StudentsList");
@@ -64,13 +64,13 @@ app.use((req, res, next) => {
 
 app.post("/student/signup", (req, res) => {
   console.log("student signup");
-  const info = new StudentSignup.Signup(connection, req, res);
+  const info = new StudentSignup.StudentSignup(connection, req, res);
   info.signup();
 });
 
 app.post("/student/signin", (req, res) => {
   console.log("student sign in");
-  const info = new StudentSignin.Signin(connection, req, res);
+  const info = new StudentSignin.StudentSignin(connection, req, res);
   info.signin();
 });
 
@@ -174,21 +174,21 @@ app.delete("/student/pictureinfo/delete", (req, res) => {
 
 app.get("/student/educationinfo/:id", (req, res) => {
   console.log("get education info");
-  console.log(req.params.id);
+  // console.log(req.params.id);
   const info = new EducationInfo.EducationInfo(connection, req, res);
   info.geteducationinfo();
 });
 
 app.post("/student/educationinfo/newform", (req, res) => {
   console.log("post education info - new form");
-  console.log(req.body.location);
+  // console.log(req.body.location);
   const info = new EducationInfo.EducationInfo(connection, req, res);
   info.posteducationinfonewform();
 });
 
 app.post("/student/educationinfo", (req, res) => {
   console.log("post education info");
-  console.log(req.body.location);
+  // console.log(req.body.location);
   const info = new EducationInfo.EducationInfo(connection, req, res);
   info.posteducationinfo();
 });
@@ -203,21 +203,21 @@ app.delete("/student/educationinfo/delete", (req, res) => {
 
 app.get("/student/workinfo/:id", (req, res) => {
   console.log("get work info");
-  console.log(req.params.id);
+  // console.log(req.params.id);
   const info = new WorkInfo.WorkInfo(connection, req, res);
   info.getworkinfo();
 });
 
 app.post("/student/workinfo/newform", (req, res) => {
   console.log("post work info - new form");
-  console.log(req.body.location);
+  // console.log(req.body.location);
   const info = new WorkInfo.WorkInfo(connection, req, res);
   info.postworkinfonewform();
 });
 
 app.post("/student/workinfo", (req, res) => {
   console.log("post work info");
-  console.log(req.body.location);
+  // console.log(req.body.location);
   const info = new WorkInfo.WorkInfo(connection, req, res);
   info.postworkinfo();
 });
@@ -247,7 +247,7 @@ app.post("/company/signin", (req, res) => {
 app.get("/company/navbar/:id", (req, res) => {
   console.log("get company navbar info");
   // console.log(req.params.id);
-  const info = new CompanyNavbar.CompanyNavbar(connection, req, res);
+  const info = new CompanyNavbar.Navbar(connection, req, res);
   info.navbar();
 });
 
@@ -279,7 +279,7 @@ app.get("/company/personalinfo/:id", (req, res) => {
     req,
     res
   );
-  info.getpictureinfo();
+  info.getpersonalinfo();
 });
 
 app.post("/company/personalinfo", (req, res) => {
@@ -290,7 +290,7 @@ app.post("/company/personalinfo", (req, res) => {
     req,
     res
   );
-  info.postpictureinfo();
+  info.postpersonalinfo();
 });
 
 app.get("/company/contactinfo/:id", (req, res) => {

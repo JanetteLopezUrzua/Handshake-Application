@@ -123,13 +123,29 @@ class Signup extends React.Component {
         .post("http://localhost:3001/student/signup", data)
         .then(response => {
           console.log("Status Code : ", response.status);
+          const data2 = {
+            id: cookie.load('id'),
+            schoolname: this.state.college,
+            primaryschool: "true",
+            location: "",
+            degree: "",
+            major: "",
+            passingmonth: "",
+            passingyear: "",
+            gpa: "",
+          };
+
+          return axios.post("http://localhost:3001/student/educationinfo/newform", data2);
+        }).then(response => {
+          console.log(response);
+
           this.setState({
             errormessages: {
               accounterrormsg: "",
             }
           });
-        })
-        .catch(error => {
+        }).catch(error => {
+          console.log(error);
           this.setState({
             errormessages: {
               accounterrormsg: error.response.data

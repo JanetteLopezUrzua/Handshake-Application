@@ -33,17 +33,6 @@ class PictureDetails extends React.Component {
     this.getInfo();
   }
 
-
-  componentDidUpdate(props, state) {
-    if (this.props.collegechange !== props.collegechange) {
-      this.getInfo();
-    }
-    // this.props.photochange = false;
-    console.log("THIS PROPS ARE", this.props);
-    console.log("THE CURRENT PROPS ARE", props);
-    console.log("THE CURRENTS STATE", state);
-  }
-
   getInfo = () => {
     axios
       .get(`http://localhost:3001/student/pictureinfo/${this.state.id}`)

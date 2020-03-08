@@ -13,7 +13,7 @@ const CompanyContactInfo = class CompanyContactInfo {
       };
 
       this.connection.query(
-        `select email, phonenumber from companies where id='${this.modulereq.params.id}'`,
+        `select email, phonenumber from companies where id='${this.req.params.id}'`,
         (err, rows) => {
           if (err) this.res.end("Can't get information");
           // console.log(rows);

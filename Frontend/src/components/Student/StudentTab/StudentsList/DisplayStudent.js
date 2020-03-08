@@ -4,7 +4,6 @@ import Image from "react-bootstrap/Image";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Link } from 'react-router-dom';
-import { MdWork } from "react-icons/md";
 
 const DisplayStudent = (props) => {
   const path = `student/${props.student.id}`;
@@ -16,7 +15,7 @@ const DisplayStudent = (props) => {
         <p
           className="studentslistpics"
         >
-          {props.student.fname.charAt(0)} {props.student.lname.chartAt(0)}
+          <div style={{ paddingTop: "10px" }}>{props.student.fname.charAt(0)}{props.student.lname.charAt(0)}</div>
         </p>
       </div>
     );
@@ -31,11 +30,9 @@ const DisplayStudent = (props) => {
     );
   }
 
-  const degree = (props.student.degree !== "" || props.student.degree !== null) ? props.student.degree : "No Degree Listed";
-  const passingdate = (props.student.passingmonth !== "" || props.student.passingmonth !== null || props.student.passingyear !== "" || props.student.passingyear !== null) ? `${props.student.passingmonth} ${props.student.passingyear}` : "No Passing Date Listed";
-  const title = (props.student.title !== "" || props.student.title !== null) ? props.student.title : "No Title Listed";
-  const companyname = (props.student.companyname !== "" || props.student.companyname !== null) ? ` at ${props.student.companyname}` : "  at No Company Listed Listed";
-  const major = (props.student.major !== "" || props.student.major !== null) ? props.student.major : "No Major Listed";
+  const degree = (props.student.degree === "" || props.student.degree === null) ? "No Degree Listed" : props.student.degree;
+  const passingdate = (props.student.passingmonth === "" || props.student.passingmonth === null || props.student.passingyear === 0 || props.student.passingyear === null) ? "No Passing Date Listed" : `${props.student.passingmonth} ${props.student.passingyear}`;
+  const major = (props.student.major === "" || props.student.major === null) ? "No Major Listed" : props.student.major;
 
   return (
     <Card style={{ padding: "16px" }}>
@@ -48,15 +45,8 @@ const DisplayStudent = (props) => {
           <Card.Title className="studentslistcollege">{props.student.college}</Card.Title>
           <Card.Title className="studentslistinfo">{degree}</Card.Title>
           <Card.Title className="studentslistinfo">{passingdate}</Card.Title>
-          <Row>
-            <MdWork style={{
-              color: "rgba(0,0,0,.8)", fontSize: "13px", marginLeft: "15px", marginTop: "3px"
-            }}
-            />
-            <Card.Title className="studentslistinfo" style={{ paddingLeft: "5px" }}>{title}{companyname}</Card.Title>
-          </Row>
         </Col>
-        <Col sm={5} style={{ paddingTop: "57px" }}>
+        <Col sm={5} style={{ paddingTop: "38px" }}>
           <Card.Title className="studentslistinfo">{major}
           </Card.Title>
           <Link

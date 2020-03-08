@@ -1,11 +1,11 @@
-const CareerObjective = class CareerObjective {
+const Skills = class Skills {
   constructor(connection, req, res) {
     this.connection = connection;
     this.req = req;
     this.res = res;
   }
 
-  getskill() {
+  getskills() {
     if (this.req.params.id !== undefined) {
       const data = {
         skills: []
@@ -90,5 +90,5 @@ const CareerObjective = class CareerObjective {
 };
 
 module.exports = {
-  CareerObjective
+  Skills
 };

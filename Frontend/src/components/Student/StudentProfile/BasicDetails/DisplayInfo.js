@@ -13,7 +13,6 @@ const DisplayInfo = (props) => {
   const city = (props.city === "") ? "No City Entered" : props.city;
   const state = (props.state === "") ? "No State Entered" : props.state;
   const country = (props.country === "") ? "No Country Entered" : props.country;
-  const college = (props.college === "") ? "No College Entered" : props.college;
 
   let button = "";
   if (cookie.load('id') === props.id && cookie.load('user') === "student") {
@@ -44,8 +43,6 @@ const DisplayInfo = (props) => {
       <Card.Text style={{ textTransform: "capitalize" }}>{ state }</Card.Text>
       <Card.Subtitle>Country</Card.Subtitle>
       <Card.Text style={{ textTransform: "capitalize" }}>{ country }</Card.Text>
-      <Card.Subtitle>Current College</Card.Subtitle>
-      <Card.Text style={{ textTransform: "capitalize" }}>{ college }</Card.Text>
     </Card>
   );
 };

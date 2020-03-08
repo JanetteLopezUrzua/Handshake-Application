@@ -16,7 +16,6 @@ class BasicDetails extends React.Component {
       city: "",
       state: "",
       country: "",
-      college: "",
       editWasTriggered: false
     };
   }
@@ -52,9 +51,6 @@ class BasicDetails extends React.Component {
         if (info.country === null || wspatt.test(info.country)) {
           info.country = "";
         }
-        if (info.college === null || wspatt.test(info.college)) {
-          info.college = "";
-        }
 
         this.setState({
           fname: info.fname,
@@ -63,7 +59,6 @@ class BasicDetails extends React.Component {
           city: info.city,
           state: info.state,
           country: info.country,
-          college: info.college
         });
       })
       .catch(error => {
@@ -115,12 +110,6 @@ class BasicDetails extends React.Component {
     });
   };
 
-  collegeChangeHandler = e => {
-    this.setState({
-      college: e.target.value
-    });
-  }
-
   handleSave = (e) => {
     e.preventDefault();
     const data = {
@@ -131,13 +120,11 @@ class BasicDetails extends React.Component {
       city: this.state.city,
       state: this.state.state,
       country: this.state.country,
-      college: this.state.college
     };
 
     axios.post("http://localhost:3001/student/personalinfo", data)
       .then(response => {
         console.log(response);
-        this.props.collegechange();
       })
       .catch(error => {
         console.log(error);
@@ -152,7 +139,7 @@ class BasicDetails extends React.Component {
 
   render() {
     const {
-      fname, lname, dob, city, state, country, college, editWasTriggered
+      fname, lname, dob, city, state, country, editWasTriggered
     } = this.state;
 
     let display = "";
@@ -166,7 +153,6 @@ class BasicDetails extends React.Component {
         city={city}
         state={state}
         country={country}
-        college={college}
       />
     );
 
@@ -179,7 +165,6 @@ class BasicDetails extends React.Component {
           citychange={this.cityChangeHandler}
           statechange={this.stateChangeHandler}
           countrychange={this.countryChangeHandler}
-          collegechange={this.collegeChangeHandler}
           save={this.handleSave}
           cancel={this.handleCancel}
           data={this.state}

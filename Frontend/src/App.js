@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { Component } from "react";
 import "./App.css";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
@@ -9,11 +10,31 @@ import CompanySignup from "./components/Company/Signup";
 import CompanySignin from "./components/Company/Signin";
 import CompanyProfile from "./components/Company/CompanyProfile/ProfilePage";
 import StudentsList from "./components/Student/StudentTab/StudentsPage";
+import Navbar from "./components/Navigationbar";
 
 
 // App Component
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      photochange: false,
+    };
+  }
+
+  handlephotochange = () => {
+    this.setState(prevState => ({ photochange: !prevState.photochange }));
+  };
+
   render() {
+    const DefaultContainer = () => (
+      <div>
+        <Navbar photochange={this.state.photochange} />
+        <Route path="/student/:id" render={(props) => <StudentProfile {...props} handlephotochange={this.handlephotochange} />} />
+        <Route path="/company/:id" render={(props) => <CompanyProfile {...props} handlephotochange={this.handlephotochange} />} />
+        <Route path="/students" component={StudentsList} />
+      </div>
+    );
     return (
       // Use Browser Router to route to different pages
       <BrowserRouter>
@@ -21,11 +42,9 @@ class App extends Component {
           <Route exact path="/" component={Firstscreen} />
           <Route path="/student/signup" component={StudentSignup} />
           <Route path="/student/signin" component={StudentSignin} />
-          <Route path="/student/:id" component={StudentProfile} />
           <Route path="/company/signup" component={CompanySignup} />
           <Route path="/company/signin" component={CompanySignin} />
-          <Route path="/company/:id" component={CompanyProfile} />
-          <Route path="/students" component={StudentsList} />
+          <Route component={DefaultContainer} />
         </Switch>
       </BrowserRouter>
     );

@@ -86,6 +86,7 @@ class EducationContainer extends React.Component {
     const data = {
       id: this.state.id,
       schoolname: this.state.school.schoolname,
+      primaryschool: "false",
       location: this.state.school.location,
       degree: this.state.school.degree,
       major: this.state.school.major,

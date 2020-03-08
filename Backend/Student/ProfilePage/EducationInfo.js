@@ -12,7 +12,7 @@ const EducationInfo = class EducationInfo {
       };
 
       this.connection.query(
-        `select schoolname, location, degree, major, passingmonth, passingyear, gpa from schools where id='${this.req.params.id}'`,
+        `select schoolname, primaryschool, location, degree, major, passingmonth, passingyear, gpa from schools where id='${this.req.params.id}'`,
         (err, rows) => {
           if (err) this.res.end("Can't get information");
           console.log(rows);
@@ -21,6 +21,7 @@ const EducationInfo = class EducationInfo {
             rows.forEach(row => {
               data.schools.push({
                 schoolname: row.schoolname,
+                primaryschool: row.primaryschool,
                 location: row.location,
                 degree: row.degree,
                 major: row.major,
@@ -58,7 +59,7 @@ const EducationInfo = class EducationInfo {
             this.res.end("School with same degree already exists.");
           } else {
             this.connection.query(
-              `insert into schools (id, schoolname, location, degree, major, passingmonth, passingyear, gpa) values ('${this.req.body.id}', '${this.req.body.schoolname}', '${this.req.body.location}', '${this.req.body.degree}', '${this.req.body.major}', '${this.req.body.passingmonth}', '${this.req.body.passingyear}', '${this.req.body.gpa}')`,
+              `insert into schools (id, schoolname, primaryschool, location, degree, major, passingmonth, passingyear, gpa) values ('${this.req.body.id}', '${this.req.body.schoolname}', '${this.req.body.primaryschool}', '${this.req.body.location}', '${this.req.body.degree}', '${this.req.body.major}', '${this.req.body.passingmonth}', '${this.req.body.passingyear}', '${this.req.body.gpa}')`,
               (err2, result) => {
                 if (err2) console.log(err2);
 

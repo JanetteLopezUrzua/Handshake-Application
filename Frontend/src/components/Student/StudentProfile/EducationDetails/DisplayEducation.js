@@ -9,7 +9,8 @@ import { MdEdit } from 'react-icons/md';
 
 const DisplayEducation = (props) => {
   let {
-    schoolname, location, degree, major, passingmonth, passingyear, gpa
+    // eslint-disable-next-line prefer-const
+    schoolname, primaryschool, location, degree, major, passingmonth, passingyear, gpa
   } = props.school;
 
   const wspatt = new RegExp("^ *$");
@@ -36,6 +37,17 @@ const DisplayEducation = (props) => {
     gpa = "";
   }
 
+  let primarydisplay = "";
+  if (primaryschool === "true") {
+    primarydisplay = (
+      <p style={{
+        backgroundColor: "#bbb", color: "white", display: "inline", padding: "2px", borderRadius: "5px", fontSize: "10px"
+      }}
+      >Primary School
+      </p>
+    );
+  }
+
   let majordisplay = "";
   if (major !== "") majordisplay = "Major:";
   else majordisplay = "";
@@ -58,8 +70,8 @@ const DisplayEducation = (props) => {
         }}
       >
         <Row>
-          <Col><Card.Title className="schoolname">{schoolname}</Card.Title></Col>
-          <Col style={{ textAlign: "right" }}>
+          <Col sm={10}><Card.Title className="schoolname">{schoolname}  {primarydisplay}</Card.Title></Col>
+          <Col sm={2} style={{ textAlign: "right" }}>
             <Button className="editbutton" onClick={props.clicked}>
               <MdEdit style={{ color: "black" }} />
             </Button>
