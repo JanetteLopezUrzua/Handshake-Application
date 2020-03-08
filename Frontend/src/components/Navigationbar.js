@@ -140,7 +140,7 @@ class Navigationbar extends React.Component {
               className="navbarpic"
               src={this.state.photo}
               alt="user profile pic"
-              roundedcircle
+              roundedcircle="true"
             />
             <p id="navbarname"> {this.state.fname} </p>
           </Container>
@@ -167,7 +167,7 @@ class Navigationbar extends React.Component {
               className="navbarpic"
               src={this.state.photo}
               alt="user profile pic"
-              roundedcircle
+              roundedcircle="true"
             />
             <p id="navbarname"> {this.state.name} </p>
           </Container>
@@ -207,7 +207,7 @@ class Navigationbar extends React.Component {
           <Nav.Link className="navbaritem" href="#home"><span>Jobs</span></Nav.Link>
           <Nav.Link className="navbaritem" href="#link"><span>Events</span></Nav.Link>
           <Nav.Link className="navbaritem" href="#link"><span>Q&amp;A</span></Nav.Link>
-          <Link className="navbaritem" to="/students"><span>Students</span></Link>
+          <Link className="navbaritem" to={`/${cookie.load("user")}/students`}><span>Students</span></Link>
           <Nav.Link className="navbaritem" href="#link"><span>Messages</span></Nav.Link>
           <Nav.Link className="navbaritem" href="#link"><span>Career Center</span></Nav.Link>
           <NavDropdown

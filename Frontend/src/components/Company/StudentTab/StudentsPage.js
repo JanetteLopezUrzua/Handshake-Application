@@ -19,7 +19,7 @@ class StudentTab extends React.Component {
     this.state = {
       name: "",
       college: "",
-      major: "",
+      skill: "",
       students: [],
       message: "",
     };
@@ -30,7 +30,7 @@ class StudentTab extends React.Component {
   }
 
   componentDidUpdate(previousProps, previousState) {
-    if ((previousState.name !== this.state.name) || (previousState.college !== this.state.college) || (previousState.major !== this.state.major)) {
+    if ((previousState.name !== this.state.name) || (previousState.college !== this.state.college) || (previousState.skill !== this.state.skill)) {
       this.getInfo();
     }
   }
@@ -41,25 +41,25 @@ class StudentTab extends React.Component {
     const wspatt = new RegExp("^ *$");
     const name = (wspatt.test(this.state.name) || this.state.name === "") ? "" : this.state.name;
     const college = (wspatt.test(this.state.college) || this.state.college === "") ? "" : this.state.college;
-    const major = (wspatt.test(this.state.major) || this.state.major === "") ? "" : this.state.major;
+    const skill = (wspatt.test(this.state.skill) || this.state.skill === "") ? "" : this.state.skill;
 
-    if (name === "" && college === "" && major === "") path = "all";
-    if (name !== "" && college === "" && major === "") path = "name";
-    if (name === "" && college !== "" && major === "") path = "college";
-    if (name === "" && college === "" && major !== "") path = "major";
-    if (name !== "" && college !== "" && major === "") path = "nameandcollege";
-    if (name !== "" && college === "" && major !== "") path = "nameandmajor";
-    if (name === "" && college !== "" && major !== "") path = "collegeandmajor";
-    if (name !== "" && college !== "" && major !== "") path = "nameandcollegeandmajor";
+    if (name === "" && college === "" && skill === "") path = "all";
+    if (name !== "" && college === "" && skill === "") path = "name";
+    if (name === "" && college !== "" && skill === "") path = "college";
+    if (name === "" && college === "" && skill !== "") path = "skill";
+    if (name !== "" && college !== "" && skill === "") path = "nameandcollege";
+    if (name !== "" && college === "" && skill !== "") path = "nameandskill";
+    if (name === "" && college !== "" && skill !== "") path = "collegeandskill";
+    if (name !== "" && college !== "" && skill !== "") path = "nameandcollegeandskill";
 
 
     const data = {
       name: this.state.name,
       major: this.state.major,
-      college: this.state.college,
+      skill: this.state.skill,
     };
 
-    axios.post(`http://localhost:3001/student/studentslist/${path}`, data)
+    axios.post(`http://localhost:3001/company/studentslist/${path}`, data)
       .then(response => {
         const info = response.data;
 
@@ -94,9 +94,9 @@ class StudentTab extends React.Component {
     });
   };
 
-  handleMajor = (e) => {
+  handleSkill = (e) => {
     this.setState({
-      major: e.target.value
+      skill: e.target.value
     });
   };
 
@@ -120,8 +120,8 @@ class StudentTab extends React.Component {
     let redirectVar = null;
     if (!cookie.load('id')) {
       redirectVar = <Redirect to="/" />;
-    } else if (cookie.load('id') && cookie.load('user') === "company") {
-      redirectVar = <Redirect to={`/company/${cookie.load('id')}`} />;
+    } else if (cookie.load('id') && cookie.load('user') === "student") {
+      redirectVar = <Redirect to={`/student/${cookie.load('id')}`} />;
     }
 
     let studentsList = "";
@@ -164,10 +164,9 @@ class StudentTab extends React.Component {
                     <Card.Text className="studentslistsubtitle">College</Card.Text>
                     <Form.Control onChange={this.handleCollege} name="college" type="search" value={this.state.college} />
                   </ListGroup.Item>
-                  <ListGroup.Item className="studentslisttitle">Filter</ListGroup.Item>
                   <ListGroup.Item>
-                    <Card.Text className="studentslistsubtitle">Major</Card.Text>
-                    <Form.Control onChange={this.handleMajor} name="major" type="search" value={this.state.major} />
+                    <Card.Text className="studentslistsubtitle">Skill</Card.Text>
+                    <Form.Control onChange={this.handleSkill} name="skill" type="search" value={this.state.skill} />
                   </ListGroup.Item>
                 </ListGroup>
                 {/* <Button onClick={this.handleClick}>Search</Button> */}

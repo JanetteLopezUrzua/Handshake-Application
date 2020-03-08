@@ -1,4 +1,4 @@
-const StudentStudentsList = class StudentStudentsList {
+const CompanyStudentsList = class CompanyStudentsList {
   constructor(connection, req, res) {
     this.connection = connection;
     this.req = req;
@@ -6,9 +6,11 @@ const StudentStudentsList = class StudentStudentsList {
   }
 
   postall() {
-    console.log("POOOOOOOOOOOOSSSSSSSSSSSSSSSSSSTTTTTINGGG");
     this.connection.query(
-      "select * from ((select students.id as ids, CONCAT_WS(' ', fname, lname) AS name, fname, lname, photo from students left join students_photos on students.id=students_photos.id) as tb left join (select schools.id, schoolname, degree, major, passingmonth, passingyear from schools where primaryschool='true') as tb2 on tb.ids=tb2.id)",
+      `select * from ((select students.id as ids, CONCAT_WS(' ', fname, lname) AS name, fname, lname, photo from students 
+      left join students_photos on students.id=students_photos.id) as tb 
+      left join (select schools.id, schoolname, degree, major, passingmonth, passingyear from schools where primaryschool='true') as tb2 
+      on tb.ids=tb2.id) left join (SELECT id, GROUP_CONCAT(skill) as skill FROM skills GROUP BY id) as tb3 on tb.ids=tb3.id`,
       (err, rows) => {
         if (err) this.res.end("Can't get information");
 
@@ -28,6 +30,7 @@ const StudentStudentsList = class StudentStudentsList {
               passingmonth: row.passingmonth,
               passingyear: row.passingyear,
               major: row.major,
+              skillset: row.skill,
               photo: row.photo
             });
           });
@@ -46,10 +49,11 @@ const StudentStudentsList = class StudentStudentsList {
 
   postname() {
     this.connection.query(
-      `select * from ((select students.id as ids, CONCAT_WS(' ', fname, lname) AS name, fname, lname, photo 
-    from students left join students_photos on students.id=students_photos.id) as tb 
-    left join (select schools.id, schoolname, degree, major, passingmonth, passingyear 
-    from schools where primaryschool='true') as tb2 on tb.ids=tb2.id) where name like '%${this.req.body.name}%'`,
+      `select * from ((select students.id as ids, CONCAT_WS(' ', fname, lname) AS name, fname, lname, photo from students 
+      left join students_photos on students.id=students_photos.id) as tb 
+      left join (select schools.id, schoolname, degree, major, passingmonth, passingyear from schools where primaryschool='true') as tb2 
+      on tb.ids=tb2.id) left join (SELECT id, GROUP_CONCAT(skill) as skill FROM skills GROUP BY id) as tb3 on tb.ids=tb3.id 
+      where name like '%${this.req.body.name}%'`,
       (err, rows) => {
         if (err) this.res.end("Can't get information");
 
@@ -69,6 +73,7 @@ const StudentStudentsList = class StudentStudentsList {
               passingmonth: row.passingmonth,
               passingyear: row.passingyear,
               major: row.major,
+              skillset: row.skill,
               photo: row.photo
             });
           });
@@ -87,10 +92,11 @@ const StudentStudentsList = class StudentStudentsList {
 
   postcollege() {
     this.connection.query(
-      `select * from ((select students.id as ids, CONCAT_WS(' ', fname, lname) AS name, fname, lname, photo 
-    from students left join students_photos on students.id=students_photos.id) as tb 
-    left join (select schools.id, schoolname, degree, major, passingmonth, passingyear 
-    from schools where primaryschool='true') as tb2 on tb.ids=tb2.id) where schoolname like '%${this.req.body.college}%'`,
+      `select * from ((select students.id as ids, CONCAT_WS(' ', fname, lname) AS name, fname, lname, photo from students 
+        left join students_photos on students.id=students_photos.id) as tb 
+        left join (select schools.id, schoolname, degree, major, passingmonth, passingyear from schools where primaryschool='true') as tb2 
+        on tb.ids=tb2.id) left join (SELECT id, GROUP_CONCAT(skill) as skill FROM skills GROUP BY id) as tb3 on tb.ids=tb3.id 
+        where college like '%${this.req.body.college}%'`,
       (err, rows) => {
         if (err) this.res.end("Can't get information");
 
@@ -110,6 +116,7 @@ const StudentStudentsList = class StudentStudentsList {
               passingmonth: row.passingmonth,
               passingyear: row.passingyear,
               major: row.major,
+              skillset: row.skill,
               photo: row.photo
             });
           });
@@ -126,12 +133,13 @@ const StudentStudentsList = class StudentStudentsList {
     );
   }
 
-  postmajor() {
+  postskill() {
     this.connection.query(
-      `select * from ((select students.id as ids, CONCAT_WS(' ', fname, lname) AS name, fname, lname, photo 
-    from students left join students_photos on students.id=students_photos.id) as tb 
-    left join (select schools.id, schoolname, degree, major, passingmonth, passingyear 
-    from schools where primaryschool='true') as tb2 on tb.ids=tb2.id) where major like '%${this.req.body.major}%'`,
+      `select * from ((select students.id as ids, CONCAT_WS(' ', fname, lname) AS name, fname, lname, photo from students 
+        left join students_photos on students.id=students_photos.id) as tb 
+        left join (select schools.id, schoolname, degree, major, passingmonth, passingyear from schools where primaryschool='true') as tb2 
+        on tb.ids=tb2.id) left join (SELECT id, GROUP_CONCAT(skill) as skill FROM skills GROUP BY id) as tb3 on tb.ids=tb3.id 
+        where skill like '%${this.req.body.skill}%'`,
       (err, rows) => {
         if (err) this.res.end("Can't get information");
 
@@ -151,6 +159,7 @@ const StudentStudentsList = class StudentStudentsList {
               passingmonth: row.passingmonth,
               passingyear: row.passingyear,
               major: row.major,
+              skillset: row.skill,
               photo: row.photo
             });
           });
@@ -169,10 +178,11 @@ const StudentStudentsList = class StudentStudentsList {
 
   postnameandcollege() {
     this.connection.query(
-      `select * from ((select students.id as ids, CONCAT_WS(' ', fname, lname) AS name, fname, lname, photo 
-    from students left join students_photos on students.id=students_photos.id) as tb 
-    left join (select schools.id, schoolname, degree, major, passingmonth, passingyear 
-    from schools where primaryschool='true') as tb2 on tb.ids=tb2.id) where name like '%${this.req.body.name}%' and schoolname like '%${this.req.body.college}%'`,
+      `select * from ((select students.id as ids, CONCAT_WS(' ', fname, lname) AS name, fname, lname, photo from students 
+        left join students_photos on students.id=students_photos.id) as tb 
+        left join (select schools.id, schoolname, degree, major, passingmonth, passingyear from schools where primaryschool='true') as tb2 
+        on tb.ids=tb2.id) left join (SELECT id, GROUP_CONCAT(skill) as skill FROM skills GROUP BY id) as tb3 on tb.ids=tb3.id 
+        where name like '%${this.req.body.name}%' and schoolname like '%${this.req.body.college}%'`,
       (err, rows) => {
         if (err) this.res.end("Can't get information");
 
@@ -192,6 +202,7 @@ const StudentStudentsList = class StudentStudentsList {
               passingmonth: row.passingmonth,
               passingyear: row.passingyear,
               major: row.major,
+              skillset: row.skill,
               photo: row.photo
             });
           });
@@ -208,12 +219,13 @@ const StudentStudentsList = class StudentStudentsList {
     );
   }
 
-  postnameandmajor() {
+  postnameandskill() {
     this.connection.query(
-      `select * from ((select students.id as ids, CONCAT_WS(' ', fname, lname) AS name, fname, lname, photo 
-    from students left join students_photos on students.id=students_photos.id) as tb 
-    left join (select schools.id, schoolname, degree, major, passingmonth, passingyear 
-    from schools where primaryschool='true') as tb2 on tb.ids=tb2.id) where name like '%${this.req.body.name}%' and major like '%${this.req.body.major}%'`,
+      `select * from ((select students.id as ids, CONCAT_WS(' ', fname, lname) AS name, fname, lname, photo from students 
+        left join students_photos on students.id=students_photos.id) as tb 
+        left join (select schools.id, schoolname, degree, major, passingmonth, passingyear from schools where primaryschool='true') as tb2 
+        on tb.ids=tb2.id) left join (SELECT id, GROUP_CONCAT(skill) as skill FROM skills GROUP BY id) as tb3 on tb.ids=tb3.id 
+        where name like '%${this.req.body.name}%' and skill like '%${this.req.body.skill}%'`,
       (err, rows) => {
         if (err) this.res.end("Can't get information");
 
@@ -233,6 +245,7 @@ const StudentStudentsList = class StudentStudentsList {
               passingmonth: row.passingmonth,
               passingyear: row.passingyear,
               major: row.major,
+              skillset: row.skill,
               photo: row.photo
             });
           });
@@ -249,12 +262,13 @@ const StudentStudentsList = class StudentStudentsList {
     );
   }
 
-  postcollegeandmajor() {
+  postcollegeandskill() {
     this.connection.query(
-      `select * from ((select students.id as ids, CONCAT_WS(' ', fname, lname) AS name, fname, lname, photo 
-    from students left join students_photos on students.id=students_photos.id) as tb 
-    left join (select schools.id, schoolname, degree, major, passingmonth, passingyear 
-    from schools where primaryschool='true') as tb2 on tb.ids=tb2.id) where schoolname like '%${this.req.body.college}%' and major like '%${this.req.body.major}%'`,
+      `select * from ((select students.id as ids, CONCAT_WS(' ', fname, lname) AS name, fname, lname, photo from students 
+        left join students_photos on students.id=students_photos.id) as tb 
+        left join (select schools.id, schoolname, degree, major, passingmonth, passingyear from schools where primaryschool='true') as tb2 
+        on tb.ids=tb2.id) left join (SELECT id, GROUP_CONCAT(skill) as skill FROM skills GROUP BY id) as tb3 on tb.ids=tb3.id 
+        where schoolname like '%${this.req.body.college}%' and skill like '%${this.req.body.skill}%'`,
       (err, rows) => {
         if (err) this.res.end("Can't get information");
 
@@ -274,6 +288,7 @@ const StudentStudentsList = class StudentStudentsList {
               passingmonth: row.passingmonth,
               passingyear: row.passingyear,
               major: row.major,
+              skillset: row.skill,
               photo: row.photo
             });
           });
@@ -290,12 +305,13 @@ const StudentStudentsList = class StudentStudentsList {
     );
   }
 
-  postnameandcollegeandmajor() {
+  postnameandcollegeandskill() {
     this.connection.query(
-      `select * from ((select students.id as ids, CONCAT_WS(' ', fname, lname) AS name, fname, lname, photo 
-    from students left join students_photos on students.id=students_photos.id) as tb 
-    left join (select schools.id, schoolname, degree, major, passingmonth, passingyear 
-    from schools where primaryschool='true') as tb2 on tb.ids=tb2.id) where name like '%${this.req.body.name}%' and schoolname like '%${this.req.body.college}%' and major like '%${this.req.body.major}%'`,
+      `select * from ((select students.id as ids, CONCAT_WS(' ', fname, lname) AS name, fname, lname, photo from students 
+        left join students_photos on students.id=students_photos.id) as tb 
+        left join (select schools.id, schoolname, degree, major, passingmonth, passingyear from schools where primaryschool='true') as tb2 
+        on tb.ids=tb2.id) left join (SELECT id, GROUP_CONCAT(skill) as skill FROM skills GROUP BY id) as tb3 on tb.ids=tb3.id 
+        where name like '%${this.req.body.name}%' and skill like '%${this.req.body.skill}%' and schoolname like '%${this.req.body.college}%'`,
       (err, rows) => {
         if (err) this.res.end("Can't get information");
 
@@ -315,6 +331,7 @@ const StudentStudentsList = class StudentStudentsList {
               passingmonth: row.passingmonth,
               passingyear: row.passingyear,
               major: row.major,
+              skillset: row.skill,
               photo: row.photo
             });
           });
@@ -333,5 +350,5 @@ const StudentStudentsList = class StudentStudentsList {
 };
 
 module.exports = {
-  StudentStudentsList
+  CompanyStudentsList
 };

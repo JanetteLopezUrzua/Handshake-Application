@@ -196,7 +196,7 @@ class PictureDetails extends React.Component {
             <Image
               className="ProfilePicImage"
               src={this.state.photo}
-              roundedCircle
+              roundedcircle="true"
             />
             <Button className="ProfilePicButtononImage" onClick={this.handleShow}>
               <Row>
@@ -216,7 +216,7 @@ class PictureDetails extends React.Component {
             <Image
               className="ProfilePicImage"
               src={this.state.photo}
-              roundedCircle
+              roundedcircle="true"
             />
           </>
         );

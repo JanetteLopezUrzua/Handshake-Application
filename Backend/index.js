@@ -24,6 +24,7 @@ const CompanyPictureInfo = require("./Company/ProfilePage/PictureInfo");
 const CompanyPersonalInfo = require("./Company/ProfilePage/PersonalInfo");
 const CompanyContactInfo = require("./Company/ProfilePage/ContactInfo");
 const StudentStudentsList = require("./Student/StudentsList/StudentsList");
+const CompanyStudentsList = require("./Company/StudentsList/StudentsList");
 
 app.set("view engine", "ejs");
 
@@ -307,9 +308,8 @@ app.post("/company/contactinfo", (req, res) => {
   info.postcontactinfo();
 });
 
-/** ******** STUDENTS LIST ************ */
-
-app.post("/studentslist/all", (req, res) => {
+/** ******** Student - STUDENTS LIST ************ */
+app.post("/student/studentslist/all", (req, res) => {
   console.log("get all students");
   // console.log(req.params.id);
   const info = new StudentStudentsList.StudentStudentsList(
@@ -320,7 +320,7 @@ app.post("/studentslist/all", (req, res) => {
   info.postall();
 });
 
-app.post("/studentslist/name", (req, res) => {
+app.post("/student/studentslist/name", (req, res) => {
   console.log("get students by name");
   // console.log(req.params.id);
   const info = new StudentStudentsList.StudentStudentsList(
@@ -331,7 +331,7 @@ app.post("/studentslist/name", (req, res) => {
   info.postname();
 });
 
-app.post("/studentslist/college", (req, res) => {
+app.post("/student/studentslist/college", (req, res) => {
   console.log("get students by name");
   // console.log(req.params.id);
   const info = new StudentStudentsList.StudentStudentsList(
@@ -342,7 +342,7 @@ app.post("/studentslist/college", (req, res) => {
   info.postcollege();
 });
 
-app.post("/studentslist/major", (req, res) => {
+app.post("/student/studentslist/major", (req, res) => {
   console.log("get students by name");
   // console.log(req.params.id);
   const info = new StudentStudentsList.StudentStudentsList(
@@ -353,7 +353,7 @@ app.post("/studentslist/major", (req, res) => {
   info.postmajor();
 });
 
-app.post("/studentslist/nameandcollege", (req, res) => {
+app.post("/student/studentslist/nameandcollege", (req, res) => {
   console.log("get students by name");
   // console.log(req.params.id);
   const info = new StudentStudentsList.StudentStudentsList(
@@ -364,7 +364,7 @@ app.post("/studentslist/nameandcollege", (req, res) => {
   info.postnameandcollege();
 });
 
-app.post("/studentslist/nameandmajor", (req, res) => {
+app.post("/student/studentslist/nameandmajor", (req, res) => {
   console.log("get students by name");
   // console.log(req.params.id);
   const info = new StudentStudentsList.StudentStudentsList(
@@ -375,7 +375,7 @@ app.post("/studentslist/nameandmajor", (req, res) => {
   info.postnameandmajor();
 });
 
-app.post("/studentslist/collegeandmajor", (req, res) => {
+app.post("/student/studentslist/collegeandmajor", (req, res) => {
   console.log("get students by name");
   // console.log(req.params.id);
   const info = new StudentStudentsList.StudentStudentsList(
@@ -386,7 +386,7 @@ app.post("/studentslist/collegeandmajor", (req, res) => {
   info.postcollegeandmajor();
 });
 
-app.post("/studentslist/nameandcollegeandmajor", (req, res) => {
+app.post("/student/studentslist/nameandcollegeandmajor", (req, res) => {
   console.log("get students by name");
   // console.log(req.params.id);
   const info = new StudentStudentsList.StudentStudentsList(
@@ -395,6 +395,97 @@ app.post("/studentslist/nameandcollegeandmajor", (req, res) => {
     res
   );
   info.postnameandcollegeandmajor();
+});
+
+
+/** ******** Company - STUDENTS LIST ************ */
+
+app.post("/company/studentslist/all", (req, res) => {
+  console.log("get all students - company");
+  // console.log(req.params.id);
+  const info = new CompanyStudentsList.CompanyStudentsList(
+    connection,
+    req,
+    res
+  );
+  info.postall();
+});
+
+app.post("/company/studentslist/name", (req, res) => {
+  console.log("get students by name - company");
+  // console.log(req.params.id);
+  const info = new CompanyStudentsList.CompanyStudentsList(
+    connection,
+    req,
+    res
+  );
+  info.postname();
+});
+
+app.post("/company/studentslist/college", (req, res) => {
+  console.log("get students by college - company");
+  // console.log(req.params.id);
+  const info = new CompanyStudentsList.CompanyStudentsList(
+    connection,
+    req,
+    res
+  );
+  info.postcollege();
+});
+
+app.post("/company/studentslist/skill", (req, res) => {
+  console.log("get students by skill - company");
+  // console.log(req.params.id);
+  const info = new CompanyStudentsList.CompanyStudentsList(
+    connection,
+    req,
+    res
+  );
+  info.postskill();
+});
+
+app.post("/company/studentslist/nameandcollege", (req, res) => {
+  console.log("get students by name and college - company");
+  // console.log(req.params.id);
+  const info = new CompanyStudentsList.CompanyStudentsList(
+    connection,
+    req,
+    res
+  );
+  info.postnameandcollege();
+});
+
+app.post("/company/studentslist/nameandskill", (req, res) => {
+  console.log("get students by name and skill - company");
+  // console.log(req.params.id);
+  const info = new CompanyStudentsList.CompanyStudentsList(
+    connection,
+    req,
+    res
+  );
+  info.postnameandskill();
+});
+
+app.post("/company/studentslist/collegeandskill", (req, res) => {
+  console.log("get students by college and skill - company");
+  // console.log(req.params.id);
+  const info = new CompanyStudentsList.CompanyStudentsList(
+    connection,
+    req,
+    res
+  );
+  info.postcollegeandskill();
+});
+
+app.post("/company/studentslist/nameandcollegeandskill", (req, res) => {
+  console.log("get students by name and college and skill - company");
+  // console.log(req.params.id);
+  const info = new CompanyStudentsList.CompanyStudentsList(
+    connection,
+    req,
+    res
+  );
+  info.postnameandcollegeandskill();
 });
 
 // start server on port 3001

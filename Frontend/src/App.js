@@ -9,7 +9,8 @@ import StudentProfile from "./components/Student/StudentProfile/ProfilePage";
 import CompanySignup from "./components/Company/Signup";
 import CompanySignin from "./components/Company/Signin";
 import CompanyProfile from "./components/Company/CompanyProfile/ProfilePage";
-import StudentsList from "./components/Student/StudentTab/StudentsPage";
+import StudentStudentsList from "./components/Student/StudentTab/StudentsPage";
+import CompanyStudentsList from "./components/Company/StudentTab/StudentsPage";
 import Navbar from "./components/Navigationbar";
 
 
@@ -30,9 +31,12 @@ class App extends Component {
     const DefaultContainer = () => (
       <div>
         <Navbar photochange={this.state.photochange} />
-        <Route path="/student/:id" render={(props) => <StudentProfile {...props} handlephotochange={this.handlephotochange} />} />
-        <Route path="/company/:id" render={(props) => <CompanyProfile {...props} handlephotochange={this.handlephotochange} />} />
-        <Route path="/students" component={StudentsList} />
+        <Switch>
+          <Route path="/student/students" component={StudentStudentsList} />
+          <Route path="/company/students" component={CompanyStudentsList} />
+          <Route path="/student/:id" render={(props) => <StudentProfile {...props} handlephotochange={this.handlephotochange} />} />
+          <Route path="/company/:id" render={(props) => <CompanyProfile {...props} handlephotochange={this.handlephotochange} />} />
+        </Switch>
       </div>
     );
     return (
