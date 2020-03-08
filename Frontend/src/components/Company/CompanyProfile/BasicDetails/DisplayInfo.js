@@ -7,7 +7,6 @@ import Button from "react-bootstrap/Button";
 import { MdEdit } from 'react-icons/md';
 
 const DisplayInfo = (props) => {
-  const name = (props.name === "") ? "No Name Entered" : props.name;
   const location = (props.location === "") ? "No Location Entered" : props.location;
   const description = (props.description === "") ? "No Description Entered" : props.description;
 
@@ -28,11 +27,6 @@ const DisplayInfo = (props) => {
         <Col><Card.Title>Company Information</Card.Title></Col>
         {button}
       </Row>
-      <Card.Title style={{
-        fontSize: "34px", fontWeight: "500", textTransform: "capitalize"
-      }}
-      >{ name }
-      </Card.Title>
       <Card.Subtitle>Location</Card.Subtitle>
       <Card.Text style={{ textTransform: "capitalize" }}>{ location }</Card.Text>
       <Card.Subtitle>Description</Card.Subtitle>

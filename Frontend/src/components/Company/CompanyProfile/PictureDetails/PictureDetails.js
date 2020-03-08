@@ -2,11 +2,14 @@ import React from "react";
 import axios from "axios";
 import cookie from "react-cookies";
 import Card from "react-bootstrap/Card";
-// import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import { FaCamera } from "react-icons/fa";
+import NavDropdown from "react-bootstrap/NavDropdown";
+import Form from "react-bootstrap/Form";
+import { MdEdit } from 'react-icons/md';
 import ModalPicture from "./Modal";
 
 class PictureDetails extends React.Component {
@@ -22,6 +25,7 @@ class PictureDetails extends React.Component {
       photo: "",
       validimage: "",
       errormessage: "",
+      editWasTriggered: false
     };
   }
 
@@ -158,13 +162,50 @@ class PictureDetails extends React.Component {
     // this.getInfo();
   };
 
+  handleClick = (e) => {
+    e.preventDefault();
+    console.log("button was pressed!!!!");
+    this.setState({ editWasTriggered: true });
+
+    // this.getInfo();
+  };
+
+  handleSave = (e) => {
+    e.preventDefault();
+    const data = {
+      id: this.state.id,
+      name: this.state.name,
+    };
+
+    axios.post("http://localhost:3001/company/personalinfoname", data)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    this.setState({ editWasTriggered: false });
+  };
+
+  handleCancel = () => {
+    this.setState({ editWasTriggered: false });
+    this.getInfo();
+  };
+
+  nameChangeHandler = e => {
+    this.setState({
+      name: e.target.value
+    });
+  };
+
   render() {
-    let studentPhoto = "";
+    let profilePhoto = "";
 
     if (this.state.has_image === false) {
       if (cookie.load('id') === this.state.id && cookie.load('user') === "company") {
-        studentPhoto = (
-          <Button className="ProfilePicButton" onClick={this.handleShow}>
+        profilePhoto = (
+          <Button className="CompanyProfilePicButton" onClick={this.handleShow}>
             <Row>
               <FaCamera size={25} style={{ margin: "0 auto" }} />
             </Row>
@@ -174,10 +215,10 @@ class PictureDetails extends React.Component {
           </Button>
         );
       } else {
-        studentPhoto = (
+        profilePhoto = (
           <div>
             <p
-              className="ProfilePicNoImage"
+              className="CompanyProfilePicNoImage"
             >
               {this.state.name.charAt(0)}
             </p>
@@ -186,14 +227,13 @@ class PictureDetails extends React.Component {
       }
     } else if (this.state.has_image === true) {
       if (cookie.load('id') === this.state.id && cookie.load('user') === "company") {
-        studentPhoto = (
+        profilePhoto = (
           <>
             <Image
-              className="ProfilePicImage"
+              className="CompanyProfilePicImage"
               src={this.state.photo}
-              roundedcircle="true"
             />
-            <Button className="ProfilePicButtononImage" onClick={this.handleShow}>
+            <Button className="CompanyProfilePicButtononImage" onClick={this.handleShow}>
               <Row>
                 <FaCamera size={25} style={{ margin: "0 auto" }} />
               </Row>
@@ -206,20 +246,54 @@ class PictureDetails extends React.Component {
           </>
         );
       } else {
-        studentPhoto = (
+        profilePhoto = (
           <>
             <Image
-              className="ProfilePicImage"
+              className="CompanyProfilePicImage"
               src={this.state.photo}
-              roundedcircle="true"
             />
           </>
         );
       }
     }
 
+    let button = "";
+    if (cookie.load('id') === this.state.id && cookie.load('user') === "company") {
+      button = (
+        <Col style={{ textAlign: "right" }}>
+          <Button className="editbutton" onClick={this.handleClick}>
+            <MdEdit style={{ color: "black" }} />
+          </Button>
+        </Col>
+      );
+    }
+
+
+    let display = "";
+    display = (
+      <Row>
+        <Col><Card.Title>{this.state.name}</Card.Title></Col>
+        {button}
+      </Row>
+    );
+
+    if (this.state.editWasTriggered) {
+      display = (
+        <Card>
+          <Form.Group controlId="Name">
+            <Form.Label className="labels">Company Name</Form.Label>
+            <Form.Control style={{ textTransform: "capitalize" }} onChange={this.nameChangeHandler} name="name" type="text" value={this.name} />
+          </Form.Group>
+          <Card.Footer>
+            <Button className="cancel" onClick={this.handleCancel}>Cancel</Button>
+            <Button className="save" onClick={this.handleSave}>Save</Button>
+          </Card.Footer>
+        </Card>
+      );
+    }
+
     return (
-      <Card>
+      <Card style={{ padding: "0" }}>
         <ModalPicture
           show={this.state.show}
           close={this.handleClose}
@@ -229,7 +303,29 @@ class PictureDetails extends React.Component {
           has_image={this.state.has_image}
           onDelete={this.onDelete}
         />
-        {studentPhoto}
+        {/* <Container style={{ height: "200px" }}>
+          <Card.Img className="CompanyProfilePicImage" variant="top" src="" />
+        </Container> */}
+        <Row>
+          <Col sm={2}>
+            <Card style={{ height: "122px", width: "122px", padding: "0" }}>
+              {profilePhoto}
+            </Card>
+          </Col>
+          <Col sm={10}>
+            <Card.Body style={{ paddingBottom: "0" }}>
+              <Card.Text>
+                <NavDropdown.Divider style={{ color: "rgba(0, 0, 0, 0.98)" }} />
+                <Card style={{
+                  border: "none", boxShadow: "none", color: "rgba(0, 0, 0, 0.98)", fontSize: "24px", fontWeight: "500"
+                }}
+                >
+                  {display}
+                </Card>
+              </Card.Text>
+            </Card.Body>
+          </Col>
+        </Row>
       </Card>
     );
   }

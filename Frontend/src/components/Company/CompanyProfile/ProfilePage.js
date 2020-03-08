@@ -25,13 +25,13 @@ class ProfilePage extends React.Component {
     return (
       <Container>
         {redirectVar}
+        <PictureDetails id={this.props.match.params.id} photochange={this.props.handlephotochange} />
         <Row>
-          <Col sm={4}>
-            <PictureDetails id={this.props.match.params.id} photochange={this.props.handlephotochange} />
-            <ContactInformation id={this.props.match.params.id} />
-          </Col>
           <Col sm={8}>
             <BasicDetails id={this.props.match.params.id} />
+          </Col>
+          <Col sm={4}>
+            <ContactInformation id={this.props.match.params.id} />
           </Col>
         </Row>
       </Container>

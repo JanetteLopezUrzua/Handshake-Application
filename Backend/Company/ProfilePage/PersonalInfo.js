@@ -44,7 +44,26 @@ const CompanyPersonalInfo = class CompanyPersonalInfo {
   postpersonalinfo() {
     if (this.req.body.id !== undefined) {
       this.connection.query(
-        `update companies set name='${this.req.body.name}', location='${this.req.body.location}', description='${this.req.body.description}' where id='${this.req.body.id}'`,
+        `update companies set location='${this.req.body.location}', description='${this.req.body.description}' where id='${this.req.body.id}'`,
+        (err) => {
+          if (err) this.res.end("Can't update information");
+
+          // console.log(`Changed ${result.changedRows} row(s)`);
+
+          this.res.writeHead(200, {
+            "Content-Type": "text/plain"
+          });
+
+          this.res.end("Successful Save");
+        }
+      );
+    }
+  }
+
+  postname() {
+    if (this.req.body.id !== undefined) {
+      this.connection.query(
+        `update companies set name='${this.req.body.name}' where id='${this.req.body.id}'`,
         (err) => {
           if (err) this.res.end("Can't update information");
 

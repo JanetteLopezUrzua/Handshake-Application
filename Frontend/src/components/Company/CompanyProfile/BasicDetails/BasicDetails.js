@@ -10,7 +10,6 @@ class BasicDetails extends React.Component {
 
     this.state = {
       id: "",
-      name: "",
       location: "",
       description: "",
       editWasTriggered: false
@@ -41,7 +40,6 @@ class BasicDetails extends React.Component {
         }
 
         this.setState({
-          name: info.name,
           location: info.location,
           description: info.description,
         });
@@ -57,12 +55,6 @@ class BasicDetails extends React.Component {
     this.setState({ editWasTriggered: true });
 
     // this.getInfo();
-  };
-
-  nameChangeHandler = e => {
-    this.setState({
-      name: e.target.value
-    });
   };
 
   locationChangeHandler = e => {
@@ -81,7 +73,6 @@ class BasicDetails extends React.Component {
     e.preventDefault();
     const data = {
       id: this.state.id,
-      name: this.state.name,
       location: this.state.location,
       description: this.state.description,
     };
@@ -104,7 +95,7 @@ class BasicDetails extends React.Component {
 
   render() {
     const {
-      name, location, description, editWasTriggered
+      location, description, editWasTriggered
     } = this.state;
 
     let display = "";
@@ -112,7 +103,6 @@ class BasicDetails extends React.Component {
       <DisplayInfo
         id={this.state.id}
         clicked={this.handleClick}
-        name={name}
         location={location}
         description={description}
       />
@@ -121,7 +111,6 @@ class BasicDetails extends React.Component {
     if (editWasTriggered) {
       display = (
         <EditInfo
-          namechange={this.nameChangeHandler}
           locationchange={this.locationChangeHandler}
           descriptionchange={this.descriptionChangeHandler}
           save={this.handleSave}

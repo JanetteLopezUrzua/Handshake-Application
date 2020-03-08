@@ -20,14 +20,14 @@ class Navigationbar extends React.Component {
     super(props);
     this.state = {
       id: cookie.load("id"),
-      fname: "",
+      // fname: "",
       photo: "",
       has_image: false,
       firstnameletter: "",
       lastnameletter: "",
 
       // Company
-      name: "",
+      // name: "",
       nameletter: "",
     };
   }
@@ -59,7 +59,7 @@ class Navigationbar extends React.Component {
 
         console.log(response.data);
         this.setState({
-          fname: info.fname,
+        //  fname: info.fname,
           photo: info.photo,
           firstnameletter: fn,
           lastnameletter: ln
@@ -97,7 +97,7 @@ class Navigationbar extends React.Component {
 
         console.log(response.data);
         this.setState({
-          name: info.name,
+          // name: info.name,
           photo: info.photo,
           nameletter: cn,
         });
@@ -142,7 +142,6 @@ class Navigationbar extends React.Component {
               alt="user profile pic"
               roundedcircle="true"
             />
-            <p id="navbarname"> {this.state.fname} </p>
           </Container>
         );
       } else {
@@ -169,7 +168,6 @@ class Navigationbar extends React.Component {
               alt="user profile pic"
               roundedcircle="true"
             />
-            <p id="navbarname"> {this.state.name} </p>
           </Container>
         );
       } else {

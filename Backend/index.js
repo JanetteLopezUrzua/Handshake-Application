@@ -294,6 +294,17 @@ app.post("/company/personalinfo", (req, res) => {
   info.postpersonalinfo();
 });
 
+app.post("/company/personalinfoname", (req, res) => {
+  console.log("post personal info - company");
+  // console.log(req.body.id);
+  const info = new CompanyPersonalInfo.CompanyPersonalInfo(
+    connection,
+    req,
+    res
+  );
+  info.postname();
+});
+
 app.get("/company/contactinfo/:id", (req, res) => {
   console.log("get contact info - company");
   // console.log(req.params.id);

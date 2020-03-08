@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import cookie from "react-cookies";
 import { Redirect } from "react-router";
+import Container from "react-bootstrap/Container";
 import "./components.css";
 import hsimage from '../assets/Handshakebanner.jpg';
 
@@ -30,11 +31,11 @@ class Firstscreen extends React.Component {
         {redirectVar}
         <img id="banner" src={hsimage} alt="handshake banner" />
         <h2 className="pagetitle">Choose an Option</h2>
-        <div id="firstscreenbuttonscontainer">
-          <Link className="firstscreenbuttons" to="/student/signin">
+        <div className="text-center" style={{ marginTop: "100px" }}>
+          <Link className="firstscreenbuttons" style={{ marginRight: "20px" }} to="/student/signin">
             Student
           </Link>
-          <Link className="firstscreenbuttons" to="/company/signin">
+          <Link className="firstscreenbuttons" style={{ marginLeft: "20px" }} to="/company/signin">
             Company
           </Link>
         </div>
