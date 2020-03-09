@@ -36,6 +36,7 @@ connection.connect((err) => {
 
   /* Events tables */
   connection.query('CREATE TABLE IF NOT EXISTS company_events(event_id int NOT NULL AUTO_INCREMENT, company_id int NOT NULL, bannerphoto longblob, title varchar(255), dayofweek int, month int, day int, year int, starttime varchar(10), startdaytime varchar(2), endtime varchar(10), enddaytime varchar(2), timezone varchar(4), location varchar(255), eligibility varchar(255), description text, PRIMARY KEY(event_id));');
+  connection.query('CREATE TABLE IF NOT EXISTS RSVP(event_id int NOT NULL, student_id int NOT NULL, FOREIGN KEY (event_id) REFERENCES company_events (event_id) ON DELETE CASCADE);');
 });
 
 exports.connection = connection;

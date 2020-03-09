@@ -28,6 +28,7 @@ const CompanyStudentsList = require("./Company/StudentsList/StudentsList");
 const CompanyNewEvent = require("./Company/Events/NewEvent");
 const EventsList = require("./Company/Events/EventsList");
 const Event = require("./Company/Events/Event");
+const RSVP = require("./Company/Events/RSVP");
 
 app.set("view engine", "ejs");
 
@@ -568,6 +569,13 @@ app.delete("/company/event/delete", (req, res) => {
   console.log("delete event");
   const info = new Event.Event(connection, req, res);
   info.deleteevent();
+});
+
+app.get("/event/RSVP/:event_id", (req, res) => {
+  console.log("get RSVPs");
+  // console.log(req.params.id);
+  const info = new RSVP.RSVP(connection, req, res);
+  info.getRSVP();
 });
 
 // start server on port 3001

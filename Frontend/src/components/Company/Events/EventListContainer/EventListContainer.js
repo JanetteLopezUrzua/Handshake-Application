@@ -55,7 +55,7 @@ const EventListContainer = (props) => {
             className="studentslistinfo"
             style={{ color: "#1569e0" }}
           >
-              Edit Event
+              View Details
           </Link>
         </Col>
       </Row>

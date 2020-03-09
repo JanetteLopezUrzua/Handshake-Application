@@ -2,12 +2,15 @@ import React from 'react';
 import "../../../components.css";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 import { Redirect } from "react-router";
 import axios from "axios";
 import cookie from "react-cookies";
 import Banner from "../Banner/DisplayBanner";
 import EventInfo from "../EventInfo/EventInfo";
 import EventDescription from "../EventDescription/EventDescription";
+import EventRSVP from "../EventRSVP/EventRSVP";
 
 class EventPage extends React.Component {
   constructor(props) {
@@ -46,7 +49,14 @@ class EventPage extends React.Component {
         {redirectVar}
         <Banner event_id={this.props.match.params.event_id} />
         <EventInfo event_id={this.props.match.params.event_id} />
-        <EventDescription event_id={this.props.match.params.event_id} />
+        <Row>
+          <Col sm={8}>
+            <EventDescription event_id={this.props.match.params.event_id} />
+          </Col>
+          <Col sm={4}>
+            <EventRSVP event_id={this.props.match.params.event_id} />
+          </Col>
+        </Row>
         <Button className="delete" style={{ margin: "15px" }} onClick={this.handleDelete}>Delete Event</Button>
       </Container>
     );
