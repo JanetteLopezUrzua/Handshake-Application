@@ -248,7 +248,7 @@ class EducationDetails extends React.Component {
   }
 
   render() {
-    console.log("RENDERRRRR");
+    // console.log("RENDERRRRR");
     let schoolsList = "";
     let newschoolform = "";
 

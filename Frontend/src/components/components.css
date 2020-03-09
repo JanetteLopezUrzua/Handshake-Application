@@ -572,3 +572,59 @@
   text-transform: uppercase;
   object-fit: cover;
 }
+
+/******* Company - Events ********/
+
+.BannerPicImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.BannerPicButton {
+  width: 100%;
+  height: 100%;
+  background-color: #f5f9ff;
+  border: 1px solid #e0e0e0;
+  color: #1569e0;
+  font-size: 13px;
+  font-weight: Bold;
+  text-align: center;
+  margin: 0 auto;
+  cursor: pointer;
+  object-fit: cover;
+}
+
+.BannerPicButtononImage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  width: 100%;
+  height: 400px;
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 3.8px solid rgba(255, 255, 255, 0);
+  color: rgba(255, 255, 255, 0.06);
+  font-size: 13px;
+  font-weight: Bold;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.BannerPicButtononImage:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: white;
+}
+
+.eventslistpics {
+  width: 60px;
+  height: 60px;
+  background-color: #707070;
+  color: #fff;
+  font-size: 14px;
+  font-weight: Bold;
+  text-align: center;
+  line-height: 2.3;
+  text-transform: uppercase;
+}

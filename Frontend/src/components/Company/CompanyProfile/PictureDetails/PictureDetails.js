@@ -25,6 +25,7 @@ class PictureDetails extends React.Component {
       photo: "",
       validimage: "",
       errormessage: "",
+      nameerrormessage: "",
       editWasTriggered: false
     };
   }
@@ -59,8 +60,6 @@ class PictureDetails extends React.Component {
             has_image: true
           });
         }
-
-        console.log(response.data);
       })
       .catch(error => {
         console.log(error);
@@ -172,24 +171,36 @@ class PictureDetails extends React.Component {
 
   handleSave = (e) => {
     e.preventDefault();
-    const data = {
-      id: this.state.id,
-      name: this.state.name,
-    };
 
-    axios.post("http://localhost:3001/company/personalinfoname", data)
-      .then(response => {
-        console.log(response);
-      })
-      .catch(error => {
-        console.log(error);
+    const wspatt = new RegExp("^ *$");
+
+    if (wspatt.test(this.state.name) || this.state.name === "") {
+      this.setState({
+        nameerrormessage: "Enter Company Name"
       });
+    } else {
+      const data = {
+        id: this.state.id,
+        name: this.state.name,
+      };
 
-    this.setState({ editWasTriggered: false });
+      axios.post("http://localhost:3001/company/personalinfoname", data)
+        .then(response => {
+          console.log(response);
+          this.setState({
+            nameerrormessage: ""
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+
+      this.setState({ editWasTriggered: false });
+    }
   };
 
   handleCancel = () => {
-    this.setState({ editWasTriggered: false });
+    this.setState({ nameerrormessage: "", editWasTriggered: false });
     this.getInfo();
   };
 
@@ -216,13 +227,11 @@ class PictureDetails extends React.Component {
         );
       } else {
         profilePhoto = (
-          <div>
-            <p
-              className="CompanyProfilePicNoImage"
-            >
-              {this.state.name.charAt(0)}
-            </p>
-          </div>
+          <p
+            className="CompanyProfilePicNoImage"
+          >
+            {this.state.name.charAt(0)}
+          </p>
         );
       }
     } else if (this.state.has_image === true) {
@@ -272,7 +281,7 @@ class PictureDetails extends React.Component {
     let display = "";
     display = (
       <Row>
-        <Col><Card.Title>{this.state.name}</Card.Title></Col>
+        <Col><Card.Title style={{ textTransform: "capitalize" }}>{this.state.name}</Card.Title></Col>
         {button}
       </Row>
     );
@@ -283,6 +292,7 @@ class PictureDetails extends React.Component {
           <Form.Group controlId="Name">
             <Form.Label className="labels">Company Name</Form.Label>
             <Form.Control style={{ textTransform: "capitalize" }} onChange={this.nameChangeHandler} name="name" type="text" value={this.name} />
+            <p className="errormessage" style={{ fontSize: "13px" }}>{this.state.nameerrormessage}</p>
           </Form.Group>
           <Card.Footer>
             <Button className="cancel" onClick={this.handleCancel}>Cancel</Button>
@@ -314,15 +324,13 @@ class PictureDetails extends React.Component {
           </Col>
           <Col sm={10}>
             <Card.Body style={{ paddingBottom: "0" }}>
-              <Card.Text>
-                <NavDropdown.Divider style={{ color: "rgba(0, 0, 0, 0.98)" }} />
-                <Card style={{
-                  border: "none", boxShadow: "none", color: "rgba(0, 0, 0, 0.98)", fontSize: "24px", fontWeight: "500"
-                }}
-                >
-                  {display}
-                </Card>
-              </Card.Text>
+              <NavDropdown.Divider style={{ color: "rgba(0, 0, 0, 0.98)" }} />
+              <Card style={{
+                border: "none", boxShadow: "none", color: "rgba(0, 0, 0, 0.98)", fontSize: "24px", fontWeight: "500"
+              }}
+              >
+                {display}
+              </Card>
             </Card.Body>
           </Col>
         </Row>

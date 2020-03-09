@@ -11,6 +11,8 @@ import CompanySignin from "./components/Company/Signin";
 import CompanyProfile from "./components/Company/CompanyProfile/ProfilePage";
 import StudentStudentsList from "./components/Student/StudentTab/StudentsPage";
 import CompanyStudentsList from "./components/Company/StudentTab/StudentsPage";
+import NewEvent from "./components/Company/Events/NewEvent/NewEventInfo";
+import Events from "./components/Company/Events/EventPage";
 import Navbar from "./components/Navigationbar";
 
 
@@ -32,6 +34,8 @@ class App extends Component {
       <div>
         <Navbar photochange={this.state.photochange} />
         <Switch>
+          <Route path="/company/events/new" component={NewEvent} />
+          <Route path="/company/events" component={Events} />
           <Route path="/student/students" component={StudentStudentsList} />
           <Route path="/company/students" component={CompanyStudentsList} />
           <Route path="/student/:id" render={(props) => <StudentProfile {...props} handlephotochange={this.handlephotochange} />} />

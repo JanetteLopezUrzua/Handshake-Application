@@ -32,6 +32,10 @@ connection.connect((err) => {
   /* Company Profile tables */
   connection.query('CREATE TABLE IF NOT EXISTS companies(id int NOT NULL AUTO_INCREMENT, name varchar(100), email varchar(255), password varchar(50), location varchar(255), description text, phonenumber varchar(255), PRIMARY KEY(id));');
   connection.query('CREATE TABLE IF NOT EXISTS companies_photos(id int unique NOT NULL, photo longblob, foreign key(id) references companies(id));');
+
+
+  /* Events tables */
+  connection.query('CREATE TABLE IF NOT EXISTS company_events(event_id int NOT NULL AUTO_INCREMENT, company_id int NOT NULL, bannerphoto longblob, title varchar(255), dayofweek int, month int, day int, year int, starttime varchar(10), startdaytime varchar(2), endtime varchar(10), enddaytime varchar(2), timezone varchar(4), location varchar(255), eligibility varchar(255), description text, PRIMARY KEY(event_id));');
 });
 
 exports.connection = connection;

@@ -25,6 +25,8 @@ const CompanyPersonalInfo = require("./Company/ProfilePage/PersonalInfo");
 const CompanyContactInfo = require("./Company/ProfilePage/ContactInfo");
 const StudentStudentsList = require("./Student/StudentsList/StudentsList");
 const CompanyStudentsList = require("./Company/StudentsList/StudentsList");
+const CompanyNewEvent = require("./Company/Events/NewEvent");
+const EventsList = require("./Company/Events/EventsList");
 
 app.set("view engine", "ejs");
 
@@ -497,6 +499,20 @@ app.post("/company/studentslist/nameandcollegeandskill", (req, res) => {
     res
   );
   info.postnameandcollegeandskill();
+});
+
+/* *********Company Events ***************** */
+app.post("/company/newevent", (req, res) => {
+  console.log("post new event - company");
+  const info = new CompanyNewEvent.CompanyNewEvent(connection, req, res);
+  info.postnewevent();
+});
+
+app.get("/company/events/:company_id", (req, res) => {
+  console.log("get events info");
+  // console.log(req.params.id);
+  const info = new EventsList.EventsList(connection, req, res);
+  info.geteventslist();
 });
 
 // start server on port 3001

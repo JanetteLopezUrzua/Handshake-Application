@@ -48,7 +48,7 @@ class Navigationbar extends React.Component {
   // }
 
   getStudentImage() {
-    console.log("COMPNENT FI MOINT");
+    // console.log("STUDENT NAV BAR", this.state.id);
     axios
       .get(`http://localhost:3001/student/navbar/${this.state.id}`)
       .then(response => {
@@ -87,7 +87,7 @@ class Navigationbar extends React.Component {
   }
 
   getCompanyImage() {
-    console.log("COMPNENT FI MOINT");
+    // console.log("Company NAV BAR", this.state.id);
     axios
       .get(`http://localhost:3001/company/navbar/${this.state.id}`)
       .then(response => {
@@ -203,7 +203,7 @@ class Navigationbar extends React.Component {
         </InputGroup>
         <Nav className="ml-auto">
           <Nav.Link className="navbaritem" href="#home"><span>Jobs</span></Nav.Link>
-          <Nav.Link className="navbaritem" href="#link"><span>Events</span></Nav.Link>
+          <Link className="navbaritem" to={`/${cookie.load("user")}/events`}><span>Events</span></Link>
           <Nav.Link className="navbaritem" href="#link"><span>Q&amp;A</span></Nav.Link>
           <Link className="navbaritem" to={`/${cookie.load("user")}/students`}><span>Students</span></Link>
           <Nav.Link className="navbaritem" href="#link"><span>Messages</span></Nav.Link>
