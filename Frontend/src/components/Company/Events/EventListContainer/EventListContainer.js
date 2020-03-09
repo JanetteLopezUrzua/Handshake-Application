@@ -29,7 +29,6 @@ const EventListContainer = (props) => {
       <Image
         className="eventslistpics"
         src={imageURL}
-        roundedcircle="true"
       />
     );
   }
@@ -56,7 +55,7 @@ const EventListContainer = (props) => {
             className="studentslistinfo"
             style={{ color: "#1569e0" }}
           >
-              View Details
+              Edit Event
           </Link>
         </Col>
       </Row>

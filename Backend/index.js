@@ -27,6 +27,7 @@ const StudentStudentsList = require("./Student/StudentsList/StudentsList");
 const CompanyStudentsList = require("./Company/StudentsList/StudentsList");
 const CompanyNewEvent = require("./Company/Events/NewEvent");
 const EventsList = require("./Company/Events/EventsList");
+const Event = require("./Company/Events/Event");
 
 app.set("view engine", "ejs");
 
@@ -513,6 +514,60 @@ app.get("/company/events/:company_id", (req, res) => {
   // console.log(req.params.id);
   const info = new EventsList.EventsList(connection, req, res);
   info.geteventslist();
+});
+
+app.get("/company/eventbannerphoto/:event_id", (req, res) => {
+  console.log("get event banner photo");
+  // console.log(req.params.id);
+  const info = new Event.Event(connection, req, res);
+  info.geteventbannerphoto();
+});
+
+app.post("/company/eventbannerphoto", (req, res) => {
+  console.log("post event banner photo");
+  // console.log(req.params.id);
+  const info = new Event.Event(connection, req, res);
+  info.posteventbannerphoto();
+});
+
+app.delete("/company/eventbannerphoto/delete", (req, res) => {
+  console.log("delete event banner photo");
+  const info = new Event.Event(connection, req, res);
+  info.deleteeventbannerphoto();
+});
+
+app.get("/company/eventinfo/:event_id", (req, res) => {
+  console.log("get event info");
+  // console.log(req.params.id);
+  const info = new Event.Event(connection, req, res);
+  info.geteventinfo();
+});
+
+app.post("/company/eventinfo", (req, res) => {
+  console.log("post event info");
+  // console.log(req.params.id);
+  const info = new Event.Event(connection, req, res);
+  info.posteventinfo();
+});
+
+app.get("/company/eventdescription/:event_id", (req, res) => {
+  console.log("get event description");
+  // console.log(req.params.id);
+  const info = new Event.Event(connection, req, res);
+  info.geteventdescription();
+});
+
+app.post("/company/eventdescription", (req, res) => {
+  console.log("post event description");
+  // console.log(req.params.id);
+  const info = new Event.Event(connection, req, res);
+  info.posteventdescription();
+});
+
+app.delete("/company/event/delete", (req, res) => {
+  console.log("delete event");
+  const info = new Event.Event(connection, req, res);
+  info.deleteevent();
 });
 
 // start server on port 3001

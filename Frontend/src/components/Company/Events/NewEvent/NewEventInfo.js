@@ -446,7 +446,7 @@ class EventInfo extends React.Component {
             <Form.Label className="labels">Time Zone</Form.Label>
             <Form.Control as="select" onChange={this.timeZoneChangeHandler} name="timezone">
               <option value="" hidden> </option>
-              <option value="PST">PST</option>
+              <option value="PST">PDT</option>
               <option value="EDT">EDT</option>
             </Form.Control>
           </Form.Group>

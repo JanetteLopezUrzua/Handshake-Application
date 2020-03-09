@@ -9,7 +9,6 @@ class EventInfo extends React.Component {
     super();
 
     this.state = {
-      company_id: "",
       event_id: "",
       title: "",
       dayofweek: "",
@@ -22,67 +21,25 @@ class EventInfo extends React.Component {
       enddaytime: "",
       timezone: "",
       location: "",
+      eligibilityoption: "",
       eligibility: "",
-      editWasTriggered: false
+      editWasTriggered: false,
+      errormessage: "",
+      photo: "",
+      name: "",
     };
   }
 
-  static getDerivedStateFromProps = (props) => ({ company_id: props.company_id, event_id: props.event_id })
+  static getDerivedStateFromProps = (props) => ({ event_id: props.event_id })
 
   componentDidMount() {
     this.getInfo();
   }
 
   getInfo = () => {
-    const data = {
-      params: {
-        event_id: this.state.event_id,
-        company_id: this.state.company_id,
-      }
-    };
-
-    axios.get(`http://localhost:3001/company/eventinfo/`, data)
+    axios.get(`http://localhost:3001/company/eventinfo/${this.state.event_id}`)
       .then(response => {
         const info = response.data;
-
-        const wspatt = new RegExp("^ *$");
-
-        if (info.title === null || wspatt.test(info.title)) {
-          info.title = "";
-        }
-        if (info.dayofweek === null || wspatt.test(info.dayofweek)) {
-          info.dayofweek = "";
-        }
-        if (info.month === null || wspatt.test(info.month)) {
-          info.month = "";
-        }
-        if (info.day === null || wspatt.test(info.day)) {
-          info.day = "";
-        }
-        if (info.year === null || wspatt.test(info.year)) {
-          info.year = "";
-        }
-        if (info.starttime === null || wspatt.test(info.starttime)) {
-          info.starttime = "";
-        }
-        if (info.startdaytime === null || wspatt.test(info.startdaytime)) {
-          info.startdaytime = "";
-        }
-        if (info.endtime === null || wspatt.test(info.endtime)) {
-          info.endtime = "";
-        }
-        if (info.enddaytime === null || wspatt.test(info.enddaytime)) {
-          info.enddaytime = "";
-        }
-        if (info.timezone === null || wspatt.test(info.timezone)) {
-          info.timezone = "";
-        }
-        if (info.location === null || wspatt.test(info.location)) {
-          info.location = "";
-        }
-        if (info.eligibility === null || wspatt.test(info.eligibility)) {
-          info.eligibility = "";
-        }
 
         this.setState({
           title: info.title,
@@ -97,6 +54,8 @@ class EventInfo extends React.Component {
           timezone: info.timezone,
           location: info.location,
           eligibility: info.eligibility,
+          photo: info.photo,
+          name: info.name,
         });
       })
       .catch(error => {
@@ -179,6 +138,13 @@ class EventInfo extends React.Component {
     });
   };
 
+  eligibilityOptionChangeHandler = e => {
+    this.setState({
+      eligibilityoption: e.target.value,
+      eligibility: e.target.value,
+    });
+  };
+
   eligibilityChangeHandler = e => {
     this.setState({
       eligibility: e.target.value
@@ -187,31 +153,73 @@ class EventInfo extends React.Component {
 
   handleSave = (e) => {
     e.preventDefault();
-    const data = {
-      event_id: this.state.event_id,
-      title: this.state.title,
-      dayofweek: this.state.dayofweek,
-      month: this.state.month,
-      day: this.state.day,
-      year: this.state.year,
-      starttime: this.state.starttime,
-      startdaytime: this.state.startdaytime,
-      endtime: this.state.endtime,
-      enddaytime: this.state.enddaytime,
-      timezone: this.state.timezone,
-      location: this.state.location,
-      eligibility: this.state.eligibility
-    };
+    console.log("SSSSSSAAAAAAVVVVEEEEEEEE");
+    const {
+      title, dayofweek, month, day, year, starttime, startdaytime, endtime, enddaytime, timezone, location, eligibility
+    } = this.state;
 
-    axios.post("http://localhost:3001/company/eventinfo", data)
-      .then(response => {
-        console.log(response);
-      })
-      .catch(error => {
-        console.log(error);
+    let err = "";
+    console.log(title);
+    console.log(err);
+    const wspatt = new RegExp("^ *$");
+    if (title === "" || wspatt.test(title)) {
+      err = "Required. Enter Title.";
+    } else if (dayofweek === "" || wspatt.test(dayofweek)) {
+      err = "Required. Select Day of Week.";
+    } else if (month === "" || wspatt.test(month)) {
+      err = "Required. Select Month.";
+    } else if (day === "" || wspatt.test(day)) {
+      err = "Required. Select Day.";
+    } else if (year === "" || wspatt.test(year)) {
+      err = "Required. Select Year.";
+    } else if (starttime === "" || wspatt.test(starttime)) {
+      err = "Required. Select Start Time.";
+    } else if (startdaytime === "" || wspatt.test(startdaytime)) {
+      err = "Required. Select Start Time AM or PM.";
+    } else if (endtime === "" || wspatt.test(endtime)) {
+      err = "Required. Select End Time.";
+    } else if (enddaytime === "" || wspatt.test(enddaytime)) {
+      err = "Required. Select End Time AM or PM.";
+    } else if (timezone === "" || wspatt.test(timezone)) {
+      err = "Required. Select time Zone.";
+    } else if (location === "" || wspatt.test(location)) {
+      err = "Required. Enter Location.";
+    } else if (eligibility === "" || wspatt.test(eligibility)) {
+      err = "Required. Enter Eligibility.";
+    }
+
+    if (err === "") {
+      const data = {
+        event_id: this.state.event_id,
+        bannerphoto: this.state.bannerphoto,
+        title: this.state.title,
+        dayofweek: this.state.dayofweek,
+        month: this.state.month,
+        day: this.state.day,
+        year: this.state.year,
+        starttime: this.state.starttime,
+        startdaytime: this.state.startdaytime,
+        endtime: this.state.endtime,
+        enddaytime: this.state.enddaytime,
+        timezone: this.state.timezone,
+        location: this.state.location,
+        eligibility: this.state.eligibility,
+        description: this.state.description
+      };
+
+      axios.post("http://localhost:3001/company/eventinfo", data)
+        .then(response => {
+          console.log(response);
+          this.setState({ editWasTriggered: false });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    } else {
+      this.setState({
+        errormessage: err,
       });
-
-    this.setState({ editWasTriggered: false });
+    }
   };
 
   handleCancel = () => {
@@ -220,7 +228,7 @@ class EventInfo extends React.Component {
 
   render() {
     const {
-      title, dayofweek, month, day, year, starttime, startdaytime, endtime, enddaytime, timezone, location, eligibility, editWasTriggered
+      title, dayofweek, month, day, year, starttime, startdaytime, endtime, enddaytime, timezone, location, eligibility, editWasTriggered, photo, name
     } = this.state;
 
     let display = "";
@@ -240,6 +248,8 @@ class EventInfo extends React.Component {
         timezone={timezone}
         location={location}
         eligibility={eligibility}
+        photo={photo}
+        name={name}
       />
     );
 
@@ -256,10 +266,13 @@ class EventInfo extends React.Component {
           endtimechange={this.endTimeChangeHandler}
           enddaytimechange={this.endDayTimeChangeHandler}
           timezonechange={this.timeZoneChangeHandler}
-          location={this.locationChangeHandler}
-          eligibility={this.eligibilityChangeHandler}
+          locationchange={this.locationChangeHandler}
+          eligibilityoptionchange={this.eligibilityOptionChangeHandler}
+          eligibilitychange={this.eligibilityChangeHandler}
           save={this.handleSave}
           cancel={this.handleCancel}
+          eligibilityoption={this.state.eligibilityoption}
+          errormessage={this.state.errormessage}
           data={this.state}
         />
       );

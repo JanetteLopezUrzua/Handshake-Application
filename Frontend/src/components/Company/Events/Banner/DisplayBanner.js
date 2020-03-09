@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import cookie from "react-cookies";
+// import cookie from "react-cookies";
 import Card from "react-bootstrap/Card";
 // import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
@@ -32,7 +32,7 @@ class DisplayBanner extends React.Component {
 
   getInfo = () => {
     axios
-      .get(`http://localhost:3001/company/bannerphoto/${this.state.event_id}`)
+      .get(`http://localhost:3001/company/eventbannerphoto/${this.state.event_id}`)
       .then(response => {
         const info = response.data;
 
@@ -41,13 +41,13 @@ class DisplayBanner extends React.Component {
           photo: info.photo
         });
 
-        if (this.state.photo === "" || this.state.photo === null) {
+        const imageURL = `${Buffer.from(info.photo).toString()}`;
+
+        if (imageURL === "" || imageURL === null) {
           this.setState({
             has_image: false
           });
         } else {
-          const imageURL = `${Buffer.from(info.photo).toString()}`;
-
           this.setState({
             photo: imageURL,
             has_image: true
@@ -103,7 +103,7 @@ class DisplayBanner extends React.Component {
       };
 
       axios
-        .post("http://localhost:3001/company/bannerphoto", data)
+        .post("http://localhost:3001/company/eventbannerphoto", data)
         .then(response => {
           console.log(response);
 
@@ -137,7 +137,7 @@ class DisplayBanner extends React.Component {
     e.preventDefault();
 
     axios
-      .delete("http://localhost:3001/company/bannerphoto/delete", {
+      .delete("http://localhost:3001/company/eventbannerphoto/delete", {
         data: { event_id: this.state.event_id }
       })
       .then(response => {
@@ -157,7 +157,7 @@ class DisplayBanner extends React.Component {
 
     if (this.state.has_image === false) {
       banner = (
-        <Button className="ProfilePicButton" onClick={this.handleShow}>
+        <Button className="BannerPicButton" onClick={this.handleShow}>
           <Row>
             <FaCamera size={25} style={{ margin: "0 auto" }} />
           </Row>
@@ -170,11 +170,11 @@ class DisplayBanner extends React.Component {
       banner = (
         <>
           <Image
-            className="ProfilePicImage"
+            className="BannerPicImage"
             src={this.state.photo}
             roundedcircle="true"
           />
-          <Button className="ProfilePicButtononImage" onClick={this.handleShow}>
+          <Button className="BannerPicButtononImage" onClick={this.handleShow}>
             <Row>
               <FaCamera size={25} style={{ margin: "0 auto" }} />
             </Row>
@@ -189,7 +189,7 @@ class DisplayBanner extends React.Component {
     }
 
     return (
-      <Card>
+      <Card style={{ height: "400px", padding: "0" }}>
         <BannerModal
           show={this.state.show}
           close={this.handleClose}
@@ -200,17 +200,6 @@ class DisplayBanner extends React.Component {
           onDelete={this.onDelete}
         />
         {banner}
-        <Card.Title
-          style={{
-            fontSize: "34px", fontWeight: "500", textAlign: "center", textTransform: "capitalize"
-          }}
-        >
-          {this.state.fname}<br />
-          {this.state.lname}
-        </Card.Title>
-        <Card.Subtitle style={{ fontSize: "18px", textAlign: "center", textTransform: "capitalize" }}>
-          {this.state.college}
-        </Card.Subtitle>
       </Card>
     );
   }

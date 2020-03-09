@@ -16,7 +16,7 @@ const EventsList = class EventsList {
           companies.id=companies_photos.id) as tb on company_events.company_id=tb.id where company_id='${this.req.params.company_id}'`,
         (err, rows) => {
           if (err) this.res.end("Can't get information");
-          console.log(rows);
+          // console.log(rows);
 
           if (rows !== undefined) {
             rows.forEach(row => {
@@ -46,7 +46,7 @@ const EventsList = class EventsList {
               "Content-Type": "application/json"
             });
 
-            console.log(data);
+            // console.log(data);
 
             this.res.end(JSON.stringify(data));
           }
