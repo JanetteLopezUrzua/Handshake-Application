@@ -10,9 +10,10 @@ import { Link } from 'react-router-dom';
 
 
 const EventListContainer = (props) => {
+  console.log("1");
   const path = `/event/${props.event.event_id}`;
   let img = "";
-
+  console.log("2");
   if (props.event.photo === "" || props.event.photo === null) {
     img = (
       <div style={{ paddingLeft: "40px" }}>
@@ -23,6 +24,7 @@ const EventListContainer = (props) => {
         </div>
       </div>
     );
+    console.log("3");
   } else {
     const imageURL = `${Buffer.from(props.event.photo).toString()}`;
     img = (
@@ -31,6 +33,7 @@ const EventListContainer = (props) => {
         src={imageURL}
       />
     );
+    console.log("4");
   }
 
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "November", "December"];

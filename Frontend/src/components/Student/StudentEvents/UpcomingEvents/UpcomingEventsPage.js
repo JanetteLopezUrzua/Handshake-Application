@@ -21,6 +21,7 @@ class UpcomingEventsPage extends React.Component {
   }
 
   getInfo = () => {
+    console.log("6");
     axios.get(`http://localhost:3001/student/events`)
       .then(response => {
         const info = response.data;
@@ -28,7 +29,7 @@ class UpcomingEventsPage extends React.Component {
         this.setState({
           events: info.events,
         });
-
+        console.log("8");
         if (this.state.events === undefined || this.state.events.length === 0) {
           this.setState({
             message: "No Events Found.",
@@ -42,10 +43,10 @@ class UpcomingEventsPage extends React.Component {
       .catch(error => {
         console.log(error);
       });
+    console.log("7");
   }
 
   render() {
-    console.log(this.events);
     // if not logged in go to login page
     let redirectVar = null;
     if (!cookie.load('id')) {

@@ -8,7 +8,7 @@ import Nav from "react-bootstrap/Nav";
 import { Link } from 'react-router-dom';
 
 
-const EventsNavBar = (props) => (
+const EventsNavBar = () => (
   <Card className="studentslistbarcard">
     <Container>
       <Row>

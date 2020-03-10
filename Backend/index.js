@@ -581,7 +581,7 @@ app.get("/event/RSVP/:event_id", (req, res) => {
 });
 
 app.post("/event/RSVP", (req, res) => {
-  console.log("get RSVPs");
+  console.log("post RSVPs Register");
   // console.log(req.params.id);
   const info = new RSVP.RSVP(connection, req, res);
   info.postRSVP();
@@ -621,6 +621,12 @@ app.get("/student/events/registered/:student_id", (req, res) => {
   // console.log(req.params.id);
   const info = new RSVP.RSVP(connection, req, res);
   info.getstudentRSVPEvents();
+});
+
+app.delete("/student/events/registered/delete", (req, res) => {
+  console.log("delete from registration list");
+  const info = new RSVP.RSVP(connection, req, res);
+  info.deleteRSVP();
 });
 
 

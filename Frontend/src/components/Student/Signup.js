@@ -131,8 +131,8 @@ class Signup extends React.Component {
             degree: "",
             major: "",
             passingmonth: "",
-            passingyear: "",
-            gpa: "",
+            passingyear: 0,
+            gpa: 0,
           };
 
           return axios.post("http://localhost:3001/student/educationinfo/newform", data2);

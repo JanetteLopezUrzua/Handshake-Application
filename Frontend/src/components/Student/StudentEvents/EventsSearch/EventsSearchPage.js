@@ -85,7 +85,7 @@ class EventSearchPage extends React.Component {
     let eventsList = "";
 
     if (this.state.events === undefined || this.state.events.length === 0) eventsList = "";
-    else eventsList = this.state.events.map((event) => <EventListContainer event={event} />);
+    else eventsList = this.state.events.map((event) => <EventListContainer key={event.event_id} event={event} />);
 
     return (
       <div>

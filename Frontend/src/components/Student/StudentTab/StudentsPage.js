@@ -127,7 +127,7 @@ class StudentTab extends React.Component {
     let studentsList = "";
 
     if (this.state.students === undefined || this.state.students.length === 0) studentsList = "";
-    else studentsList = this.state.students.map((student) => <DisplayStudent student={student} />);
+    else studentsList = this.state.students.map((student) => <DisplayStudent key={student.id} student={student} />);
 
     return (
       <div>

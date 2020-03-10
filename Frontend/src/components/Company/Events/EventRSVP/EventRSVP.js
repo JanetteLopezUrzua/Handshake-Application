@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import cookie from "react-cookies";
-import { FaPlus } from 'react-icons/fa';
+import { FaPlus, FaMinus } from 'react-icons/fa';
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import RSVPModal from "./RSVPModal";
@@ -14,7 +14,8 @@ class ContactInformation extends React.Component {
       event_id: "",
       show: false,
       students: [],
-      message: ""
+      message: "",
+      alreadyrsvp: false,
     };
   }
 
@@ -24,19 +25,23 @@ class ContactInformation extends React.Component {
     this.getInfo();
   }
 
-  // componentDidUpdate(props) {
-  //   if (this.props !== props) {
-  //     this.getInfo();
-  //   }
-  // }
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.alreadyrsvp !== prevState.alreadyrsvp) {
+      this.getInfo();
+    }
+  }
 
   getInfo = () => {
     axios.get(`http://localhost:3001/event/RSVP/${this.state.event_id}`)
       .then(response => {
         const info = response.data;
 
+        let inlist = false;
+        inlist = info.students.some((student) => student.student_id.toString() === cookie.load("id"));
+
         this.setState({
-          students: info.students
+          students: info.students,
+          alreadyrsvp: inlist,
         });
       })
       .catch(error => {
@@ -68,7 +73,7 @@ class ContactInformation extends React.Component {
       .then(response => {
         console.log(response);
         this.setState({
-          message: "You Registered To This Event"
+          alreadyrsvp: true,
         });
       })
       .catch(error => {
@@ -77,9 +82,20 @@ class ContactInformation extends React.Component {
           message: error.response.data,
         });
       });
-
-    this.getInfo();
   };
+
+  handleUnregister = () => {
+    axios.delete("http://localhost:3001/student/events/registered/delete", { data: { event_id: this.state.event_id, student_id: cookie.load('id') } })
+      .then(response => {
+        console.log(response);
+        this.setState({
+          alreadyrsvp: false,
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
 
   render() {
     let message = "";
@@ -98,14 +114,25 @@ class ContactInformation extends React.Component {
 
     let rsvpbutton = "";
     if (cookie.load('id') && cookie.load('user') === "student") {
-      rsvpbutton = (
-        <Button className="save" onClick={this.handleRSVP}><FaPlus /> RSVP for Event</Button>
-      );
+      if (this.state.alreadyrsvp === false) {
+        rsvpbutton = (
+          <div>
+            <Button className="save" onClick={this.handleRSVP}><FaPlus /> RSVP for Event</Button><br />
+            <p className="errormessage">{this.state.message}</p>
+          </div>
+        );
+      } else {
+        rsvpbutton = (
+          <div>
+            <Button className="delete" onClick={this.handleUnregister}><FaMinus /> Unregister from Event</Button><br />
+            <p className="errormessage">{this.state.message}</p>
+          </div>
+        );
+      }
     }
 
     return (
       <div>
-        {this.state.message}
         {rsvpbutton}
         <Card>
           <RSVPModal
@@ -113,7 +140,7 @@ class ContactInformation extends React.Component {
             close={this.handleClose}
             students={this.state.students}
           />
-          {message}
+          <p className="errormessage">{message}</p><br />
           {button}
         </Card>
       </div>

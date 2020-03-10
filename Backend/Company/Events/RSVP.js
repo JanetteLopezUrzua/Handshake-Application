@@ -92,60 +92,49 @@ const RSVP = class RSVP {
 
   postRSVP() {
     if (this.req.body.event_id !== undefined) {
-      this.connection.query(`select * from RSVP where event_id='${this.req.body.event_id}' and student_id='${this.req.body.student_id}'`,
-        (err4, rows4) => {
-          if (err4) this.res.end("Can't get information");
-          console.log("LEENGTH", rows4.length);
-          if (rows4 === undefined || rows4.lenght === '0') {
-            this.connection.query(`select elegibility from company_event where event_id='${this.req.body.event_id}'`,
-              (err, rows) => {
-                if (err) this.res.end("Can't get information");
-                else {
-                  this.connection.query(`select major from schools where id='${this.req.body.student_id}' and primaryschool="true"`,
-                    (err2, rows2) => {
-                      if (err2) this.res.end("Can't get information");
+      this.connection.query(`insert into RSVP (event_id, student_id) select '${this.req.body.event_id}', '${this.req.body.student_id}' where 
+      '${this.req.body.event_id}' in (select event_id from company_events join (select * from (select students.id, major from students join 
+        schools where students.id=schools.id and primaryschool="true") as tb where tb.id='${this.req.body.student_id}') as tb2 where
+         eligibility=major or eligibility="all" or major="") and not exists (select event_id, student_id from RSVP where 
+          event_id='${this.req.body.event_id}' and student_id='${this.req.body.student_id}')`,
+      (err, result) => {
+        if (err) this.res.end("Can't get information");
+        console.log('Last insert ID:', result.insertId);
+        console.log('Afected Rows:', result.affectedRows);
 
-                      let eligibility = "";
-                      rows.forEach(row => {
-                        eligibility = row.eligibility;
-                      });
+        if (result.affectedRows > 0) {
+          this.res.writeHead(200, {
+            "Content-Type": "text/plain"
+          });
 
+          this.res.end("Successful Post");
+        } else {
+          this.res.writeHead(400, {
+            "Content-Type": "text/plain"
+          });
 
-                      let major = "";
-                      rows2.forEach(row2 => {
-                        major = row2.major;
-                      });
+          this.res.end("Not Eligible For This Event");
+        }
+      });
+    }
+  }
 
-                      if (eligibility === major || eligibility === "all") {
-                        this.connection.query(`insert into RSVP values ('${this.req.body.event_id}', '${this.req.body.student_id}')`,
-                          (err3) => {
-                            if (err3) this.res.end("Can't insert information");
-                            // console.log('Last insert ID:', result.insertId);
+  deleteRSVP() {
+    if (this.req.body.event_id !== undefined) {
+      this.connection.query(
+        `delete from RSVP where event_id='${this.req.body.event_id}' && student_id='${this.req.body.student_id}'`,
+        (err) => {
+          if (err) this.res.end("Can't delete information");
 
-                            this.res.writeHead(200, {
-                              "Content-Type": "text/plain"
-                            });
+          // console.log(`Deleted ${result.affectedRows} row(s)`);
 
-                            this.res.end("Successful Post");
-                          });
-                      } else {
-                        this.res.writeHead(400, {
-                          "Content-Type": "text/plain"
-                        });
+          this.res.writeHead(200, {
+            "Content-Type": "text/plain"
+          });
 
-                        this.res.end("Not Eligible For This Event");
-                      }
-                    });
-                }
-              });
-          } else {
-            this.res.writeHead(400, {
-              "Content-Type": "text/plain"
-            });
-
-            this.res.end("Your Are Already Registered In This Event");
-          }
-        });
+          this.res.end("Successful Delete");
+        }
+      );
     }
   }
 };
