@@ -130,7 +130,7 @@ class NewBanner extends React.Component {
     }
 
     return (
-      <Card style={{ height: "400px", padding: "0" }}>
+      <Card style={{ height: "200px", padding: "0" }}>
         <NewBannerModal
           show={this.state.show}
           close={this.handleClose}

@@ -183,6 +183,13 @@ class Navigationbar extends React.Component {
       }
     }
 
+    let eventspath = "";
+    if (cookie.load("user") === "student") {
+      eventspath = "/student/events/upcoming";
+    } else {
+      eventspath = "/company/events";
+    }
+
     return (
       <Navbar id="navbar" expand="lg">
         <Nav.Link>
@@ -203,7 +210,7 @@ class Navigationbar extends React.Component {
         </InputGroup>
         <Nav className="ml-auto">
           <Nav.Link className="navbaritem" href="#home"><span>Jobs</span></Nav.Link>
-          <Link className="navbaritem" to={`/${cookie.load("user")}/events`}><span>Events</span></Link>
+          <Link className="navbaritem" to={eventspath}><span>Events</span></Link>
           <Nav.Link className="navbaritem" href="#link"><span>Q&amp;A</span></Nav.Link>
           <Link className="navbaritem" to={`/${cookie.load("user")}/students`}><span>Students</span></Link>
           <Nav.Link className="navbaritem" href="#link"><span>Messages</span></Nav.Link>

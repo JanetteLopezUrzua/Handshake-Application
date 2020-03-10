@@ -9,6 +9,7 @@ class EventInfo extends React.Component {
     super();
 
     this.state = {
+      company_id: "",
       event_id: "",
       title: "",
       dayofweek: "",
@@ -42,6 +43,7 @@ class EventInfo extends React.Component {
         const info = response.data;
 
         this.setState({
+          company_id: info.company_id.toString(),
           title: info.title,
           dayofweek: info.dayofweek,
           month: info.month,
@@ -250,6 +252,7 @@ class EventInfo extends React.Component {
         eligibility={eligibility}
         photo={photo}
         name={name}
+        company_id={this.state.company_id}
       />
     );
 

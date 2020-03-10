@@ -12,7 +12,7 @@ const EventsList = class EventsList {
       };
 
       this.connection.query(
-        `select * from company_events left join (select companies.id, name, photo from companies join companies_photos on 
+        `select * from company_events left join (select companies.id, name, photo from companies left join companies_photos on 
           companies.id=companies_photos.id) as tb on company_events.company_id=tb.id where company_id='${this.req.params.company_id}'`,
         (err, rows) => {
           if (err) this.res.end("Can't get information");

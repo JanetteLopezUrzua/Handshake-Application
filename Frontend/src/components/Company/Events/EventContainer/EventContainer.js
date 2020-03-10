@@ -17,7 +17,26 @@ class EventPage extends React.Component {
     super(props);
     this.state = {
       redirect: false,
+      company_id: "",
     };
+  }
+
+  componentDidMount() {
+    this.getInfo();
+  }
+
+  getInfo = () => {
+    axios.get(`http://localhost:3001/company/companytoevent/${this.props.match.params.event_id}`)
+      .then(response => {
+        const info = response.data;
+
+        this.setState({
+          company_id: info.company_id.toString()
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   handleDelete=() => {
@@ -44,6 +63,13 @@ class EventPage extends React.Component {
       redirectVar = <Redirect to="/company/events" />;
     }
 
+    let del = "";
+    if (cookie.load('id') === this.state.company_id && cookie.load('user') === "company") {
+      del = (
+        <Button className="delete" style={{ margin: "15px" }} onClick={this.handleDelete}>Delete Event</Button>
+      );
+    }
+
     return (
       <Container>
         {redirectVar}
@@ -53,11 +79,11 @@ class EventPage extends React.Component {
           <Col sm={8}>
             <EventDescription event_id={this.props.match.params.event_id} />
           </Col>
-          <Col sm={4}>
+          <Col sm={4} style={{ textAlign: "center" }}>
             <EventRSVP event_id={this.props.match.params.event_id} />
           </Col>
         </Row>
-        <Button className="delete" style={{ margin: "15px" }} onClick={this.handleDelete}>Delete Event</Button>
+        {del}
       </Container>
     );
   }

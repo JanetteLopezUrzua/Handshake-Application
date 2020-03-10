@@ -6,8 +6,8 @@ const StudentPictureInfo = class StudentPictureInfo {
   }
 
   getpictureinfo() {
+    console.log("ddddddddddd", this.req.params.id);
     if (this.req.params.id !== undefined) {
-      // console.log("Inside");
       this.connection.query(
         `select fname, lname, college, photo
             from (SELECT students.id, fname, lname, college, photo

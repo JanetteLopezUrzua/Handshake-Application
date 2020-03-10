@@ -1,5 +1,5 @@
 import React from 'react';
-// import cookie from 'react-cookies';
+import cookie from 'react-cookies';
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -16,9 +16,9 @@ const DisplayInfo = (props) => {
     img = (
       <div>
         <div
-          className="CompanyProfilePicImage"
+          className="CompanyProfilePicNoImage"
         >
-          <p style={{ paddingTop: "10px" }}>{props.name.charAt(0)}</p>
+          <p style={{ lineHeight: "1" }}>{props.name.charAt(0)}</p>
         </div>
       </div>
     );
@@ -29,6 +29,18 @@ const DisplayInfo = (props) => {
         className="CompanyProfilePicImage"
         src={imageURL}
       />
+    );
+  }
+
+  let button = "";
+
+  if (cookie.load('id') === props.company_id && cookie.load('user') === "company") {
+    button = (
+      <Col style={{ textAlign: "right" }}>
+        <Button className="editbutton" onClick={props.clicked}>
+          <MdEdit style={{ color: "black" }} />
+        </Button>
+      </Col>
     );
   }
 
@@ -57,11 +69,7 @@ const DisplayInfo = (props) => {
                   >{ props.title }
                   </Card.Title>
                 </Col>
-                <Col style={{ textAlign: "right" }}>
-                  <Button className="editbutton" onClick={props.clicked}>
-                    <MdEdit style={{ color: "black" }} />
-                  </Button>
-                </Col>
+                {button}
               </Row>
               <Card.Text style={{ margin: "0" }}><FaCalendar />
                 { days[props.dayofweek - 1] }, {months[props.month - 1]} {props.day} {props.year}, {props.starttime} {(props.startdaytime).toLowerCase()} - {props.endtime} {(props.enddaytime).toLowerCase()} {props.timezone}

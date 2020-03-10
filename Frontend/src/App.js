@@ -14,8 +14,11 @@ import CompanyStudentsList from "./components/Company/StudentTab/StudentsPage";
 import NewEvent from "./components/Company/Events/NewEvent/NewEventInfo";
 import CompanyEvents from "./components/Company/Events/EventPage";
 import Event from "./components/Company/Events/EventContainer/EventContainer";
-
+import EventsSearch from "./components/Student/StudentEvents/EventsSearch/EventsSearchPage";
+import RegisteredEvents from "./components/Student/StudentEvents/RegisteredEvents/RegisteredEventsPage";
+import UpcomingEvents from "./components/Student/StudentEvents/UpcomingEvents/UpcomingEventsPage";
 import Navbar from "./components/Navigationbar";
+import EventsNavBar from "./components/Student/StudentEvents/EventsNavBar";
 
 
 // App Component
@@ -32,20 +35,33 @@ class App extends Component {
   };
 
   render() {
+    const EventsContainer = () => (
+      <div>
+        <EventsNavBar />
+        <Switch>
+          <Route exact path="/student/events/upcoming" component={UpcomingEvents} />
+          <Route exact path="/student/events/search" component={EventsSearch} />
+          <Route exact path="/student/events/registered" component={RegisteredEvents} />
+        </Switch>
+      </div>
+    );
+
     const DefaultContainer = () => (
       <div>
         <Navbar photochange={this.state.photochange} />
         <Switch>
-          <Route path="/event/:event_id" component={Event} />
-          <Route path="/company/events/new" component={NewEvent} />
-          <Route path="/company/events" component={CompanyEvents} />
-          <Route path="/student/students" component={StudentStudentsList} />
-          <Route path="/company/students" component={CompanyStudentsList} />
-          <Route path="/student/:id" render={(props) => <StudentProfile {...props} handlephotochange={this.handlephotochange} />} />
-          <Route path="/company/:id" render={(props) => <CompanyProfile {...props} handlephotochange={this.handlephotochange} />} />
+          <Route exact path="/event/:event_id" component={Event} />
+          <Route exact path="/company/events/new" component={NewEvent} />
+          <Route exact path="/company/events" component={CompanyEvents} />
+          <Route exact path="/student/students" component={StudentStudentsList} />
+          <Route exact path="/company/students" component={CompanyStudentsList} />
+          <Route exact path="/student/:id" render={(props) => <StudentProfile {...props} handlephotochange={this.handlephotochange} />} />
+          <Route excat path="/company/:id" render={(props) => <CompanyProfile {...props} handlephotochange={this.handlephotochange} />} />
+          <Route component={EventsContainer} />
         </Switch>
       </div>
     );
+
     return (
       // Use Browser Router to route to different pages
       <BrowserRouter>

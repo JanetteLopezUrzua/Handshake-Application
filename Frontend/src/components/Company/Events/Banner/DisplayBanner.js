@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-// import cookie from "react-cookies";
+import cookie from "react-cookies";
 import Card from "react-bootstrap/Card";
 // import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
@@ -21,6 +21,7 @@ class DisplayBanner extends React.Component {
       photo: "",
       validimage: "",
       errormessage: "",
+      company_id: "",
     };
   }
 
@@ -38,7 +39,8 @@ class DisplayBanner extends React.Component {
 
         console.log(response.data);
         this.setState({
-          photo: info.photo
+          photo: info.photo,
+          company_id: info.company_id.toString()
         });
 
         const imageURL = `${Buffer.from(info.photo).toString()}`;
@@ -154,42 +156,58 @@ class DisplayBanner extends React.Component {
 
   render() {
     let banner = "";
-
+    // console.log("COOKIE ID", cookie.load('id'));
+    // console.log("STATE ID", this.state.company_id);
+    // console.log("COOKIE USER", cookie.load('user'));
     if (this.state.has_image === false) {
-      banner = (
-        <Button className="BannerPicButton" onClick={this.handleShow}>
-          <Row>
-            <FaCamera size={25} style={{ margin: "0 auto" }} />
-          </Row>
-          <Row>
-            <h5 style={{ margin: "0 auto", fontSize: "13px" }}>Add a Photo</h5>
-          </Row>
-        </Button>
-      );
-    } else if (this.state.has_image === true) {
-      banner = (
-        <>
-          <Image
-            className="BannerPicImage"
-            src={this.state.photo}
-            roundedcircle="true"
-          />
-          <Button className="BannerPicButtononImage" onClick={this.handleShow}>
+      if (cookie.load('id') === this.state.company_id && cookie.load('user') === "company") {
+        banner = (
+          <Button className="BannerPicButton" onClick={this.handleShow}>
             <Row>
               <FaCamera size={25} style={{ margin: "0 auto" }} />
             </Row>
             <Row>
-              <h5 style={{ margin: "0 auto", fontSize: "13px" }}>
-                    Change Photo
-              </h5>
+              <h5 style={{ margin: "0 auto", fontSize: "13px" }}>Add a Photo</h5>
             </Row>
           </Button>
-        </>
-      );
+        );
+      }
+    } else if (this.state.has_image === true) {
+      if (cookie.load('id') === this.state.company_id && cookie.load('user') === "company") {
+        banner = (
+          <>
+            <Image
+              className="BannerPicImage"
+              src={this.state.photo}
+              roundedcircle="true"
+            />
+            <Button className="BannerPicButtononImage" onClick={this.handleShow}>
+              <Row>
+                <FaCamera size={25} style={{ margin: "0 auto" }} />
+              </Row>
+              <Row>
+                <h5 style={{ margin: "0 auto", fontSize: "13px" }}>
+                    Change Photo
+                </h5>
+              </Row>
+            </Button>
+          </>
+        );
+      } else {
+        banner = (
+          <>
+            <Image
+              className="BannerPicImage"
+              src={this.state.photo}
+              roundedcircle="true"
+            />
+          </>
+        );
+      }
     }
 
     return (
-      <Card style={{ height: "400px", padding: "0" }}>
+      <Card style={{ height: "200px", padding: "0" }}>
         <BannerModal
           show={this.state.show}
           close={this.handleClose}

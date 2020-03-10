@@ -9,21 +9,21 @@ const Event = class Event {
     console.log(this.req.params.event_id);
     if (this.req.params.event_id !== undefined) {
       this.connection.query(
-        `select bannerphoto, name from company_events left join companies on company_events.company_id=companies.id where event_id='${this.req.params.event_id}'`,
+        `select company_id, bannerphoto from company_events where event_id='${this.req.params.event_id}'`,
         (err, rows) => {
           if (err) this.res.end("Can't get information");
           // console.log(rows);
 
           if (rows !== undefined) {
             let data = {
-              name: "",
-              photo: ""
+              photo: "",
+              company_id: "",
             };
 
             rows.forEach(row => {
               data = {
-                name: row.name,
-                photo: row.bannerphoto
+                photo: row.bannerphoto,
+                company_id: row.company_id,
               };
             });
 
@@ -82,7 +82,7 @@ const Event = class Event {
     console.log(this.req.params.event_id);
     if (this.req.params.event_id !== undefined) {
       this.connection.query(
-        `select * from company_events left join (select companies.id, name, photo from companies join companies_photos on 
+        `select * from company_events left join (select companies.id, name, photo from companies left join companies_photos on 
           companies.id=companies_photos.id) as tb on company_events.company_id=tb.id where event_id='${this.req.params.event_id}'`,
 
         (err, rows) => {
@@ -105,6 +105,7 @@ const Event = class Event {
               eligibility: "",
               name: "",
               photo: "",
+              company_id: "",
             };
 
             rows.forEach(row => {
@@ -123,6 +124,7 @@ const Event = class Event {
                 eligibility: row.eligibility,
                 name: row.name,
                 photo: row.photo,
+                company_id: row.company_id,
               };
             });
 
@@ -165,7 +167,7 @@ const Event = class Event {
     console.log(this.req.params.event_id);
     if (this.req.params.event_id !== undefined) {
       this.connection.query(
-        `select description from company_events where event_id='${this.req.params.event_id}'`,
+        `select description, company_id from company_events where event_id='${this.req.params.event_id}'`,
 
         (err, rows) => {
           if (err) this.res.end("Can't get information");
@@ -174,11 +176,13 @@ const Event = class Event {
           if (rows !== undefined) {
             let data = {
               description: "",
+              company_id: "",
             };
 
             rows.forEach(row => {
               data = {
                 description: row.description,
+                company_id: row.company_id
               };
             });
 
@@ -228,6 +232,39 @@ const Event = class Event {
           });
 
           this.res.end("Successful Delete");
+        }
+      );
+    }
+  }
+
+  getcompanyid() {
+    console.log(this.req.params.event_id);
+    if (this.req.params.event_id !== undefined) {
+      this.connection.query(
+        `select company_id from company_events where event_id='${this.req.params.event_id}'`,
+        (err, rows) => {
+          if (err) this.res.end("Can't get information");
+          // console.log(rows);
+
+          if (rows !== undefined) {
+            let data = {
+              company_id: "",
+            };
+
+            rows.forEach(row => {
+              data = {
+                company_id: row.company_id,
+              };
+            });
+
+            this.res.writeHead(200, {
+              "Content-Type": "application/json"
+            });
+
+            // console.log(data);
+
+            this.res.end(JSON.stringify(data));
+          }
         }
       );
     }

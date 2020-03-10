@@ -13,6 +13,7 @@ class EventDescription extends React.Component {
       event_id: "",
       description: "",
       editWasTriggered: false,
+      company_id: ""
     };
   }
 
@@ -33,10 +34,12 @@ class EventDescription extends React.Component {
         if (info.description === undefined || wspatt.test(info.description)) {
           this.setState({
             description: "",
+            company_id: info.company_id.toString()
           });
         } else {
           this.setState({
             description: info.description,
+            company_id: info.company_id.toString()
           });
         }
       })
@@ -94,7 +97,7 @@ class EventDescription extends React.Component {
 
   render() {
     const {
-      description, editWasTriggered
+      description, editWasTriggered,
     } = this.state;
 
     let display = "";
@@ -102,6 +105,7 @@ class EventDescription extends React.Component {
       <EventDisplayDescription
         clicked={this.handleClick}
         description={description}
+        company_id={this.state.company_id}
       />
     );
 

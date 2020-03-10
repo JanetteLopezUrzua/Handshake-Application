@@ -29,6 +29,8 @@ const CompanyNewEvent = require("./Company/Events/NewEvent");
 const EventsList = require("./Company/Events/EventsList");
 const Event = require("./Company/Events/Event");
 const RSVP = require("./Company/Events/RSVP");
+const StudentEventsList = require("./Student/Events/EventLists");
+const EventSearch = require("./Student/Events/EventSearch");
 
 app.set("view engine", "ejs");
 
@@ -577,6 +579,50 @@ app.get("/event/RSVP/:event_id", (req, res) => {
   const info = new RSVP.RSVP(connection, req, res);
   info.getRSVP();
 });
+
+app.post("/event/RSVP", (req, res) => {
+  console.log("get RSVPs");
+  // console.log(req.params.id);
+  const info = new RSVP.RSVP(connection, req, res);
+  info.postRSVP();
+});
+
+app.get("/company/companytoevent/:event_id", (req, res) => {
+  console.log("get company id related to event");
+  // console.log(req.params.id);
+  const info = new Event.Event(connection, req, res);
+  info.getcompanyid();
+});
+
+/* *********Student Events ***************** */
+app.get("/student/events", (req, res) => {
+  console.log("get all events in increasing date");
+  // console.log(req.params.id);
+  const info = new StudentEventsList.StudentEventsList(connection, req, res);
+  info.geteventslist();
+});
+
+app.post("/student/events/all", (req, res) => {
+  console.log("get all events in search");
+  // console.log(req.params.id);
+  const info = new EventSearch.EventSearch(connection, req, res);
+  info.postall();
+});
+
+app.post("/student/events/eventname", (req, res) => {
+  console.log("get events by eventname in search");
+  // console.log(req.params.id);
+  const info = new EventSearch.EventSearch(connection, req, res);
+  info.posteventname();
+});
+
+app.get("/student/events/registered/:student_id", (req, res) => {
+  console.log("get all registered event");
+  // console.log(req.params.id);
+  const info = new RSVP.RSVP(connection, req, res);
+  info.getstudentRSVPEvents();
+});
+
 
 // start server on port 3001
 app.listen(3001);
