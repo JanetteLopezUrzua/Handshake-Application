@@ -34,6 +34,7 @@ const EventSearch = require("./Student/Events/EventSearch");
 const CompanyNewJob = require("./Company/Jobs/NewJob");
 const JobsList = require("./Company/Jobs/JobsList");
 const Job = require("./Company/Jobs/Job");
+const StudentsJobsList = require("./Student/Jobs/JobsList");
 
 app.set("view engine", "ejs");
 
@@ -671,6 +672,141 @@ app.get("/company/companytojob/:job_id", (req, res) => {
   // console.log(req.params.id);
   const info = new Job.Job(connection, req, res);
   info.getcompanyid();
+});
+
+/** ** Students - Jobs Postings ******* */
+
+app.post("/student/jobslist/all", (req, res) => {
+  console.log("get all jobs");
+  // console.log(req.params.id);
+  const info = new StudentsJobsList.StudentsJobsList(connection, req, res);
+  info.getalljobs();
+});
+
+app.post("/student/jobslist/nameortitle", (req, res) => {
+  console.log("get nameortitle jobs");
+  // console.log(req.params.id);
+  const info = new StudentsJobsList.StudentsJobsList(connection, req, res);
+  info.getnameortitlejobs();
+});
+
+app.post("/student/jobslist/location", (req, res) => {
+  console.log("get location jobs");
+  // console.log(req.params.id);
+  const info = new StudentsJobsList.StudentsJobsList(connection, req, res);
+  info.getlocationjobs();
+});
+
+app.post("/student/jobslist/fulltime", (req, res) => {
+  console.log("get fulltime jobs");
+  // console.log(req.params.id);
+  const info = new StudentsJobsList.StudentsJobsList(connection, req, res);
+  info.getfulltimejobs();
+});
+
+app.post("/student/jobslist/parttime", (req, res) => {
+  console.log("get parttime jobs");
+  // console.log(req.params.id);
+  const info = new StudentsJobsList.StudentsJobsList(connection, req, res);
+  info.getparttimejobs();
+});
+
+app.post("/student/jobslist/internship", (req, res) => {
+  console.log("get internships jobs");
+  // console.log(req.params.id);
+  const info = new StudentsJobsList.StudentsJobsList(connection, req, res);
+  info.getinternshipsjobs();
+});
+
+app.post("/student/jobslist/oncampus", (req, res) => {
+  console.log("get oncampus jobs");
+  // console.log(req.params.id);
+  const info = new StudentsJobsList.StudentsJobsList(connection, req, res);
+  info.getoncampusjobs();
+});
+
+app.post("/student/jobslist/lfulltime", (req, res) => {
+  console.log("get location and fulltime jobs");
+  // console.log(req.params.id);
+  const info = new StudentsJobsList.StudentsJobsList(connection, req, res);
+  info.getlfulltimejobs();
+});
+
+app.post("/student/jobslist/lparttime", (req, res) => {
+  console.log("get location and parttime jobs");
+  // console.log(req.params.id);
+  const info = new StudentsJobsList.StudentsJobsList(connection, req, res);
+  info.getlparttimejobs();
+});
+
+app.post("/student/jobslist/linternship", (req, res) => {
+  console.log("get location and intenrships jobs");
+  // console.log(req.params.id);
+  const info = new StudentsJobsList.StudentsJobsList(connection, req, res);
+  info.getlinternshipsjobs();
+});
+
+app.post("/student/jobslist/loncampus", (req, res) => {
+  console.log("get location and oncampus jobs");
+  // console.log(req.params.id);
+  const info = new StudentsJobsList.StudentsJobsList(connection, req, res);
+  info.getloncampusjobs();
+});
+
+app.post("/student/jobslist/ntfulltime", (req, res) => {
+  console.log("get nt and fulltime jobs");
+  // console.log(req.params.id);
+  const info = new StudentsJobsList.StudentsJobsList(connection, req, res);
+  info.getntfulltimejobs();
+});
+
+app.post("/student/jobslist/ntparttime", (req, res) => {
+  console.log("get nt and parttime jobs");
+  // console.log(req.params.id);
+  const info = new StudentsJobsList.StudentsJobsList(connection, req, res);
+  info.getntparttimejobs();
+});
+
+app.post("/student/jobslist/ntinternship", (req, res) => {
+  console.log("get nt and intenrships jobs");
+  // console.log(req.params.id);
+  const info = new StudentsJobsList.StudentsJobsList(connection, req, res);
+  info.getntinternshipsjobs();
+});
+
+app.post("/student/jobslist/ntoncampus", (req, res) => {
+  console.log("get nt and oncampus jobs");
+  // console.log(req.params.id);
+  const info = new StudentsJobsList.StudentsJobsList(connection, req, res);
+  info.getntoncampusjobs();
+});
+
+app.post("/student/jobslist/lntfulltime", (req, res) => {
+  console.log("get lnt and fulltime jobs");
+  // console.log(req.params.id);
+  const info = new StudentsJobsList.StudentsJobsList(connection, req, res);
+  info.getlntfulltimejobs();
+});
+
+app.post("/student/jobslist/lntparttime", (req, res) => {
+  console.log("get lnt and parttime jobs");
+  // console.log(req.params.id);
+  const info = new StudentsJobsList.StudentsJobsList(connection, req, res);
+  info.getlntparttimejobs();
+});
+
+app.post("/student/jobslist/lntinternship", (req, res) => {
+  console.log("get lnt and intenrships jobs");
+  // console.log(req.params.id);
+  const info = new StudentsJobsList.StudentsJobsList(connection, req, res);
+  info.getlntinternshipsjobs();
+});
+
+app.post("/student/jobslist/lntoncampus", (req, res) => {
+  console.log("get lnt and oncampus jobs");
+  // console.log(req.params.id);
+  const info = new StudentsJobsList.StudentsJobsList(connection, req, res);
+  info.getlntoncampusjobs();
 });
 
 

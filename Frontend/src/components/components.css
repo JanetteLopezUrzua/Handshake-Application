@@ -660,3 +660,12 @@
   font-size: 14px;
   font-weight: 500;
 }
+
+/**** Job Postings *****/
+.categorybuttons {
+  color: #1569e0;
+  border-radius: 20px;
+  background-color: white;
+  font-size: 12px;
+  margin: 10px 0 0 10px;
+}

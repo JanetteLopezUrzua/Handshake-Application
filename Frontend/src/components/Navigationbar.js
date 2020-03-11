@@ -187,7 +187,7 @@ class Navigationbar extends React.Component {
     let jobspath = "";
     if (cookie.load("user") === "student") {
       eventspath = "/student/events/upcoming";
-      jobspath = "/student/jobs/postings";
+      jobspath = "/student/jobs/search";
     } else {
       eventspath = "/company/events";
       jobspath = "/company/jobs";
