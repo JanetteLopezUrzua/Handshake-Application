@@ -19,6 +19,11 @@ class JobsPage extends React.Component {
 
   componentDidMount() {
     this.getInfo();
+    console.log("job will mount");
+  }
+
+  componentWillUnmount() {
+    console.log("job will unmount");
   }
 
   getInfo = () => {

@@ -164,11 +164,9 @@ const Event = class Event {
   }
 
   geteventdescription() {
-    console.log(this.req.params.event_id);
     if (this.req.params.event_id !== undefined) {
       this.connection.query(
         `select description, company_id from company_events where event_id='${this.req.params.event_id}'`,
-
         (err, rows) => {
           if (err) this.res.end("Can't get information");
           // console.log(rows);

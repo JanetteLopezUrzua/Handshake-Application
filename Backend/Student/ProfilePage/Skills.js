@@ -41,7 +41,7 @@ const Skills = class Skills {
         `select skill from skills where id='${this.req.body.id}' and skill='${this.req.body.skill}'`,
         (err, rows) => {
           if (err) this.res.end("Can't get information");
-          console.log(rows);
+          // console.log(rows);
           if (rows.length > 0 || rows === undefined) {
             this.res.writeHead(400, {
               "Content-Type": "text/plain"
@@ -54,7 +54,7 @@ const Skills = class Skills {
               (err2, result) => {
                 if (err2) this.res.end("Can't insert information");
 
-                console.log("Last insert ID:", result.insertId);
+                //  console.log("Last insert ID:", result.insertId);
 
                 this.res.writeHead(200, {
                   "Content-Type": "text/plain"

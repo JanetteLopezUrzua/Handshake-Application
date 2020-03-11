@@ -6,7 +6,7 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import RSVPModal from "./RSVPModal";
 
-class ContactInformation extends React.Component {
+class EventRSVP extends React.Component {
   constructor() {
     super();
 
@@ -148,4 +148,4 @@ class ContactInformation extends React.Component {
   }
 }
 
-export default ContactInformation;
+export default EventRSVP;

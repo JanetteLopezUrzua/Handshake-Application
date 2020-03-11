@@ -33,6 +33,7 @@ const StudentEventsList = require("./Student/Events/EventLists");
 const EventSearch = require("./Student/Events/EventSearch");
 const CompanyNewJob = require("./Company/Jobs/NewJob");
 const JobsList = require("./Company/Jobs/JobsList");
+const Job = require("./Company/Jobs/Job");
 
 app.set("view engine", "ejs");
 
@@ -643,6 +644,33 @@ app.get("/company/jobs/:company_id", (req, res) => {
   // console.log(req.params.id);
   const info = new JobsList.JobsList(connection, req, res);
   info.getjobslist();
+});
+
+app.get("/company/jobinfo/:job_id", (req, res) => {
+  console.log("get job info");
+  // console.log(req.params.id);
+  const info = new Job.Job(connection, req, res);
+  info.getjobinfo();
+});
+
+app.post("/company/jobinfo", (req, res) => {
+  console.log("post job info");
+  // console.log(req.params.id);
+  const info = new Job.Job(connection, req, res);
+  info.postjobinfo();
+});
+
+app.delete("/company/job/delete", (req, res) => {
+  console.log("delete job");
+  const info = new Job.Job(connection, req, res);
+  info.deletejob();
+});
+
+app.get("/company/companytojob/:job_id", (req, res) => {
+  console.log("get company id related to job");
+  // console.log(req.params.id);
+  const info = new Job.Job(connection, req, res);
+  info.getcompanyid();
 });
 
 

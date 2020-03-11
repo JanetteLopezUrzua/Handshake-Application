@@ -42,7 +42,7 @@ const DisplayStudent = (props) => {
           {img}
         </Col>
         <Col sm={5} style={{ paddingLeft: "0" }}>
-          <Card.Title className="studentslistname">{props.student.name}</Card.Title>
+          <Card.Title className="studentslistname"><Link to={path} style={{ color: "black" }}>{props.student.name}</Link></Card.Title>
           <Card.Title className="studentslistcollege">{props.student.college}</Card.Title>
           <Card.Title className="studentslistinfo">{degree}</Card.Title>
           <Card.Title className="studentslistinfo">{passingdate}</Card.Title>

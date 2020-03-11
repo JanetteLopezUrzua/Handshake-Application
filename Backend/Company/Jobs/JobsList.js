@@ -6,7 +6,7 @@ const JobsList = class JobsList {
   }
 
   getjobslist() {
-    console.log(this.req.params.company_id);
+    // console.log(this.req.params.company_id);
     if (this.req.params.company_id !== undefined) {
       const data = {
         jobs: []

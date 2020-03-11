@@ -125,11 +125,15 @@ class NewJobPosting extends React.Component {
 
     if (err === "") {
       const date = new Date();
-      const day = (`0${date.getDate()}`).slice(-2);
-      const month = (`0${date.getMonth() + 1}`).slice(-2);
+      const day = (`${date.getDate()}`).slice(-2);
+      let month = (`${date.getMonth()}`).slice(-2);
       const year = date.getFullYear();
 
-      const postingdatevar = `${month} ${day} ${year}`;
+      const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+
+      month = months[month];
+
+      const postingdatevar = `${month} ${day}, ${year}`;
       console.log("COKIE", cookie.load("id"));
       console.log(this.state.company_id);
       const data = {

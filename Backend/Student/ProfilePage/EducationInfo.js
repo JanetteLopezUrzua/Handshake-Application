@@ -15,7 +15,7 @@ const EducationInfo = class EducationInfo {
         `select schoolname, primaryschool, location, degree, major, passingmonth, passingyear, gpa from schools where id='${this.req.params.id}'`,
         (err, rows) => {
           if (err) this.res.end("Can't get information");
-          console.log(rows);
+          // console.log(rows);
 
           if (rows !== undefined) {
             rows.forEach(row => {
@@ -35,7 +35,7 @@ const EducationInfo = class EducationInfo {
               "Content-Type": "application/json"
             });
 
-            console.log(data);
+            // console.log(data);
 
             this.res.end(JSON.stringify(data));
           }
@@ -50,7 +50,7 @@ const EducationInfo = class EducationInfo {
         `select schoolname, degree from schools where id='${this.req.body.id}' and schoolname='${this.req.body.schoolname}' and degree='${this.req.body.degree}'`,
         (err, rows) => {
           if (err) this.res.end("Can't get information");
-          console.log(rows);
+          // console.log(rows);
           if (rows.length > 0 || rows === undefined) {
             this.res.writeHead(400, {
               "Content-Type": "text/plain"
@@ -60,10 +60,10 @@ const EducationInfo = class EducationInfo {
           } else {
             this.connection.query(
               `insert into schools (id, schoolname, primaryschool, location, degree, major, passingmonth, passingyear, gpa) values ('${this.req.body.id}', '${this.req.body.schoolname}', '${this.req.body.primaryschool}', '${this.req.body.location}', '${this.req.body.degree}', '${this.req.body.major}', '${this.req.body.passingmonth}', '${this.req.body.passingyear}', '${this.req.body.gpa}')`,
-              (err2, result) => {
+              (err2) => {
                 if (err2) console.log(err2);
 
-                console.log("Last insert ID:", result.insertId);
+                //  console.log("Last insert ID:", result.insertId);
 
                 this.res.writeHead(200, {
                   "Content-Type": "text/plain"

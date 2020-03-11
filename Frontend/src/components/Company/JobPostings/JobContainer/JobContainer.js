@@ -2,17 +2,16 @@ import React from 'react';
 import "../../../components.css";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
+import Card from "react-bootstrap/Card";
+// import Col from "react-bootstrap/Col";
+// import Row from "react-bootstrap/Row";
 import { Redirect } from "react-router";
 import axios from "axios";
 import cookie from "react-cookies";
-import Banner from "../Banner/DisplayBanner";
-import EventInfo from "../EventInfo/EventInfo";
-import EventDescription from "../EventDescription/EventDescription";
-import EventRSVP from "../EventRSVP/EventRSVP";
+import JobInfo from "../JobInfo/JobInfo";
+import JobApplications from "../JobApplications/JobApplications";
 
-class EventContainer extends React.Component {
+class JobContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,7 +25,7 @@ class EventContainer extends React.Component {
   }
 
   getInfo = () => {
-    axios.get(`http://localhost:3001/company/companytoevent/${this.props.match.params.event_id}`)
+    axios.get(`http://localhost:3001/company/companytojob/${this.props.match.params.job_id}`)
       .then(response => {
         const info = response.data;
 
@@ -40,7 +39,7 @@ class EventContainer extends React.Component {
   }
 
   handleDelete=() => {
-    axios.delete("http://localhost:3001/company/event/delete", { data: { event_id: this.props.match.params.event_id } })
+    axios.delete("http://localhost:3001/company/job/delete", { data: { job_id: this.props.match.params.job_id } })
       .then(response => {
         console.log(response);
         this.setState({
@@ -60,33 +59,27 @@ class EventContainer extends React.Component {
     }
 
     if (this.state.redirect === true) {
-      redirectVar = <Redirect to="/company/events" />;
+      redirectVar = <Redirect to="/company/jobs" />;
     }
 
     let del = "";
     if (cookie.load('id') === this.state.company_id && cookie.load('user') === "company") {
       del = (
-        <Button className="delete" style={{ margin: "15px" }} onClick={this.handleDelete}>Delete Event</Button>
+        <Button className="delete" style={{ margin: "15px" }} onClick={this.handleDelete}>Delete Job Post</Button>
       );
     }
 
     return (
       <Container>
         {redirectVar}
-        <Banner event_id={this.props.match.params.event_id} />
-        <EventInfo event_id={this.props.match.params.event_id} />
-        <Row>
-          <Col sm={8}>
-            <EventDescription event_id={this.props.match.params.event_id} />
-          </Col>
-          <Col sm={4} style={{ textAlign: "center" }}>
-            <EventRSVP event_id={this.props.match.params.event_id} />
-          </Col>
-        </Row>
+        <Card>
+          <JobApplications job_id={this.props.match.params.job_id} />
+          <JobInfo job_id={this.props.match.params.job_id} />
+        </Card>
         {del}
       </Container>
     );
   }
 }
 
-export default EventContainer;
+export default JobContainer;

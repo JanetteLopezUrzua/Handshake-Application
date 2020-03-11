@@ -39,7 +39,7 @@ connection.connect((err) => {
   connection.query('CREATE TABLE IF NOT EXISTS RSVP(event_id int NOT NULL, student_id int NOT NULL, FOREIGN KEY (event_id) REFERENCES company_events (event_id) ON DELETE CASCADE);');
 
   /* Jobs tables */
-  connection.query('CREATE TABLE IF NOT EXISTS job_postings(job_id int NOT NULL AUTO_INCREMENT, company_id int NOT NULL, title varchar(255), deadlinemonth int, deadlineday int, deadlineyear int, deadlinetime varchar(10), deadlinedaytime varchar(2), location varchar(255), salary int, salarytime varchar(20) , category varchar(20), description text, postingdate varchar(100), PRIMARY KEY(job_id));');
+  connection.query('CREATE TABLE IF NOT EXISTS job_postings(job_id int NOT NULL AUTO_INCREMENT, company_id int NOT NULL, title varchar(255), deadlinemonth int, deadlineday int, deadlineyear int, deadlinetime varchar(10), deadlinedaytime varchar(2), location varchar(255), salary bigint, salarytime varchar(20), category varchar(20), description text, postingdate varchar(100), PRIMARY KEY(job_id));');
 });
 
 

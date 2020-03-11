@@ -6,7 +6,6 @@ const StudentStudentsList = class StudentStudentsList {
   }
 
   postall() {
-    console.log("POOOOOOOOOOOOSSSSSSSSSSSSSSSSSSTTTTTINGGG");
     this.connection.query(
       "select * from ((select students.id as ids, CONCAT_WS(' ', fname, lname) AS name, fname, lname, photo from students left join students_photos on students.id=students_photos.id) as tb left join (select schools.id, schoolname, degree, major, passingmonth, passingyear from schools where primaryschool='true') as tb2 on tb.ids=tb2.id)",
       (err, rows) => {

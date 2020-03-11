@@ -21,7 +21,7 @@ import Navbar from "./components/Navigationbar";
 import EventsNavBar from "./components/Student/StudentEvents/EventsNavBar";
 import NewJob from "./components/Company/JobPostings/NewJobPosting/NewJobPosting";
 import CompanyJobs from "./components/Company/JobPostings/JobsPage";
-
+import Job from "./components/Company/JobPostings/JobContainer/JobContainer";
 
 // App Component
 class App extends Component {
@@ -52,6 +52,7 @@ class App extends Component {
       <div>
         <Navbar photochange={this.state.photochange} />
         <Switch>
+          <Route exact path="/job/:job_id" component={Job} />
           <Route exact path="/event/:event_id" component={Event} />
           <Route exact path="/company/events/new" component={NewEvent} />
           <Route exact path="/company/events" component={CompanyEvents} />

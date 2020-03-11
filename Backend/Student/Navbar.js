@@ -6,7 +6,6 @@ const Navbar = class Navbar {
   }
 
   navbar() {
-    console.log("NAAAVBAAAR", this.req.params.id);
     if (this.req.params.id !== undefined) {
       this.connection.query(
         `select fname, lname, photo

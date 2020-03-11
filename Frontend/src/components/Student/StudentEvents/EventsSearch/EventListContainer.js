@@ -44,7 +44,7 @@ const EventListContainer = (props) => {
           {img}
         </Col>
         <Col sm={5} style={{ paddingLeft: "0" }}>
-          <Card.Title className="studentslistname">{props.event.title}</Card.Title>
+          <Card.Title className="studentslistname"><Link to={path} style={{ color: "black" }}>{props.event.title}</Link></Card.Title>
           <Card.Title className="studentslistcollege" style={{ textTransform: "none" }}><FaCalendar style={{ color: "black" }} />
             {month} {props.event.day}, {props.event.year} from {props.event.starttime} {(props.event.startdaytime).toLowerCase()} to {props.event.endtime} {(props.event.enddaytime).toLowerCase()}
           </Card.Title>

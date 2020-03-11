@@ -6,7 +6,7 @@ const CompanyNewJob = class CompanyNewJob {
   }
 
   postnewjob() {
-    console.log(this.req.body.company_id);
+    // console.log(this.req.body.company_id);
     if (this.req.body.company_id !== undefined) {
       this.connection.query(
         `insert into job_postings (company_id, title, deadlinemonth, deadlineday, deadlineyear, deadlinetime, deadlinedaytime, location, 
@@ -17,7 +17,7 @@ const CompanyNewJob = class CompanyNewJob {
         (err, result) => {
           if (err) this.res.end(`Can't insert information. Error: ${err}`);
           else {
-            console.log('Last insert ID:', result.insertId);
+            // console.log('Last insert ID:', result.insertId);
 
             this.res.writeHead(200, {
               "Content-Type": "text/plain"

@@ -15,7 +15,7 @@ const WorkInfo = class WorkInfo {
         `select companyname, title, startdatemonth, startdateyear, enddatemonth, enddateyear, description from jobs where id='${this.req.params.id}'`,
         (err, rows) => {
           if (err) this.res.end("Can't get information");
-          console.log(rows);
+          // console.log(rows);
 
           if (rows !== undefined) {
             rows.forEach(row => {
@@ -34,7 +34,7 @@ const WorkInfo = class WorkInfo {
               "Content-Type": "application/json"
             });
 
-            console.log(data);
+            // console.log(data);
 
             this.res.end(JSON.stringify(data));
           }
@@ -49,7 +49,7 @@ const WorkInfo = class WorkInfo {
         `select companyname from jobs where id='${this.req.body.id}' and companyname='${this.req.body.companyname}' and title='${this.req.body.title}'`,
         (err, rows) => {
           if (err) this.res.end("Can't get information");
-          console.log(rows);
+          //  console.log(rows);
           if (rows.length > 0 || rows === undefined) {
             this.res.writeHead(400, {
               "Content-Type": "text/plain"
@@ -59,10 +59,10 @@ const WorkInfo = class WorkInfo {
           } else {
             this.connection.query(
               `insert into jobs (id, companyname, title, startdatemonth, startdateyear, enddatemonth, enddateyear, description) values ('${this.req.body.id}', '${this.req.body.companyname}', '${this.req.body.title}', '${this.req.body.startdatemonth}', '${this.req.body.startdateyear}', '${this.req.body.enddatemonth}', '${this.req.body.enddateyear}', '${this.req.body.description}')`,
-              (err2, result) => {
+              (err2) => {
                 if (err2) console.log(err2);
 
-                console.log("Last insert ID:", result.insertId);
+                //  console.log("Last insert ID:", result.insertId);
 
                 this.res.writeHead(200, {
                   "Content-Type": "text/plain"

@@ -155,7 +155,7 @@ class EventInfo extends React.Component {
 
   handleSave = (e) => {
     e.preventDefault();
-    console.log("SSSSSSAAAAAAVVVVEEEEEEEE");
+
     const {
       title, dayofweek, month, day, year, starttime, startdaytime, endtime, enddaytime, timezone, location, eligibility
     } = this.state;
@@ -226,6 +226,7 @@ class EventInfo extends React.Component {
 
   handleCancel = () => {
     this.setState({ editWasTriggered: false });
+    this.getInfo();
   };
 
   render() {

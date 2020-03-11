@@ -20,6 +20,11 @@ class EventPage extends React.Component {
 
   componentDidMount() {
     this.getInfo();
+    console.log("event will mount");
+  }
+
+  componentWillUnmount() {
+    console.log("event will unmount");
   }
 
   getInfo = () => {

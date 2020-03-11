@@ -33,7 +33,7 @@ const RSVP = class RSVP {
               "Content-Type": "application/json"
             });
 
-            console.log(data);
+            // console.log(data);
 
             this.res.end(JSON.stringify(data));
           }
@@ -99,8 +99,8 @@ const RSVP = class RSVP {
           event_id='${this.req.body.event_id}' and student_id='${this.req.body.student_id}')`,
       (err, result) => {
         if (err) this.res.end("Can't get information");
-        console.log('Last insert ID:', result.insertId);
-        console.log('Afected Rows:', result.affectedRows);
+        // console.log('Last insert ID:', result.insertId);
+        // console.log('Afected Rows:', result.affectedRows);
 
         if (result.affectedRows > 0) {
           this.res.writeHead(200, {
