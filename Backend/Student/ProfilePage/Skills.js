@@ -51,7 +51,7 @@ const Skills = class Skills {
           } else {
             this.connection.query(
               `insert into skills (id, skill) values ('${this.req.body.id}', '${this.req.body.skill}')`,
-              (err2, result) => {
+              (err2) => {
                 if (err2) this.res.end("Can't insert information");
 
                 //  console.log("Last insert ID:", result.insertId);

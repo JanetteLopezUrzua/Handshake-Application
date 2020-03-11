@@ -40,6 +40,7 @@ connection.connect((err) => {
 
   /* Jobs tables */
   connection.query('CREATE TABLE IF NOT EXISTS job_postings(job_id int NOT NULL AUTO_INCREMENT, company_id int NOT NULL, title varchar(255), deadlinemonth int, deadlineday int, deadlineyear int, deadlinetime varchar(10), deadlinedaytime varchar(2), location varchar(255), salary bigint, salarytime varchar(20), category varchar(20), description text, postingdate varchar(100), PRIMARY KEY(job_id));');
+  connection.query('CREATE TABLE IF NOT EXISTS resumes(job_id int NOT NULL, student_id int NOT NULL, resume varchar(255), status varchar(100), applicationdate varchar(100), FOREIGN KEY (job_id) REFERENCES job_postings (job_id) ON DELETE CASCADE);');
 });
 
 

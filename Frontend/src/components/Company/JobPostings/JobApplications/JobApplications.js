@@ -1,5 +1,5 @@
 import React from "react";
-// import axios from "axios";
+import axios from "axios";
 // import cookie from "react-cookies";
 // import { FaPlus, FaMinus } from 'react-icons/fa';
 // import Card from "react-bootstrap/Card";
@@ -11,48 +11,37 @@ class JobApplications extends React.Component {
     super();
 
     this.state = {
-      // job_id: "",
+      job_id: "",
       show: false,
       students: [],
-      // message: "",
     };
   }
 
   static getDerivedStateFromProps = (props) => ({ job_id: props.job_id })
 
   componentDidMount() {
-    // this.getInfo();
+    this.getInfo();
   }
 
-  //   componentDidUpdate(prevProps, prevState) {
-  //     if (this.state.alreadyrsvp !== prevState.alreadyrsvp) {
-  //       this.getInfo();
-  //     }
-  //   }
-
-  //   getInfo = () => {
-  //     axios.get(`http://localhost:3001/event/RSVP/${this.state.event_id}`)
-  //       .then(response => {
-  //         const info = response.data;
-
-  //         let inlist = false;
-  //         inlist = info.students.some((student) => student.student_id.toString() === cookie.load("id"));
-
-  //         this.setState({
-  //           students: info.students,
-  //           alreadyrsvp: inlist,
-  //         });
-  //       })
-  //       .catch(error => {
-  //         console.log(error);
-  //       });
-  //   }
+  getInfo = () => {
+    axios.get(`http://localhost:3001/job/applied/${this.state.job_id}`)
+      .then(response => {
+        const info = response.data;
+        this.setState({
+          students: info.students,
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
 
   handleClose = () => {
     // eslint-disable-next-line implicit-arrow-linebreak
     this.setState({
       show: false,
     });
+    this.getInfo();
   };
 
   handleShow = () => {
@@ -62,26 +51,25 @@ class JobApplications extends React.Component {
     });
   };
 
-  //   handleRSVP = () => {
-  //     const data = {
-  //       student_id: cookie.load('id'),
-  //       event_id: this.state.event_id,
-  //     };
+  // eslint-disable-next-line camelcase
+  handleStatus = (e, pstudent_id) => {
+    const data = {
+      student_id: pstudent_id,
+      job_id: this.state.job_id,
+      status: e.target.value,
+    };
 
-  //     axios.post("http://localhost:3001/event/RSVP", data)
-  //       .then(response => {
-  //         console.log(response);
-  //         this.setState({
-  //           alreadyrsvp: true,
-  //         });
-  //       })
-  //       .catch(error => {
-  //         console.log(error);
-  //         this.setState({
-  //           message: error.response.data,
-  //         });
-  //       });
-  //   };
+
+    console.log(e.target.value);
+
+    axios.post("http://localhost:3001/job/studentstatus", data)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
   render() {
     let message = "";
@@ -104,6 +92,7 @@ class JobApplications extends React.Component {
           show={this.state.show}
           close={this.handleClose}
           students={this.state.students}
+          handleStatus={this.handleStatus}
         />
         {button}<br />
         <p className="errormessage">{message}</p>

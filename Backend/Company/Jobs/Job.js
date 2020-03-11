@@ -140,6 +140,67 @@ const Job = class Job {
       );
     }
   }
+
+  getstudentswhoapplied() {
+    // console.log(this.req.params.job_id);
+    if (this.req.params.job_id !== undefined) {
+      this.connection.query(
+        `select student_id, fname, lname, photo, resume, status from 
+        (select * from (select student_id, resume, status from resumes where job_id='${this.req.params.job_id}') as tb left join students on students.id=tb.student_id) as tb2 
+        left join students_photos on students_photos.id=tb2.student_id`,
+        (err, rows) => {
+          if (err) this.res.end("Can't get information");
+          // console.log(rows);
+
+          const data = {
+            students: [],
+          };
+
+          if (rows !== undefined) {
+            rows.forEach(row => {
+              data.students.push({
+                student_id: row.student_id,
+                fname: row.fname,
+                lname: row.lname,
+                photo: row.photo,
+                resume: row.resume,
+                status: row.status,
+              });
+            });
+
+            this.res.writeHead(200, {
+              "Content-Type": "application/json"
+            });
+
+            // console.log(data);
+
+            this.res.end(JSON.stringify(data));
+          }
+        }
+      );
+    }
+  }
+
+  changeapplicationstatus() {
+    console.log("SI", this.req.body.student_id);
+    console.log("JI", this.req.body.job_id);
+    if (this.req.body.student_id !== undefined && this.req.body.job_id !== undefined) {
+      this.connection.query(
+        `update resumes set status='${this.req.body.status}' where job_id='${this.req.body.job_id}' and student_id='${this.req.body.student_id}'`,
+        (err, result) => {
+          if (err) this.res.end("Can't delete information");
+
+          console.log(`Deleted ${result.affectedRows} row(s)`);
+
+          this.res.writeHead(200, {
+            "Content-Type": "text/plain"
+          });
+
+          this.res.end("Successful update");
+        }
+      );
+    }
+  }
 };
 
 module.exports = {

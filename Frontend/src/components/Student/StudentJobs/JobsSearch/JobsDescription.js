@@ -14,7 +14,6 @@ class JobsDescription extends React.Component {
   static getDerivedStateFromProps = (props) => ({ job: props.job })
 
   render() {
-    console.log("WTF", this.state.job);
     let job = "";
     if (this.state.job === "" || this.state.job === undefined) job = "";
     else job = (<JobDescriptionDisplay job={this.state.job} />);

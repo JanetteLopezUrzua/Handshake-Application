@@ -6,7 +6,7 @@ const Event = class Event {
   }
 
   geteventbannerphoto() {
-    console.log(this.req.params.event_id);
+    // console.log(this.req.params.event_id);
     if (this.req.params.event_id !== undefined) {
       this.connection.query(
         `select company_id, bannerphoto from company_events where event_id='${this.req.params.event_id}'`,
@@ -79,7 +79,7 @@ const Event = class Event {
   }
 
   geteventinfo() {
-    console.log(this.req.params.event_id);
+    //  console.log(this.req.params.event_id);
     if (this.req.params.event_id !== undefined) {
       this.connection.query(
         `select * from company_events left join (select companies.id, name, photo from companies left join companies_photos on 
@@ -236,7 +236,7 @@ const Event = class Event {
   }
 
   getcompanyid() {
-    console.log(this.req.params.event_id);
+    // console.log(this.req.params.event_id);
     if (this.req.params.event_id !== undefined) {
       this.connection.query(
         `select company_id from company_events where event_id='${this.req.params.event_id}'`,

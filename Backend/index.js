@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
+const multer = require("multer");
 const session = require("express-session");
 // const cookieParser = require("cookie-parser");
 const cors = require("cors");
@@ -52,6 +53,7 @@ app.use(
   })
 );
 
+app.use("/resumes", express.static("public/"));
 app.use(bodyParser.json({ limit: "10mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 
@@ -417,7 +419,6 @@ app.post("/student/studentslist/nameandcollegeandmajor", (req, res) => {
   );
   info.postnameandcollegeandmajor();
 });
-
 
 /** ******** Company - STUDENTS LIST ************ */
 
@@ -809,6 +810,96 @@ app.post("/student/jobslist/lntoncampus", (req, res) => {
   info.getlntoncampusjobs();
 });
 
+/** **Applications ******** */
+
+const storage = multer.diskStorage({
+  destination: "./public/resumes",
+  filename(req, file, callback) {
+    callback(
+      null,
+      `${new Date().toISOString().replace(/:/g, "-")}-${file.fieldname}.${
+        file.mimetype.split("/")[1]
+      }`
+    );
+  }
+});
+
+const upload = multer({ storage });
+
+app.post("/uploadresumes", upload.single("file"), (req, res) => {
+  console.log("Req Body : ", req.body);
+  console.log("file", req.file.filename);
+
+  res.writeHead(200, {
+    "Content-Type": "application/json"
+  });
+
+  res.end(req.file.filename);
+});
+
+app.post("/resumes", (req, res) => {
+  console.log("Saving resumes file names to db");
+  // console.log(req.body);
+  if (req.body.student_id !== undefined) {
+    connection.query(
+      `insert into resumes values ('${req.body.job_id}', '${req.body.student_id}', '${req.body.file}', "Pending", '${req.body.appdate}')`,
+      (err, result) => {
+        if (err) res.end("Can't insert information");
+        else {
+          console.log("Last insert ID:", result.insertId);
+
+          res.writeHead(200, {
+            "Content-Type": "text/plain"
+          });
+
+          res.end("Succesful insert");
+        }
+      }
+    );
+  }
+});
+
+// app.get("/student/resume/:student_id/:job_id", (req, res) => {
+//   console.log("Check if student already applied to job");
+//   if (req.params.student_id !== undefined && req.params.job_id !== undefined) {
+//     connection.query(
+//       `select student_id from resumes where job_id='${req.params.job_id}' and student_id='${req.params.student_id}'`,
+//       (err, rows) => {
+//         if (err) res.end("Can't insert information");
+
+//         if (rows !== undefined || rows.lenght === 0) {
+//           res.writeHead(200, {
+//             "Content-Type": "text/plain"
+//           });
+
+//           res.end("Succesful read");
+//         } else {
+//           res.writeHead(400, {
+//             "Content-Type": "text/plain"
+//           });
+
+//           res.end("error");
+//         }
+//       }
+//     );
+//   }
+// });
+
+/* ************Company - Deal with Students who applied to the job ******* */
+
+app.get("/job/applied/:job_id", (req, res) => {
+  console.log("to get student who applied to job ");
+  // console.log(req.params.id);
+  const info = new Job.Job(connection, req, res);
+  info.getstudentswhoapplied();
+});
+
+app.post("/job/studentstatus", (req, res) => {
+  console.log("change application status");
+  // console.log(req.params.id);
+  const info = new Job.Job(connection, req, res);
+  info.changeapplicationstatus();
+});
 
 // start server on port 3001
 app.listen(3001);
