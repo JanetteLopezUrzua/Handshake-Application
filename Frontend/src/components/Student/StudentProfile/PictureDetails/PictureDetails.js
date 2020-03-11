@@ -52,10 +52,10 @@ class PictureDetails extends React.Component {
             has_image: false
           });
         } else {
-          const imageURL = `${Buffer.from(info.photo).toString()}`;
+          //  const imageURL = `${Buffer.from(info.photo).toString()}`;
 
           this.setState({
-            photo: imageURL,
+            // photo: imageURL,
             has_image: true
           });
         }

@@ -43,15 +43,24 @@ class DisplayBanner extends React.Component {
           company_id: info.company_id.toString()
         });
 
-        const imageURL = `${Buffer.from(info.photo).toString()}`;
+        // const imageURL = `${Buffer.from(info.photo).toString()}`;
 
-        if (imageURL === "" || imageURL === null) {
+        // if (imageURL === "" || imageURL === null) {
+        //   this.setState({
+        //     has_image: false
+        //   });
+        // } else {
+        //   this.setState({
+        //     // photo: imageURL,
+        //     has_image: true
+        //   });
+        // }
+        if (info.photo === "" || info.photo === null) {
           this.setState({
             has_image: false
           });
         } else {
           this.setState({
-            photo: imageURL,
             has_image: true
           });
         }

@@ -31,6 +31,8 @@ const Event = require("./Company/Events/Event");
 const RSVP = require("./Company/Events/RSVP");
 const StudentEventsList = require("./Student/Events/EventLists");
 const EventSearch = require("./Student/Events/EventSearch");
+const CompanyNewJob = require("./Company/Jobs/NewJob");
+const JobsList = require("./Company/Jobs/JobsList");
 
 app.set("view engine", "ejs");
 
@@ -627,6 +629,20 @@ app.delete("/student/events/registered/delete", (req, res) => {
   console.log("delete from registration list");
   const info = new RSVP.RSVP(connection, req, res);
   info.deleteRSVP();
+});
+
+/* *********Company Jobs ***************** */
+app.post("/company/newjob", (req, res) => {
+  console.log("post new job - company");
+  const info = new CompanyNewJob.CompanyNewJob(connection, req, res);
+  info.postnewjob();
+});
+
+app.get("/company/jobs/:company_id", (req, res) => {
+  console.log("get jobs list info");
+  // console.log(req.params.id);
+  const info = new JobsList.JobsList(connection, req, res);
+  info.getjobslist();
 });
 
 

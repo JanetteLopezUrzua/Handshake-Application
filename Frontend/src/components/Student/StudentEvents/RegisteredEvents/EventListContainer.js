@@ -24,11 +24,12 @@ const EventListContainer = (props) => {
       </div>
     );
   } else {
-    const imageURL = `${Buffer.from(props.event.photo).toString()}`;
+    // const imageURL = `${Buffer.from(props.event.photo).toString()}`;
     img = (
       <Image
         className="eventslistpics"
-        src={imageURL}
+        // src={imageURL}
+        src={props.event.photo}
       />
     );
   }

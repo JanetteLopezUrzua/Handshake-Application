@@ -23,11 +23,12 @@ const DisplayInfo = (props) => {
       </div>
     );
   } else {
-    const imageURL = `${Buffer.from(props.photo).toString()}`;
+    // const imageURL = `${Buffer.from(props.photo).toString()}`;
     img = (
       <Image
         className="CompanyProfilePicImage"
-        src={imageURL}
+        // src={imageURL}
+        src={props.photo}
       />
     );
   }

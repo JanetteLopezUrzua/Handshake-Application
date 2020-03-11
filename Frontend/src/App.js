@@ -19,6 +19,8 @@ import RegisteredEvents from "./components/Student/StudentEvents/RegisteredEvent
 import UpcomingEvents from "./components/Student/StudentEvents/UpcomingEvents/UpcomingEventsPage";
 import Navbar from "./components/Navigationbar";
 import EventsNavBar from "./components/Student/StudentEvents/EventsNavBar";
+import NewJob from "./components/Company/JobPostings/NewJobPosting/NewJobPosting";
+import CompanyJobs from "./components/Company/JobPostings/JobsPage";
 
 
 // App Component
@@ -53,6 +55,8 @@ class App extends Component {
           <Route exact path="/event/:event_id" component={Event} />
           <Route exact path="/company/events/new" component={NewEvent} />
           <Route exact path="/company/events" component={CompanyEvents} />
+          <Route exact path="/company/jobs/new" component={NewJob} />
+          <Route exact path="/company/jobs" component={CompanyJobs} />
           <Route exact path="/student/students" component={StudentStudentsList} />
           <Route exact path="/company/students" component={CompanyStudentsList} />
           <Route exact path="/student/:id" render={(props) => <StudentProfile {...props} handlephotochange={this.handlephotochange} />} />

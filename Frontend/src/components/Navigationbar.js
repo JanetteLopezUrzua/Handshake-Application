@@ -70,10 +70,10 @@ class Navigationbar extends React.Component {
             has_image: false
           });
         } else {
-          const imageURL = `${Buffer.from(info.photo).toString()}`;
+          // const imageURL = `${Buffer.from(info.photo).toString()}`;
 
           this.setState({
-            photo: imageURL,
+            // photo: imageURL,
             has_image: true
           });
         }
@@ -107,10 +107,10 @@ class Navigationbar extends React.Component {
             has_image: false
           });
         } else {
-          const imageURL = `${Buffer.from(info.photo).toString()}`;
+          // const imageURL = `${Buffer.from(info.photo).toString()}`;
 
           this.setState({
-            photo: imageURL,
+            // photo: imageURL,
             has_image: true
           });
         }
@@ -184,10 +184,13 @@ class Navigationbar extends React.Component {
     }
 
     let eventspath = "";
+    let jobspath = "";
     if (cookie.load("user") === "student") {
       eventspath = "/student/events/upcoming";
+      jobspath = "/student/jobs/postings";
     } else {
       eventspath = "/company/events";
+      jobspath = "/company/jobs";
     }
 
     return (
@@ -209,7 +212,7 @@ class Navigationbar extends React.Component {
           />
         </InputGroup>
         <Nav className="ml-auto">
-          <Nav.Link className="navbaritem" href="#home"><span>Jobs</span></Nav.Link>
+          <Link className="navbaritem" to={jobspath}><span>Jobs</span></Link>
           <Link className="navbaritem" to={eventspath}><span>Events</span></Link>
           <Nav.Link className="navbaritem" href="#link"><span>Q&amp;A</span></Nav.Link>
           <Link className="navbaritem" to={`/${cookie.load("user")}/students`}><span>Students</span></Link>
