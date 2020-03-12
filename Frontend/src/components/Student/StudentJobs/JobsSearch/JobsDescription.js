@@ -20,7 +20,7 @@ class JobsDescription extends React.Component {
 
     return (
       <Card style={{
-        marginLeft: "0", borderBottomLeftRadius: "0", borderTopLeftRadius: "0", minHeight: "450px", height: "450", overflowY: "scroll"
+        marginLeft: "0", borderBottomLeftRadius: "0", borderTopLeftRadius: "0", maxHeight: "450px", height: "450", overflowY: "scroll"
       }}
       >
         { job }

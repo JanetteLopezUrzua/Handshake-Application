@@ -23,7 +23,7 @@ class JobsLists extends React.Component {
 
     return (
       <Card style={{
-        marginRight: "0", borderBottomRightRadius: "0", borderTopRightRadius: "0", minHeight: "450px", height: "450px", overflowY: "scroll"
+        marginRight: "0", borderBottomRightRadius: "0", borderTopRightRadius: "0", maxHeight: "450px", height: "450px", overflowY: "scroll"
       }}
       >
         <p>{jobsList.length} Job Posts </p>
