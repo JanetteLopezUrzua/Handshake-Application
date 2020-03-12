@@ -54,7 +54,7 @@ const JobApplicationModal = props => {
                 target="_blank"
                 rel="noopener noreferrer"
                 href={
-                    `http://localhost:3001/public/resumes/${student.resume.replace('resume', 'file')}`
+                    `http://localhost:3001/resumes/${student.resume.replace('resume', 'file')}`
                   }
               >
                 Resume

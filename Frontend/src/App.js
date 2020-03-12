@@ -24,6 +24,8 @@ import CompanyJobs from "./components/Company/JobPostings/JobsPage";
 import Job from "./components/Company/JobPostings/JobContainer/JobContainer";
 import JobsNavBar from "./components/Student/StudentJobs/JobsNavBar";
 import JobsSearch from "./components/Student/StudentJobs/JobsSearch/JobsSearch";
+import ApplicationsList from "./components/Student/StudentJobs/JobsApplications/ApplicationsPage";
+
 
 // App Component
 class App extends Component {
@@ -44,7 +46,7 @@ class App extends Component {
         <JobsNavBar />
         <Switch>
           <Route exact path="/student/jobs/search" component={JobsSearch} />
-          {/* <Route exact path="/student/jobs/applications" component={RegisteredEvents} /> */}
+          <Route exact path="/student/jobs/applications" component={ApplicationsList} />
         </Switch>
       </div>
     );
@@ -74,8 +76,8 @@ class App extends Component {
           <Route exact path="/company/students" component={CompanyStudentsList} />
           <Route exact path="/student/:id" render={(props) => <StudentProfile {...props} handlephotochange={this.handlephotochange} />} />
           <Route excat path="/company/:id" render={(props) => <CompanyProfile {...props} handlephotochange={this.handlephotochange} />} />
-          <Route component={JobsContainer} />
-          <Route component={EventsContainer} />
+          <Route path="/student/jobs/" component={JobsContainer} />
+          <Route path="/student/events/" component={EventsContainer} />
         </Switch>
       </div>
     );

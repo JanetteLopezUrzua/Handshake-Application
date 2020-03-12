@@ -36,6 +36,7 @@ const CompanyNewJob = require("./Company/Jobs/NewJob");
 const JobsList = require("./Company/Jobs/JobsList");
 const Job = require("./Company/Jobs/Job");
 const StudentsJobsList = require("./Student/Jobs/JobsList");
+const StudentApplications = require("./Student/Jobs/Applications");
 
 app.set("view engine", "ejs");
 
@@ -53,7 +54,7 @@ app.use(
   })
 );
 
-app.use("/resumes", express.static("public/"));
+app.use(express.static("public"));
 app.use(bodyParser.json({ limit: "10mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 
@@ -859,32 +860,6 @@ app.post("/resumes", (req, res) => {
   }
 });
 
-// app.get("/student/resume/:student_id/:job_id", (req, res) => {
-//   console.log("Check if student already applied to job");
-//   if (req.params.student_id !== undefined && req.params.job_id !== undefined) {
-//     connection.query(
-//       `select student_id from resumes where job_id='${req.params.job_id}' and student_id='${req.params.student_id}'`,
-//       (err, rows) => {
-//         if (err) res.end("Can't insert information");
-
-//         if (rows !== undefined || rows.lenght === 0) {
-//           res.writeHead(200, {
-//             "Content-Type": "text/plain"
-//           });
-
-//           res.end("Succesful read");
-//         } else {
-//           res.writeHead(400, {
-//             "Content-Type": "text/plain"
-//           });
-
-//           res.end("error");
-//         }
-//       }
-//     );
-//   }
-// });
-
 /* ************Company - Deal with Students who applied to the job ******* */
 
 app.get("/job/applied/:job_id", (req, res) => {
@@ -900,6 +875,33 @@ app.post("/job/studentstatus", (req, res) => {
   const info = new Job.Job(connection, req, res);
   info.changeapplicationstatus();
 });
+
+/* ********Student Applications ************ */
+
+app.post("/student/applicationslist/all", (req, res) => {
+  console.log("to get all applications of a student ");
+  const info = new StudentApplications.StudentApplications(connection, req, res);
+  info.getallapplications();
+});
+
+app.post("/student/applicationslist/pending", (req, res) => {
+  console.log("to get all pending applications of a student ");
+  const info = new StudentApplications.StudentApplications(connection, req, res);
+  info.getpendingapplications();
+});
+
+app.post("/student/applicationslist/reviewed", (req, res) => {
+  console.log("to get all the reviewed applications of a student ");
+  const info = new StudentApplications.StudentApplications(connection, req, res);
+  info.getreviewedapplications();
+});
+
+app.post("/student/applicationslist/declined", (req, res) => {
+  console.log("to get all the declined applications of a student ");
+  const info = new StudentApplications.StudentApplications(connection, req, res);
+  info.getdeclinedapplications();
+});
+
 
 // start server on port 3001
 app.listen(3001);
