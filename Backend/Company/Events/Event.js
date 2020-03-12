@@ -28,14 +28,14 @@ const Event = class Event {
             });
 
             this.res.writeHead(200, {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",
             });
 
             // console.log(data);
 
             this.res.end(JSON.stringify(data));
           }
-        }
+        },
       );
     }
   }
@@ -50,11 +50,11 @@ const Event = class Event {
           // console.log('Last insert ID:', result.insertId);
 
           this.res.writeHead(200, {
-            "Content-Type": "text/plain"
+            "Content-Type": "text/plain",
           });
 
           this.res.end("Successful Post");
-        }
+        },
       );
     }
   }
@@ -69,11 +69,11 @@ const Event = class Event {
           // console.log(`Deleted ${result.affectedRows} row(s)`);
 
           this.res.writeHead(200, {
-            "Content-Type": "text/plain"
+            "Content-Type": "text/plain",
           });
 
           this.res.end("Successful Delete");
-        }
+        },
       );
     }
   }
@@ -129,14 +129,14 @@ const Event = class Event {
             });
 
             this.res.writeHead(200, {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",
             });
 
             // console.log(data);
 
             this.res.end(JSON.stringify(data));
           }
-        }
+        },
       );
     }
   }
@@ -154,11 +154,11 @@ const Event = class Event {
           // console.log('Last insert ID:', result.insertId);
 
           this.res.writeHead(200, {
-            "Content-Type": "text/plain"
+            "Content-Type": "text/plain",
           });
 
           this.res.end("Successful Post");
-        }
+        },
       );
     }
   }
@@ -180,19 +180,19 @@ const Event = class Event {
             rows.forEach(row => {
               data = {
                 description: row.description,
-                company_id: row.company_id
+                company_id: row.company_id,
               };
             });
 
             this.res.writeHead(200, {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",
             });
 
             // console.log(data);
 
             this.res.end(JSON.stringify(data));
           }
-        }
+        },
       );
     }
   }
@@ -207,11 +207,11 @@ const Event = class Event {
           // console.log('Last insert ID:', result.insertId);
 
           this.res.writeHead(200, {
-            "Content-Type": "text/plain"
+            "Content-Type": "text/plain",
           });
 
           this.res.end("Successful Post");
-        }
+        },
       );
     }
   }
@@ -226,11 +226,11 @@ const Event = class Event {
           // console.log(`Deleted ${result.affectedRows} row(s)`);
 
           this.res.writeHead(200, {
-            "Content-Type": "text/plain"
+            "Content-Type": "text/plain",
           });
 
           this.res.end("Successful Delete");
-        }
+        },
       );
     }
   }
@@ -256,19 +256,19 @@ const Event = class Event {
             });
 
             this.res.writeHead(200, {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",
             });
 
             // console.log(data);
 
             this.res.end(JSON.stringify(data));
           }
-        }
+        },
       );
     }
   }
 };
 
 module.exports = {
-  Event
+  Event,
 };

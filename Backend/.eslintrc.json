@@ -16,7 +16,6 @@
   },
   "rules": {
     "no-console": "off",
-    "import/newline-after-import": "off",
     "quotes": "off",
     "comma-dangle": "off",
     "arrow-parens": "off",

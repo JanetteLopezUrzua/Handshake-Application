@@ -8,7 +8,7 @@ const EventsList = class EventsList {
   geteventslist() {
     if (this.req.params.company_id !== undefined) {
       const data = {
-        events: []
+        events: [],
       };
 
       this.connection.query(
@@ -43,19 +43,19 @@ const EventsList = class EventsList {
             });
 
             this.res.writeHead(200, {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",
             });
 
             // console.log(data);
 
             this.res.end(JSON.stringify(data));
           }
-        }
+        },
       );
     }
   }
 };
 
 module.exports = {
-  EventsList
+  EventsList,
 };

@@ -21,7 +21,7 @@ class PictureDetails extends React.Component {
       name: "",
       show: false,
       has_image: false,
-      image: "",
+      data: "",
       photo: "",
       validimage: "",
       errormessage: "",
@@ -53,10 +53,7 @@ class PictureDetails extends React.Component {
             has_image: false
           });
         } else {
-          // const imageURL = `${Buffer.from(info.photo).toString()}`;
-
           this.setState({
-            // photo: imageURL,
             has_image: true
           });
         }
@@ -76,18 +73,17 @@ class PictureDetails extends React.Component {
   };
 
   getImage = file => {
-    const reader = new FileReader();
+    const data = new FormData();
 
     if (file && file.type.match("image.*")) {
-      reader.readAsDataURL(file);
-
-      reader.onloadend = () => {
-        this.setState({
-          image: reader.result,
-          validimage: true,
-          errormessage: ""
-        });
-      };
+      data.append('file', file);
+      data.append('name', 'file');
+      console.log(data);
+      this.setState({
+        data,
+        validimage: true,
+        errormessage: "",
+      });
     } else {
       this.setState({
         validimage: false,
@@ -100,20 +96,23 @@ class PictureDetails extends React.Component {
     console.log(this.state.validimage);
     e.preventDefault();
     if (this.state.validimage === true) {
-      const { image } = this.state;
-
-      const data = {
-        id: this.state.id,
-        photo: this.state.image
-      };
-
+      console.log(this.state.data);
       axios
-        .post("http://localhost:3001/company/pictureinfo", data)
+        .post('http://localhost:3001/upload', this.state.data)
+        .then(response => {
+          console.log("res", response.data);
+          console.log(response.data);
+          const data = {
+            id: this.state.id,
+            photo: response.data
+          };
+
+          return axios.post("http://localhost:3001/company/pictureinfo", data);
+        })
         .then(response => {
           console.log(response);
 
           this.setState({
-            photo: image,
             has_image: true,
             show: false,
           });
@@ -240,7 +239,7 @@ class PictureDetails extends React.Component {
           <>
             <Image
               className="CompanyProfilePicImage"
-              src={this.state.photo}
+              src={`http://localhost:3001/resumesandimages/${this.state.photo}`}
             />
             <Button className="CompanyProfilePicButtononImage" onClick={this.handleShow}>
               <Row>
@@ -259,13 +258,12 @@ class PictureDetails extends React.Component {
           <>
             <Image
               className="CompanyProfilePicImage"
-              src={this.state.photo}
+              src={`http://localhost:3001/resumesandimages/${this.state.photo}`}
             />
           </>
         );
       }
     }
-
     let button = "";
     if (cookie.load('id') === this.state.id && cookie.load('user') === "company") {
       button = (

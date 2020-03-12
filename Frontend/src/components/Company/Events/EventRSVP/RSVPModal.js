@@ -24,12 +24,10 @@ const RSVPModal = props => {
           </div>
         );
       } else {
-        // const imageURL = `${Buffer.from(student.photo).toString()}`;
         img = (
           <Image
             className="studentslistpics"
-            // src={imageURL}
-            src={student.photo}
+            src={`http://localhost:3001/resumesandimages/${student.photo}`}
           />
         );
       }

@@ -14,23 +14,23 @@ const CompanyNewJob = class CompanyNewJob {
               '${this.req.body.deadlinemonth}', '${this.req.body.deadlineday}', '${this.req.body.deadlineyear}', '${this.req.body.deadlinetime}',
               '${this.req.body.deadlinedaytime}', '${this.req.body.location}', '${this.req.body.salary}', '${this.req.body.salarytime}',
               '${this.req.body.category}', '${this.req.body.description}', '${this.req.body.postingdate}')`,
-        (err, result) => {
+        (err) => {
           if (err) this.res.end(`Can't insert information. Error: ${err}`);
           else {
             // console.log('Last insert ID:', result.insertId);
 
             this.res.writeHead(200, {
-              "Content-Type": "text/plain"
+              "Content-Type": "text/plain",
             });
 
             this.res.end("Successful Save");
           }
-        }
+        },
       );
     }
   }
 };
 
 module.exports = {
-  CompanyNewJob
+  CompanyNewJob,
 };

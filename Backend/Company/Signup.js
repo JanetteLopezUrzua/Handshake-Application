@@ -18,14 +18,14 @@ const CompanySignup = class CompanySignup {
 
       if (exists === true) {
         this.res.writeHead(400, {
-          "Content-Type": "text/plain"
+          "Content-Type": "text/plain",
         });
         this.res.end("Email already exists.");
       } else {
         // password is encrypted
         const ciphertext = CryptoJS.AES.encrypt(
           this.req.body.password,
-          "secret key 123"
+          "secret key 123",
         );
           // console.log("encrypted text", ciphertext.toString());
           // var bytes  = CryptoJS.AES.decrypt(ciphertext.toString(), 'secret key 123');
@@ -44,32 +44,32 @@ const CompanySignup = class CompanySignup {
                   else {
                     rows1.forEach(row => {
                       this.res.cookie("id", row.id, {
-                        maxAge: 30 * 60 * 1000,
+                        maxAge: 3 * 60 * 60 * 1000, // hrs, min, src, msec
                         httpOnly: false,
-                        path: "/"
+                        path: "/",
                       });
 
                       this.res.cookie("user", "company", {
-                        maxAge: 30 * 60 * 1000,
+                        maxAge: 3 * 60 * 60 * 1000, // hrs, min, src, msec
                         httpOnly: false,
-                        path: "/"
+                        path: "/",
                       });
 
                       this.req.session.userId = row.id;
                     });
 
                     this.res.writeHead(200, {
-                      "Content-Type": "application/json"
+                      "Content-Type": "application/json",
                     });
 
                     // console.log(req.session.userId);
 
                     this.res.end(JSON.stringify(this.req.session.userId));
                   }
-                }
+                },
               );
             }
-          }
+          },
         );
       }
     });
@@ -78,5 +78,5 @@ const CompanySignup = class CompanySignup {
 
 
 module.exports = {
-  CompanySignup
+  CompanySignup,
 };

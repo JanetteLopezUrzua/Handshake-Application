@@ -25,12 +25,10 @@ const JobApplicationModal = props => {
           </div>
         );
       } else {
-        // const imageURL = `${Buffer.from(student.photo).toString()}`;
         img = (
           <Image
             className="studentslistpics"
-            // src={imageURL}
-            src={student.photo}
+            src={`http://localhost:3001/resumesandimages/${student.photo}`}
           />
         );
       }
@@ -54,7 +52,7 @@ const JobApplicationModal = props => {
                 target="_blank"
                 rel="noopener noreferrer"
                 href={
-                    `http://localhost:3001/resumes/${student.resume.replace('resume', 'file')}`
+                    `http://localhost:3001/resumesandimages/${student.resume.replace('resume', 'file')}`
                   }
               >
                 Resume

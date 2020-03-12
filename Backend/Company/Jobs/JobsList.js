@@ -9,7 +9,7 @@ const JobsList = class JobsList {
     // console.log(this.req.params.company_id);
     if (this.req.params.company_id !== undefined) {
       const data = {
-        jobs: []
+        jobs: [],
       };
 
       this.connection.query(
@@ -38,19 +38,19 @@ const JobsList = class JobsList {
             });
 
             this.res.writeHead(200, {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",
             });
 
             // console.log(data);
 
             this.res.end(JSON.stringify(data));
           }
-        }
+        },
       );
     }
   }
 };
 
 module.exports = {
-  JobsList
+  JobsList,
 };

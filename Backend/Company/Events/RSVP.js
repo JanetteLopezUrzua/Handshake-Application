@@ -30,21 +30,21 @@ const RSVP = class RSVP {
             });
 
             this.res.writeHead(200, {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",
             });
 
             // console.log(data);
 
             this.res.end(JSON.stringify(data));
           }
-        }
+        },
       );
     }
   }
 
   getstudentRSVPEvents() {
     const data = {
-      events: []
+      events: [],
     };
 
     this.connection.query(
@@ -79,14 +79,14 @@ const RSVP = class RSVP {
           });
 
           this.res.writeHead(200, {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           });
 
           // console.log(data);
 
           this.res.end(JSON.stringify(data));
         }
-      }
+      },
     );
   }
 
@@ -104,13 +104,13 @@ const RSVP = class RSVP {
 
         if (result.affectedRows > 0) {
           this.res.writeHead(200, {
-            "Content-Type": "text/plain"
+            "Content-Type": "text/plain",
           });
 
           this.res.end("Successful Post");
         } else {
           this.res.writeHead(400, {
-            "Content-Type": "text/plain"
+            "Content-Type": "text/plain",
           });
 
           this.res.end("Not Eligible For This Event");
@@ -129,16 +129,16 @@ const RSVP = class RSVP {
           // console.log(`Deleted ${result.affectedRows} row(s)`);
 
           this.res.writeHead(200, {
-            "Content-Type": "text/plain"
+            "Content-Type": "text/plain",
           });
 
           this.res.end("Successful Delete");
-        }
+        },
       );
     }
   }
 };
 
 module.exports = {
-  RSVP
+  RSVP,
 };

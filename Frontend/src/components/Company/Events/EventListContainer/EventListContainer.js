@@ -28,8 +28,7 @@ const EventListContainer = (props) => {
     img = (
       <Image
         className="eventslistpics"
-        src={props.event.photo}
-        // src={imageURL}
+        src={`http://localhost:3001/resumesandimages/${props.event.photo}`}
       />
     );
   }

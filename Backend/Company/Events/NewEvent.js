@@ -20,17 +20,17 @@ const CompanyNewEvent = class CompanyNewEvent {
           // console.log('Last insert ID:', result.insertId);
 
             this.res.writeHead(200, {
-              "Content-Type": "text/plain"
+              "Content-Type": "text/plain",
             });
 
             this.res.end("Successful Save");
           }
-        }
+        },
       );
     }
   }
 };
 
 module.exports = {
-  CompanyNewEvent
+  CompanyNewEvent,
 };

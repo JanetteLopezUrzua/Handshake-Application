@@ -20,7 +20,6 @@ class PictureDetails extends React.Component {
       college: "",
       show: false,
       has_image: false,
-      image: "",
       photo: "",
       validimage: "",
       errormessage: "",
@@ -52,10 +51,7 @@ class PictureDetails extends React.Component {
             has_image: false
           });
         } else {
-          //  const imageURL = `${Buffer.from(info.photo).toString()}`;
-
           this.setState({
-            // photo: imageURL,
             has_image: true
           });
         }
@@ -77,18 +73,16 @@ class PictureDetails extends React.Component {
   };
 
   getImage = file => {
-    const reader = new FileReader();
+    const data = new FormData();
 
     if (file && file.type.match("image.*")) {
-      reader.readAsDataURL(file);
-
-      reader.onloadend = () => {
-        this.setState({
-          image: reader.result,
-          validimage: true,
-          errormessage: ""
-        });
-      };
+      data.append('file', file);
+      data.append('name', 'file');
+      this.setState({
+        data,
+        validimage: true,
+        errormessage: ""
+      });
     } else {
       this.setState({
         validimage: false,
@@ -101,20 +95,22 @@ class PictureDetails extends React.Component {
     console.log(this.state.validimage);
     e.preventDefault();
     if (this.state.validimage === true) {
-      const { image } = this.state;
-
-      const data = {
-        id: this.state.id,
-        photo: this.state.image
-      };
-
       axios
-        .post("http://localhost:3001/student/pictureinfo", data)
+        .post('http://localhost:3001/upload', this.state.data)
+        .then(response => {
+          console.log("res", response.data);
+
+          const data = {
+            id: this.state.id,
+            photo: response.data
+          };
+
+          return axios.post("http://localhost:3001/student/pictureinfo", data);
+        })
         .then(response => {
           console.log(response);
 
           this.setState({
-            photo: image,
             has_image: true,
             show: false,
           });
@@ -195,7 +191,7 @@ class PictureDetails extends React.Component {
           <>
             <Image
               className="ProfilePicImage"
-              src={this.state.photo}
+              src={`http://localhost:3001/resumesandimages/${this.state.photo}`}
               roundedcircle="true"
             />
             <Button className="ProfilePicButtononImage" onClick={this.handleShow}>
@@ -215,7 +211,7 @@ class PictureDetails extends React.Component {
           <>
             <Image
               className="ProfilePicImage"
-              src={this.state.photo}
+              src={`http://localhost:3001/resumesandimages/${this.state.photo}`}
               roundedcircle="true"
             />
           </>

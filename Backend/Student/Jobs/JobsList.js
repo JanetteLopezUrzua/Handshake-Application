@@ -8,7 +8,7 @@ const StudentsJobsList = class StudentsJobsList {
   getalljobs() {
     // console.log(this.req.params.company_id);
     const data = {
-      jobs: []
+      jobs: [],
     };
 
     this.connection.query(
@@ -40,21 +40,21 @@ const StudentsJobsList = class StudentsJobsList {
           });
 
           this.res.writeHead(200, {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           });
 
           // console.log(data);
 
           this.res.end(JSON.stringify(data));
         }
-      }
+      },
     );
   }
 
   getnameortitlejobs() {
     // console.log(this.req.params.company_id);
     const data = {
-      jobs: []
+      jobs: [],
     };
 
     this.connection.query(
@@ -87,21 +87,21 @@ const StudentsJobsList = class StudentsJobsList {
           });
 
           this.res.writeHead(200, {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           });
 
           // console.log(data);
 
           this.res.end(JSON.stringify(data));
         }
-      }
+      },
     );
   }
 
   getlocationjobs() {
     // console.log(this.req.params.company_id);
     const data = {
-      jobs: []
+      jobs: [],
     };
 
     this.connection.query(
@@ -134,21 +134,21 @@ const StudentsJobsList = class StudentsJobsList {
           });
 
           this.res.writeHead(200, {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           });
 
           // console.log(data);
 
           this.res.end(JSON.stringify(data));
         }
-      }
+      },
     );
   }
 
   getfulltimejobs() {
     // console.log(this.req.params.company_id);
     const data = {
-      jobs: []
+      jobs: [],
     };
 
     this.connection.query(
@@ -181,21 +181,21 @@ const StudentsJobsList = class StudentsJobsList {
           });
 
           this.res.writeHead(200, {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           });
 
           // console.log(data);
 
           this.res.end(JSON.stringify(data));
         }
-      }
+      },
     );
   }
 
   getparttimejobs() {
     // console.log(this.req.params.company_id);
     const data = {
-      jobs: []
+      jobs: [],
     };
 
     this.connection.query(
@@ -228,21 +228,21 @@ const StudentsJobsList = class StudentsJobsList {
           });
 
           this.res.writeHead(200, {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           });
 
           // console.log(data);
 
           this.res.end(JSON.stringify(data));
         }
-      }
+      },
     );
   }
 
   getinternshipsjobs() {
     // console.log(this.req.params.company_id);
     const data = {
-      jobs: []
+      jobs: [],
     };
 
     this.connection.query(
@@ -275,21 +275,21 @@ const StudentsJobsList = class StudentsJobsList {
           });
 
           this.res.writeHead(200, {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           });
 
           // console.log(data);
 
           this.res.end(JSON.stringify(data));
         }
-      }
+      },
     );
   }
 
   getoncampusjobs() {
     // console.log(this.req.params.company_id);
     const data = {
-      jobs: []
+      jobs: [],
     };
 
     this.connection.query(
@@ -322,14 +322,14 @@ const StudentsJobsList = class StudentsJobsList {
           });
 
           this.res.writeHead(200, {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           });
 
           // console.log(data);
 
           this.res.end(JSON.stringify(data));
         }
-      }
+      },
     );
   }
 
@@ -337,7 +337,7 @@ const StudentsJobsList = class StudentsJobsList {
   getlfulltimejobs() {
   // console.log(this.req.params.company_id);
     const data = {
-      jobs: []
+      jobs: [],
     };
 
     this.connection.query(
@@ -370,21 +370,21 @@ const StudentsJobsList = class StudentsJobsList {
           });
 
           this.res.writeHead(200, {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           });
 
           // console.log(data);
 
           this.res.end(JSON.stringify(data));
         }
-      }
+      },
     );
   }
 
   getlparttimejobs() {
   // console.log(this.req.params.company_id);
     const data = {
-      jobs: []
+      jobs: [],
     };
 
     this.connection.query(
@@ -417,21 +417,21 @@ const StudentsJobsList = class StudentsJobsList {
           });
 
           this.res.writeHead(200, {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           });
 
           // console.log(data);
 
           this.res.end(JSON.stringify(data));
         }
-      }
+      },
     );
   }
 
   getlinternshipsjobs() {
   // console.log(this.req.params.company_id);
     const data = {
-      jobs: []
+      jobs: [],
     };
 
     this.connection.query(
@@ -464,21 +464,21 @@ const StudentsJobsList = class StudentsJobsList {
           });
 
           this.res.writeHead(200, {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           });
 
           // console.log(data);
 
           this.res.end(JSON.stringify(data));
         }
-      }
+      },
     );
   }
 
   getloncampusjobs() {
   // console.log(this.req.params.company_id);
     const data = {
-      jobs: []
+      jobs: [],
     };
 
     this.connection.query(
@@ -511,14 +511,14 @@ const StudentsJobsList = class StudentsJobsList {
           });
 
           this.res.writeHead(200, {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           });
 
           // console.log(data);
 
           this.res.end(JSON.stringify(data));
         }
-      }
+      },
     );
   }
 
@@ -526,7 +526,7 @@ const StudentsJobsList = class StudentsJobsList {
   getntfulltimejobs() {
     // console.log(this.req.params.company_id);
     const data = {
-      jobs: []
+      jobs: [],
     };
 
     this.connection.query(
@@ -559,21 +559,21 @@ const StudentsJobsList = class StudentsJobsList {
           });
 
           this.res.writeHead(200, {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           });
 
           // console.log(data);
 
           this.res.end(JSON.stringify(data));
         }
-      }
+      },
     );
   }
 
   getntparttimejobs() {
     // console.log(this.req.params.company_id);
     const data = {
-      jobs: []
+      jobs: [],
     };
 
     this.connection.query(
@@ -606,21 +606,21 @@ const StudentsJobsList = class StudentsJobsList {
           });
 
           this.res.writeHead(200, {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           });
 
           // console.log(data);
 
           this.res.end(JSON.stringify(data));
         }
-      }
+      },
     );
   }
 
   getntinternshipsjobs() {
     // console.log(this.req.params.company_id);
     const data = {
-      jobs: []
+      jobs: [],
     };
 
     this.connection.query(
@@ -653,21 +653,21 @@ const StudentsJobsList = class StudentsJobsList {
           });
 
           this.res.writeHead(200, {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           });
 
           // console.log(data);
 
           this.res.end(JSON.stringify(data));
         }
-      }
+      },
     );
   }
 
   getntoncampusjobs() {
     // console.log(this.req.params.company_id);
     const data = {
-      jobs: []
+      jobs: [],
     };
 
     this.connection.query(
@@ -700,14 +700,14 @@ const StudentsJobsList = class StudentsJobsList {
           });
 
           this.res.writeHead(200, {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           });
 
           // console.log(data);
 
           this.res.end(JSON.stringify(data));
         }
-      }
+      },
     );
   }
 
@@ -715,7 +715,7 @@ const StudentsJobsList = class StudentsJobsList {
   getlntfulltimejobs() {
     // console.log(this.req.params.company_id);
     const data = {
-      jobs: []
+      jobs: [],
     };
 
     this.connection.query(
@@ -748,21 +748,21 @@ const StudentsJobsList = class StudentsJobsList {
           });
 
           this.res.writeHead(200, {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           });
 
           // console.log(data);
 
           this.res.end(JSON.stringify(data));
         }
-      }
+      },
     );
   }
 
   getlntparttimejobs() {
     // console.log(this.req.params.company_id);
     const data = {
-      jobs: []
+      jobs: [],
     };
 
     this.connection.query(
@@ -795,21 +795,21 @@ const StudentsJobsList = class StudentsJobsList {
           });
 
           this.res.writeHead(200, {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           });
 
           // console.log(data);
 
           this.res.end(JSON.stringify(data));
         }
-      }
+      },
     );
   }
 
   getlntinternshipsjobs() {
     // console.log(this.req.params.company_id);
     const data = {
-      jobs: []
+      jobs: [],
     };
 
     this.connection.query(
@@ -842,21 +842,21 @@ const StudentsJobsList = class StudentsJobsList {
           });
 
           this.res.writeHead(200, {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           });
 
           // console.log(data);
 
           this.res.end(JSON.stringify(data));
         }
-      }
+      },
     );
   }
 
   getlntoncampusjobs() {
     // console.log(this.req.params.company_id);
     const data = {
-      jobs: []
+      jobs: [],
     };
 
     this.connection.query(
@@ -889,18 +889,18 @@ const StudentsJobsList = class StudentsJobsList {
           });
 
           this.res.writeHead(200, {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           });
 
           // console.log(data);
 
           this.res.end(JSON.stringify(data));
         }
-      }
+      },
     );
   }
 };
 
 module.exports = {
-  StudentsJobsList
+  StudentsJobsList,
 };

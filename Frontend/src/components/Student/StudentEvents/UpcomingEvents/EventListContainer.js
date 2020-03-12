@@ -26,12 +26,10 @@ const EventListContainer = (props) => {
     );
     console.log("3");
   } else {
-    // const imageURL = `${Buffer.from(props.event.photo).toString()}`;
     img = (
       <Image
         className="eventslistpics"
-        // src={imageURL}
-        src={props.event.photo}
+        src={`http://localhost:3001/resumesandimages/${props.event.photo}`}
       />
     );
     console.log("4");

@@ -165,25 +165,31 @@ class EventInfo extends React.Component {
     }
 
     if (err === "") {
-      const data = {
-        company_id: this.state.company_id,
-        bannerphoto: this.state.bannerphoto,
-        title: this.state.title,
-        dayofweek: this.state.dayofweek,
-        month: this.state.month,
-        day: this.state.day,
-        year: this.state.year,
-        starttime: this.state.starttime,
-        startdaytime: this.state.startdaytime,
-        endtime: this.state.endtime,
-        enddaytime: this.state.enddaytime,
-        timezone: this.state.timezone,
-        location: this.state.location,
-        eligibility: this.state.eligibility,
-        description: this.state.description
-      };
+      axios
+        .post('http://localhost:3001/upload', this.state.bannerphoto)
+        .then(response => {
+          console.log("res", response.data);
 
-      axios.post("http://localhost:3001/company/newevent", data)
+          const data = {
+            company_id: this.state.company_id,
+            bannerphoto: response.data,
+            title: this.state.title,
+            dayofweek: this.state.dayofweek,
+            month: this.state.month,
+            day: this.state.day,
+            year: this.state.year,
+            starttime: this.state.starttime,
+            startdaytime: this.state.startdaytime,
+            endtime: this.state.endtime,
+            enddaytime: this.state.enddaytime,
+            timezone: this.state.timezone,
+            location: this.state.location,
+            eligibility: this.state.eligibility,
+            description: this.state.description
+          };
+
+          return axios.post("http://localhost:3001/company/newevent", data);
+        })
         .then(response => {
           console.log(response);
           this.setState({

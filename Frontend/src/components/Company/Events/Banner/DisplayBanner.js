@@ -17,7 +17,7 @@ class DisplayBanner extends React.Component {
       event_id: "",
       show: false,
       has_image: false,
-      image: "",
+      data: "",
       photo: "",
       validimage: "",
       errormessage: "",
@@ -43,18 +43,6 @@ class DisplayBanner extends React.Component {
           company_id: info.company_id.toString()
         });
 
-        // const imageURL = `${Buffer.from(info.photo).toString()}`;
-
-        // if (imageURL === "" || imageURL === null) {
-        //   this.setState({
-        //     has_image: false
-        //   });
-        // } else {
-        //   this.setState({
-        //     // photo: imageURL,
-        //     has_image: true
-        //   });
-        // }
         if (info.photo === "" || info.photo === null) {
           this.setState({
             has_image: false
@@ -82,18 +70,17 @@ class DisplayBanner extends React.Component {
   };
 
   getImage = file => {
-    const reader = new FileReader();
+    const data = new FormData();
 
     if (file && file.type.match("image.*")) {
-      reader.readAsDataURL(file);
+      data.append('file', file);
+      data.append('name', 'file');
 
-      reader.onloadend = () => {
-        this.setState({
-          image: reader.result,
-          validimage: true,
-          errormessage: ""
-        });
-      };
+      this.setState({
+        data,
+        validimage: true,
+        errormessage: ""
+      });
     } else {
       this.setState({
         validimage: false,
@@ -105,24 +92,28 @@ class DisplayBanner extends React.Component {
   onUpload = e => {
     console.log(this.state.validimage);
     e.preventDefault();
+
     if (this.state.validimage === true) {
-      const { image } = this.state;
-
-      const data = {
-        event_id: this.state.event_id,
-        photo: this.state.image
-      };
-
       axios
-        .post("http://localhost:3001/company/eventbannerphoto", data)
+        .post('http://localhost:3001/upload', this.state.data)
+        .then(response => {
+          console.log("res", response.data);
+
+          const data = {
+            event_id: this.state.event_id,
+            photo: response.data
+          };
+
+          return axios.post("http://localhost:3001/company/eventbannerphoto", data);
+        })
         .then(response => {
           console.log(response);
 
           this.setState({
-            photo: image,
             has_image: true,
             show: false,
           });
+          this.getInfo();
         })
         .catch(error => {
           console.log(error);
@@ -187,7 +178,7 @@ class DisplayBanner extends React.Component {
           <>
             <Image
               className="BannerPicImage"
-              src={this.state.photo}
+              src={`http://localhost:3001/resumesandimages/${this.state.photo}`}
               roundedcircle="true"
             />
             <Button className="BannerPicButtononImage" onClick={this.handleShow}>
@@ -207,7 +198,7 @@ class DisplayBanner extends React.Component {
           <>
             <Image
               className="BannerPicImage"
-              src={this.state.photo}
+              src={`http://localhost:3001/resumesandimages/${this.state.photo}`}
               roundedcircle="true"
             />
           </>

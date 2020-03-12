@@ -296,6 +296,8 @@
 /* Profile Component */
 
 .ProfilePicButton {
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   width: 180px;
   height: 180px;
@@ -308,6 +310,7 @@
   margin: 0 auto;
   margin-bottom: 10px;
   cursor: pointer;
+  object-fit: cover;
 }
 
 .ProfilePicImage {
@@ -316,6 +319,7 @@
   height: 180px;
   margin: 0 auto;
   margin-bottom: 10px;
+  object-fit: cover;
 }
 
 .ProfilePicNoImage {
@@ -331,6 +335,7 @@
   text-align: center;
   line-height: 4.5;
   text-transform: uppercase;
+  object-fit: cover;
 }
 
 .ProfilePicButtononImage {
@@ -349,7 +354,7 @@
   font-weight: Bold;
   text-align: center;
   margin: 0 auto;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 }
 
 .ProfilePicButtononImage:hover {

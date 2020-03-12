@@ -21,12 +21,10 @@ const EventListContainer = (props) => {
       </div>
     );
   } else {
-    // const imageURL = `${Buffer.from(props.event.photo).toString()}`;
     img = (
       <Image
         className="eventslistpics"
-        src={props.application.photo}
-        // src={imageURL}
+        src={`http://localhost:3001/resumesandimages/${props.application.photo}`}
       />
     );
   }

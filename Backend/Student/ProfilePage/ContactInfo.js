@@ -9,7 +9,7 @@ const StudentContactInfo = class StudentContactInfo {
     if (this.req.params.id !== undefined) {
       let data = {
         email: "",
-        phonenum: ""
+        phonenum: "",
       };
 
       this.connection.query(
@@ -21,19 +21,19 @@ const StudentContactInfo = class StudentContactInfo {
             rows.forEach(row => {
               data = {
                 email: row.email,
-                phonenum: row.phonenumber
+                phonenum: row.phonenumber,
               };
             });
 
             this.res.writeHead(200, {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",
             });
 
             // console.log(data);
 
             this.res.end(JSON.stringify(data));
           }
-        }
+        },
       );
     }
   }
@@ -49,16 +49,16 @@ const StudentContactInfo = class StudentContactInfo {
           // console.log(`Changed ${result.changedRows} row(s)`);
 
           this.res.writeHead(200, {
-            "Content-Type": "text/plain"
+            "Content-Type": "text/plain",
           });
 
           this.res.end("Successful Save");
-        }
+        },
       );
     }
   }
 };
 
 module.exports = {
-  StudentContactInfo
+  StudentContactInfo,
 };

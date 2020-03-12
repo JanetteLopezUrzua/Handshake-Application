@@ -1,4 +1,5 @@
 const express = require("express");
+
 const app = express();
 const bodyParser = require("body-parser");
 const multer = require("multer");
@@ -6,6 +7,7 @@ const session = require("express-session");
 // const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const conn = require("./db");
+
 const { connection } = conn;
 
 const StudentSignin = require("./Student/Signin");
@@ -50,8 +52,8 @@ app.use(
     resave: false,
     saveUninitialized: false,
     duration: 60 * 60 * 1000, // Overall duration of Session : 30 minutes : 1800 seconds
-    activeDuration: 5 * 60 * 1000
-  })
+    activeDuration: 5 * 60 * 1000,
+  }),
 );
 
 app.use(express.static("public"));
@@ -64,11 +66,11 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader(
     "Access-Control-Allow-Methods",
-    "GET,HEAD,OPTIONS,POST,PUT,DELETE"
+    "GET,HEAD,OPTIONS,POST,PUT,DELETE",
   );
   res.setHeader(
     "Access-Control-Allow-Headers",
-    "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
+    "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers",
   );
   res.setHeader("Cache-Control", "no-cache");
   next();
@@ -101,7 +103,7 @@ app.get("/student/personalinfo/:id", (req, res) => {
   const info = new StudentPersonalInfo.StudentPersonalInfo(
     connection,
     req,
-    res
+    res,
   );
   info.getpersonalinfo();
 });
@@ -112,7 +114,7 @@ app.post("/student/personalinfo", (req, res) => {
   const info = new StudentPersonalInfo.StudentPersonalInfo(
     connection,
     req,
-    res
+    res,
   );
   info.postpersonalinfo();
 });
@@ -155,7 +157,7 @@ app.get("/student/skill/:id", (req, res) => {
 app.post("/student/skill", (req, res) => {
   console.log("post skill");
   const info = new Skills.Skills(connection, req, res);
-  info.postskills();
+  info.postskill();
 });
 
 app.delete("/student/skill/delete", (req, res) => {
@@ -163,7 +165,7 @@ app.delete("/student/skill/delete", (req, res) => {
   // console.log(req.body.id);
   // console.log(req.body.skill);
   const info = new Skills.Skills(connection, req, res);
-  info.deleteskills();
+  info.deleteskill();
 });
 
 app.get("/student/pictureinfo/:id", (req, res) => {
@@ -291,7 +293,7 @@ app.get("/company/personalinfo/:id", (req, res) => {
   const info = new CompanyPersonalInfo.CompanyPersonalInfo(
     connection,
     req,
-    res
+    res,
   );
   info.getpersonalinfo();
 });
@@ -302,7 +304,7 @@ app.post("/company/personalinfo", (req, res) => {
   const info = new CompanyPersonalInfo.CompanyPersonalInfo(
     connection,
     req,
-    res
+    res,
   );
   info.postpersonalinfo();
 });
@@ -313,7 +315,7 @@ app.post("/company/personalinfoname", (req, res) => {
   const info = new CompanyPersonalInfo.CompanyPersonalInfo(
     connection,
     req,
-    res
+    res,
   );
   info.postname();
 });
@@ -339,7 +341,7 @@ app.post("/student/studentslist/all", (req, res) => {
   const info = new StudentStudentsList.StudentStudentsList(
     connection,
     req,
-    res
+    res,
   );
   info.postall();
 });
@@ -350,7 +352,7 @@ app.post("/student/studentslist/name", (req, res) => {
   const info = new StudentStudentsList.StudentStudentsList(
     connection,
     req,
-    res
+    res,
   );
   info.postname();
 });
@@ -361,7 +363,7 @@ app.post("/student/studentslist/college", (req, res) => {
   const info = new StudentStudentsList.StudentStudentsList(
     connection,
     req,
-    res
+    res,
   );
   info.postcollege();
 });
@@ -372,7 +374,7 @@ app.post("/student/studentslist/major", (req, res) => {
   const info = new StudentStudentsList.StudentStudentsList(
     connection,
     req,
-    res
+    res,
   );
   info.postmajor();
 });
@@ -383,7 +385,7 @@ app.post("/student/studentslist/nameandcollege", (req, res) => {
   const info = new StudentStudentsList.StudentStudentsList(
     connection,
     req,
-    res
+    res,
   );
   info.postnameandcollege();
 });
@@ -394,7 +396,7 @@ app.post("/student/studentslist/nameandmajor", (req, res) => {
   const info = new StudentStudentsList.StudentStudentsList(
     connection,
     req,
-    res
+    res,
   );
   info.postnameandmajor();
 });
@@ -405,7 +407,7 @@ app.post("/student/studentslist/collegeandmajor", (req, res) => {
   const info = new StudentStudentsList.StudentStudentsList(
     connection,
     req,
-    res
+    res,
   );
   info.postcollegeandmajor();
 });
@@ -416,7 +418,7 @@ app.post("/student/studentslist/nameandcollegeandmajor", (req, res) => {
   const info = new StudentStudentsList.StudentStudentsList(
     connection,
     req,
-    res
+    res,
   );
   info.postnameandcollegeandmajor();
 });
@@ -429,7 +431,7 @@ app.post("/company/studentslist/all", (req, res) => {
   const info = new CompanyStudentsList.CompanyStudentsList(
     connection,
     req,
-    res
+    res,
   );
   info.postall();
 });
@@ -440,7 +442,7 @@ app.post("/company/studentslist/name", (req, res) => {
   const info = new CompanyStudentsList.CompanyStudentsList(
     connection,
     req,
-    res
+    res,
   );
   info.postname();
 });
@@ -451,7 +453,7 @@ app.post("/company/studentslist/college", (req, res) => {
   const info = new CompanyStudentsList.CompanyStudentsList(
     connection,
     req,
-    res
+    res,
   );
   info.postcollege();
 });
@@ -462,7 +464,7 @@ app.post("/company/studentslist/skill", (req, res) => {
   const info = new CompanyStudentsList.CompanyStudentsList(
     connection,
     req,
-    res
+    res,
   );
   info.postskill();
 });
@@ -473,7 +475,7 @@ app.post("/company/studentslist/nameandcollege", (req, res) => {
   const info = new CompanyStudentsList.CompanyStudentsList(
     connection,
     req,
-    res
+    res,
   );
   info.postnameandcollege();
 });
@@ -484,7 +486,7 @@ app.post("/company/studentslist/nameandskill", (req, res) => {
   const info = new CompanyStudentsList.CompanyStudentsList(
     connection,
     req,
-    res
+    res,
   );
   info.postnameandskill();
 });
@@ -495,7 +497,7 @@ app.post("/company/studentslist/collegeandskill", (req, res) => {
   const info = new CompanyStudentsList.CompanyStudentsList(
     connection,
     req,
-    res
+    res,
   );
   info.postcollegeandskill();
 });
@@ -506,7 +508,7 @@ app.post("/company/studentslist/nameandcollegeandskill", (req, res) => {
   const info = new CompanyStudentsList.CompanyStudentsList(
     connection,
     req,
-    res
+    res,
   );
   info.postnameandcollegeandskill();
 });
@@ -814,25 +816,25 @@ app.post("/student/jobslist/lntoncampus", (req, res) => {
 /** **Applications ******** */
 
 const storage = multer.diskStorage({
-  destination: "./public/resumes",
+  destination: "./public/resumesandimages",
   filename(req, file, callback) {
     callback(
       null,
       `${new Date().toISOString().replace(/:/g, "-")}-${file.fieldname}.${
         file.mimetype.split("/")[1]
-      }`
+      }`,
     );
-  }
+  },
 });
 
 const upload = multer({ storage });
 
-app.post("/uploadresumes", upload.single("file"), (req, res) => {
+app.post("/upload", upload.single("file"), (req, res) => {
   console.log("Req Body : ", req.body);
   console.log("file", req.file.filename);
 
   res.writeHead(200, {
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
   });
 
   res.end(req.file.filename);
@@ -850,12 +852,12 @@ app.post("/resumes", (req, res) => {
           console.log("Last insert ID:", result.insertId);
 
           res.writeHead(200, {
-            "Content-Type": "text/plain"
+            "Content-Type": "text/plain",
           });
 
           res.end("Succesful insert");
         }
-      }
+      },
     );
   }
 });

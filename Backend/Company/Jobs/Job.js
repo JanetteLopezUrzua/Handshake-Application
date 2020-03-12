@@ -54,14 +54,14 @@ const Job = class Job {
             });
 
             this.res.writeHead(200, {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",
             });
 
             // console.log(data);
 
             this.res.end(JSON.stringify(data));
           }
-        }
+        },
       );
     }
   }
@@ -80,11 +80,11 @@ const Job = class Job {
           // console.log('Last insert ID:', result.insertId);
 
           this.res.writeHead(200, {
-            "Content-Type": "text/plain"
+            "Content-Type": "text/plain",
           });
 
           this.res.end("Successful Post");
-        }
+        },
       );
     }
   }
@@ -99,11 +99,11 @@ const Job = class Job {
           // console.log(`Deleted ${result.affectedRows} row(s)`);
 
           this.res.writeHead(200, {
-            "Content-Type": "text/plain"
+            "Content-Type": "text/plain",
           });
 
           this.res.end("Successful Delete");
-        }
+        },
       );
     }
   }
@@ -129,14 +129,14 @@ const Job = class Job {
             });
 
             this.res.writeHead(200, {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",
             });
 
             // console.log(data);
 
             this.res.end(JSON.stringify(data));
           }
-        }
+        },
       );
     }
   }
@@ -169,14 +169,14 @@ const Job = class Job {
             });
 
             this.res.writeHead(200, {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",
             });
 
             // console.log(data);
 
             this.res.end(JSON.stringify(data));
           }
-        }
+        },
       );
     }
   }
@@ -193,16 +193,16 @@ const Job = class Job {
           console.log(`Deleted ${result.affectedRows} row(s)`);
 
           this.res.writeHead(200, {
-            "Content-Type": "text/plain"
+            "Content-Type": "text/plain",
           });
 
           this.res.end("Successful update");
-        }
+        },
       );
     }
   }
 };
 
 module.exports = {
-  Job
+  Job,
 };

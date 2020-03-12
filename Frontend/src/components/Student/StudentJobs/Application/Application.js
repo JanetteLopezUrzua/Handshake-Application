@@ -40,7 +40,7 @@ class Application extends React.Component {
 
     if (file && file.type.match('.pdf')) {
       data.append('file', file);
-      data.append('name', 'resume');
+      data.append('name', 'file');
 
       this.setState({
         data,
@@ -59,7 +59,7 @@ class Application extends React.Component {
     e.preventDefault();
     if (this.state.validfile === true) {
       axios
-        .post('http://localhost:3001/uploadresumes', this.state.data)
+        .post('http://localhost:3001/upload', this.state.data)
         .then(response => {
           console.log("res", response.data);
 

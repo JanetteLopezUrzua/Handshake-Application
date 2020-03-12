@@ -15,10 +15,11 @@ class NewBanner extends React.Component {
     this.state = {
       show: false,
       has_image: false,
-      image: "",
+      tempimage: "",
       photo: "",
       validimage: "",
       errormessage: "",
+      data: "",
     };
   }
 
@@ -31,14 +32,19 @@ class NewBanner extends React.Component {
   };
 
   getImage = file => {
+    const data = new FormData();
     const reader = new FileReader();
 
     if (file && file.type.match("image.*")) {
+      data.append('file', file);
+      data.append('name', 'file');
+
       reader.readAsDataURL(file);
 
       reader.onloadend = () => {
         this.setState({
-          image: reader.result,
+          data,
+          tempimage: reader.result,
           validimage: true,
           errormessage: ""
         });
@@ -55,15 +61,15 @@ class NewBanner extends React.Component {
     // console.log(this.state.validimage);
     e.preventDefault();
     if (this.state.validimage === true) {
-      const { image } = this.state;
+      const { tempimage } = this.state;
 
       this.setState({
-        photo: image,
+        photo: tempimage,
         has_image: true,
         show: false,
       });
 
-      this.props.handlephotochange(image);
+      this.props.handlephotochange(this.state.data);
     }
   };
 

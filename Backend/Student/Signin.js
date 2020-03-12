@@ -30,13 +30,13 @@ const StudentSignin = class StudentSignin {
         // console.log(req.body.password);
         if (plaintext === this.req.body.password) {
           this.res.cookie("id", id, {
-            maxAge: 30 * 60 * 1000,
+            maxAge: 3 * 60 * 60 * 1000, // hrs, min, src, msec
             httpOnly: false,
             path: "/"
           });
 
           this.res.cookie("user", "student", {
-            maxAge: 30 * 60 * 1000,
+            maxAge: 3 * 60 * 60 * 1000, // hrs, min, src, msec
             httpOnly: false,
             path: "/"
           });

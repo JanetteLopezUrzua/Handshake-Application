@@ -138,7 +138,7 @@ class Navigationbar extends React.Component {
           <Container>
             <img
               className="navbarpic"
-              src={this.state.photo}
+              src={`http://localhost:3001/resumesandimages/${this.state.photo}`}
               alt="user profile pic"
               roundedcircle="true"
             />
@@ -164,7 +164,7 @@ class Navigationbar extends React.Component {
           <Container>
             <img
               className="navbarpic"
-              src={this.state.photo}
+              src={`http://localhost:3001/resumesandimages/${this.state.photo}`}
               alt="user profile pic"
               roundedcircle="true"
             />
@@ -214,18 +214,17 @@ class Navigationbar extends React.Component {
         <Nav className="ml-auto">
           <Link className="navbaritem" to={jobspath}><span>Jobs</span></Link>
           <Link className="navbaritem" to={eventspath}><span>Events</span></Link>
-          <Nav.Link className="navbaritem" href="#link"><span>Q&amp;A</span></Nav.Link>
+          <Nav.Link className="navbaritem" href="#"><span>Q&amp;A</span></Nav.Link>
           <Link className="navbaritem" to={`/${cookie.load("user")}/students`}><span>Students</span></Link>
-          <Nav.Link className="navbaritem" href="#link"><span>Messages</span></Nav.Link>
-          <Nav.Link className="navbaritem" href="#link"><span>Career Center</span></Nav.Link>
+          <Nav.Link className="navbaritem" href="#"><span>Messages</span></Nav.Link>
+          <Nav.Link className="navbaritem" href="#"><span>Career Center</span></Nav.Link>
           <NavDropdown
             className="navbardropdown"
             title={img}
           >
-            <Link to={`/${cookie.load("user")}/${cookie.load("id")}`}>Profile</Link>
-            <NavDropdown.Item href="#action/3.2">Applications</NavDropdown.Item>
+            <Link style={{ color: "black" }} to={`/${cookie.load("user")}/${cookie.load("id")}`}>Profile</Link>
             <NavDropdown.Divider />
-            <Link onClick={this.handleLogout} to="/">Sign Out</Link>
+            <Link style={{ color: "black" }} onClick={this.handleLogout} to="/">Sign Out</Link>
           </NavDropdown>
         </Nav>
       </Navbar>

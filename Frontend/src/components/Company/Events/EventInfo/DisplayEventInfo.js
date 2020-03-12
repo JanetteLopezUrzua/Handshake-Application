@@ -27,8 +27,7 @@ const DisplayInfo = (props) => {
     img = (
       <Image
         className="CompanyProfilePicImage"
-        // src={imageURL}
-        src={props.photo}
+        src={`http://localhost:3001/resumesandimages/${props.photo}`}
       />
     );
   }

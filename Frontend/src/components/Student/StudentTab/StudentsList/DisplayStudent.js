@@ -20,12 +20,10 @@ const DisplayStudent = (props) => {
       </div>
     );
   } else {
-    // const imageURL = `${Buffer.from(props.student.photo).toString()}`;
     img = (
       <Image
         className="studentslistpics"
-        // src={imageURL}
-        src={props.student.photo}
+        src={`http://localhost:3001/resumesandimages/${props.student.photo}`}
         roundedcircle="true"
       />
     );
