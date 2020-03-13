@@ -909,4 +909,5 @@ app.post("/student/applicationslist/declined", (req, res) => {
 app.listen(3001);
 console.log("Server Listening on port 3001");
 
+module.exports = app;
 // connection.end();

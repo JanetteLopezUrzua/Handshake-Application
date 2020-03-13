@@ -3,7 +3,6 @@ import axios from "axios";
 import DisplayInfo from "./DisplayInfo";
 import EditInfo from "./EditInfo";
 
-
 class BasicDetails extends React.Component {
   constructor() {
     super();
@@ -16,14 +15,15 @@ class BasicDetails extends React.Component {
     };
   }
 
-  static getDerivedStateFromProps = (props) => ({ id: props.id })
+  static getDerivedStateFromProps = props => ({ id: props.id });
 
   componentDidMount() {
     this.getInfo();
   }
 
   getInfo = () => {
-    axios.get(`http://localhost:3001/company/personalinfo/${this.state.id}`)
+    axios
+      .get(`http://localhost:3001/company/personalinfo/${this.state.id}`)
       .then(response => {
         const info = response.data;
 
@@ -41,15 +41,15 @@ class BasicDetails extends React.Component {
 
         this.setState({
           location: info.location,
-          description: info.description,
+          description: info.description
         });
       })
       .catch(error => {
         console.log(error);
       });
-  }
+  };
 
-  handleClick = (e) => {
+  handleClick = e => {
     e.preventDefault();
     console.log("button was pressed!!!!");
     this.setState({ editWasTriggered: true });
@@ -69,15 +69,16 @@ class BasicDetails extends React.Component {
     });
   };
 
-  handleSave = (e) => {
+  handleSave = e => {
     e.preventDefault();
     const data = {
       id: this.state.id,
       location: this.state.location,
-      description: this.state.description,
+      description: this.state.description
     };
 
-    axios.post("http://localhost:3001/company/personalinfo", data)
+    axios
+      .post("http://localhost:3001/company/personalinfo", data)
       .then(response => {
         console.log(response);
       })
@@ -94,9 +95,7 @@ class BasicDetails extends React.Component {
   };
 
   render() {
-    const {
-      location, description, editWasTriggered
-    } = this.state;
+    const { location, description, editWasTriggered } = this.state;
 
     let display = "";
     display = (

@@ -1,13 +1,14 @@
 const mysql = require('mysql');
 
-const connection = mysql.createConnection({
+const connection = mysql.createPool({
   host: 'lab1db.cukc16guifim.us-west-1.rds.amazonaws.com',
   user: 'admin',
   password: 'lab1admin',
   port: 8000,
+  database: 'lab1db',
 });
 
-connection.connect((err) => {
+connection.getConnection((err) => {
   //   if (err) {
   //     console.error(`Database connection failed: ${err.stack}`);
   //     return;
@@ -17,8 +18,8 @@ connection.connect((err) => {
 
   if (err) throw err;
 
-  connection.query('CREATE DATABASE IF NOT EXISTS lab1db;');
-  connection.query('USE lab1db;');
+  // connection.query('CREATE DATABASE IF NOT EXISTS lab1db;');
+  // connection.query('USE lab1db;');
 
   /* Student Profile tables */
   connection.query('CREATE TABLE IF NOT EXISTS students(id int NOT NULL AUTO_INCREMENT, fname varchar(100), lname varchar(100), email varchar(255), password varchar(50), college varchar(255), dob varchar(25), city varchar(255), state varchar(255), country varchar(255), phonenumber varchar(255), PRIMARY KEY(id));');

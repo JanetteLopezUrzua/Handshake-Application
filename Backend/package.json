@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha test",
     "start": "node index.js"
   },
   "keywords": [],
@@ -13,7 +13,6 @@
   "dependencies": {
     "aws-sdk": "latest",
     "body-parser": "^1.19.0",
-    "chai": "^4.1.2",
     "chai-http": "^4.2.0",
     "client-sessions": "^0.8.0",
     "cookie-parser": "^1.4.3",
@@ -24,12 +23,12 @@
     "express": "^4.17.1",
     "express-session": "^1.15.6",
     "express-sessions": "^1.0.6",
-    "mocha": "^5.2.0",
     "morgan": "^1.9.1",
     "multer": "^1.4.2",
     "mysql": "latest"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
     "eslint": "^6.1.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-node": "^4.0.0",
@@ -37,6 +36,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-react": "^7.14.3",
-    "eslint-plugin-react-hooks": "^1.7.0"
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "mocha": "^5.2.0"
   }
 }
